@@ -18,7 +18,7 @@
 | GitHub Release | ✅ https://github.com/UserShi/dsh-plugin-scope/releases/tag/v0.1.0 |
 | npm | 待 `npm login`（包名可用） |
 
-SSH 授权与代码推送已完成。剩余的是 Release 附件与（可选的）npm 发布。
+SSH 授权、代码推送与 GitHub Release 已完成。剩余的是（可选的）npm 发布。
 
 ---
 
@@ -157,14 +157,10 @@ jobs:
         with:
           files: '*.tgz'
           generate_release_notes: true
-      - name: Publish to npm
-        if: ${{ secrets.NPM_TOKEN != '' }}
-        run: npm publish --access public
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 ```
 
-> 当前 tag `v0.1.0` 已经推送，但 Release 尚未创建；可以直接在网页创建并拖入 `dsh-plugin-scope-0.1.0.tgz`，或配置 `NPM_TOKEN` 后让 workflow 处理。
+> Release 已由该 workflow 自动创建：https://github.com/UserShi/dsh-plugin-scope/releases/tag/v0.1.0  
+> npm 发布没有放进 workflow（secrets 不能直接用于 step 的 if），需要本地 `npm login` 或配置一个单独的发布工作流。
 
 ---
 ## 8. 安装方式（发布后）
