@@ -26,7 +26,7 @@ It also provides:
 ## Status
 
 - **v0.1.0**: released on GitHub Release and npm (Gate engine, global toggles, marketplace integration).
-- **main / v0.2.0-dev**: M4a is in place — skill mapping, manual prompt-section mapping, a skill list in the mapping drawer, shadows only for skills that are actually visible, and a dark-mode fix.
+- **main / v0.2.0-dev**: M4a is in place — skill mapping, manual prompt-section mapping, a skill list in the mapping drawer, shadows only for skills that are actually visible, a Chinese/English switch (Chinese default), and a dark-mode fix.
 - **M4b / full Preset isolation**: not started yet.
 
 ## Install
