@@ -105,14 +105,24 @@ Map tools 抽屉允许手动把当前会话可见工具归到插件下，保存�
 
 ## 6. 已验证
 
-- node --test test/core.test.mjs：12/12 通过。
+已在本机 desktop profile 安装并做运行时验证：
+
+- npm test：12/12 通过。
 - node --check lib/core.js lib/state.js lib/index.js lib/client.js：通过。
-- 尚未在真实 profile 安装验证；安装后需要检查：
-  - Settings 页出现 Plugin Scope；
-  - Plugins 页出现 Scopes tab；
-  - 插件详情页出现作用域徽章/区块；
-  - 对话输入框上方出现 chip；
-  - 切换模板后 tool-addition/removal 写入会话日志。
+- 安装：dsh plugin --profile desktop add link:/Users/haozhanshi/WorkSpace/deepseek-work/plugin-scope 成功；profile 依赖与 bundle 列表包含 dsh-plugin-scope。
+- GET /api/dsh-plugin-scope/state：返回 8 个 profile 插件、2 个 live agent。
+- Gate：把 dsh-ai-diagrams 设为 on-demand、默认模板 minimal 后，两个 live agent 的 gate 都登记了 7 个 diagram_* 工具和 diagram-design 技能；estimate 从 32 tools / 19,590 tokens 降到 25 tools / 18,291 tokens。
+- 全局开关：POST /plugin 把 dsh-ai-diagrams 设为 off 返回 application: applied，enabled 变为 false；设回 on-demand 后 enabled 恢复 true。
+- 客户端 bundle：GET /api/dsh-plugin-scope/client 的 client module graph 包含 dsh-plugin-scope；combo URL 返回 HTTP 200（40 KB）。
+- 当前状态已恢复为默认 all，两个 live agent 的 gate 数为 0，避免影响用户后续对话。
+
+尚未完成的验证（需要浏览器控制或用户确认）：
+
+- Settings 页出现 Plugin Scope、Plugins 页出现 Scopes tab；
+- 插件详情页出现作用域徽章/区块；
+- 对话输入框上方出现 chip；
+- 点击切换后浏览器端无 React/slot 崩溃；
+- 下一轮请求 header 中出现 tool-removal（当前会话的工具列表在 gate 应用前已经固定，下一轮才能观察）。
 
 ## 7. 下一步
 

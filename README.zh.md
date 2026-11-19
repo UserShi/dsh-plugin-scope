@@ -26,7 +26,7 @@ DSH 的插件一装就是全局：每个插件的工具 schema 都会进入每�
 
 ### 本地目录（开发）
 
-    dsh plugin --profile desktop add link:/Users/haozhanshi/WorkSpace/deepseek-work/plugin-scope
+    dsh plugin --profile desktop add link:/absolute/path/to/dsh-plugin-scope
 
 或在 **Plugins → Add plugin** 里选择本目录。
 

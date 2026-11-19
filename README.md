@@ -26,7 +26,7 @@ It also provides:
 
 ### Local directory (development)
 
-    dsh plugin --profile desktop add link:/Users/haozhanshi/WorkSpace/deepseek-work/plugin-scope
+    dsh plugin --profile desktop add link:/absolute/path/to/dsh-plugin-scope
 
 Or choose this directory in **Plugins → Add plugin**.
 
