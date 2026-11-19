@@ -24,6 +24,10 @@ It also provides:
 
 ## Install
 
+### GitHub source (available now)
+
+    dsh plugin --profile desktop add github:UserShi/dsh-plugin-scope
+
 ### Local directory (development)
 
     dsh plugin --profile desktop add link:/absolute/path/to/dsh-plugin-scope

@@ -1,7 +1,7 @@
 # GitHub 发布指南
 
 > 目标仓库：`https://github.com/UserShi/dsh-plugin-scope`（已创建，public）  
-> 当前状态：本地仓库已提交 v0.1.0；**尚未推送**（本机 SSH 公钥未加到 GitHub，且没有 HTTPS/PAT 凭据）。
+> 当前状态：**main 与 v0.1.0 tag 已推送**（SSH 授权完成）。GitHub Release 可通过网页创建并附上 `dsh-plugin-scope-0.1.0.tgz`。
 
 ---
 

@@ -24,6 +24,10 @@ DSH 的插件一装就是全局：每个插件的工具 schema 都会进入每�
 
 ## 安装
 
+### GitHub 源码（当前可用）
+
+    dsh plugin --profile desktop add github:UserShi/dsh-plugin-scope
+
 ### 本地目录（开发）
 
     dsh plugin --profile desktop add link:/absolute/path/to/dsh-plugin-scope
