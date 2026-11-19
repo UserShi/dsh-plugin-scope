@@ -15,7 +15,7 @@
 | package.json | dsh.bundle.patch + dsh.client + exports；无运行时依赖 |
 | cordis.patch.yml | 只插入一个 Host row |
 | locale/en.json, locale/zh.json | 插件管理器的标题/描述 |
-| test/core.test.mjs | 14 个纯函数测试 |
+| test/core.test.mjs | 15 个纯函数测试 |
 
 v0.1 是**纯 ESM JavaScript**，没有构建步骤。这样本地 link 安装和 GitHub 源码安装都不需要 pnpm 执行 prepare/build 脚本。TypeScript/tsdown 可以作为后续重构，不是当前运行前提。
 
@@ -26,7 +26,8 @@ v0.1 是**纯 ESM JavaScript**，没有构建步骤。这样本地 link 安装�
 - 全局：所有对话可见。
 - 按需：只有选中它的模板/对话可见；未选中时工具声明被 tools.restrict 移除。
 - 关闭：调用 pluginManager.setBundleEnabled(name, false)；所有对话不可见。
-- 对话级：每个 session 记录 profileId + overrides（add/remove/includeTools/excludeTools）。
+- 工作区级：state.workspaces[cwd] 记录 profileId + overrides；对话没有 session 记录时使用 cwd 对应工作区。
+- 对话级：每个 session 记录 profileId + overrides（add/remove/includeTools/excludeTools）；有记录时优先于工作区。
 - 语言：settings.language 为 zh/en，默认 zh；作用于客户端文案和内置模板名/描述。
 
 ### 2.2 Gate
@@ -79,6 +80,9 @@ Map contributions 抽屉允许手动把当前会话可见工具、技能归到�
 | POST | /plugin | { name, scope, profiles }；全局/按需/关闭 |
 | POST | /session | { sessionId, profileId, overrides } |
 | POST | /session/plugin | { sessionId, name, enabled }；只对 on-demand 插件启停本次对话 |
+| POST | /session/reset | { sessionId }；删除会话覆盖，回退到工作区/默认 |
+| POST | /workspace | { cwd, profileId, overrides? }；设置工作区模板 |
+| POST | /workspace/delete | { cwd }；清除工作区配置 |
 | POST | /default | { profileId } |
 | POST | /profile | { action: create/update/delete, profile/id } |
 | POST | /mapping | { name, contribution } |
@@ -111,7 +115,7 @@ Map contributions 抽屉允许手动把当前会话可见工具、技能归到�
 
 已在本机 desktop profile 安装并做运行时验证：
 
-- npm test：14/14 通过。
+- npm test：15/15 通过。
 - node --check lib/core.js lib/state.js lib/index.js lib/client.js：通过。
 - 安装：dsh plugin --profile desktop add link:/Users/haozhanshi/WorkSpace/deepseek-work/plugin-scope 成功；profile 依赖与 bundle 列表包含 dsh-plugin-scope。
 - GET /api/dsh-plugin-scope/state：返回 8 个 profile 插件、2 个 live agent。
@@ -121,6 +125,7 @@ Map contributions 抽屉允许手动把当前会话可见工具、技能归到�
 - M4a：GET /skills 返回 7 个技能；把 session 临时切到 minimal 时 gatedTools=7、gatedSkills=1、gates=1，切回 all 后归零；映射弹窗、技能/section 保存和 /gates 诊断已接入。
 - 语言：POST /settings {language:'en'} 返回 settings.language='en'，切回 zh 成功；内置模板名/描述/计数在客户端本地化，默认 zh。
 - 对话插件选择器：POST /session/plugin 关闭 dsh-ai-diagrams 后 /state?session 的 visible=false、overrides.remove=['dsh-ai-diagrams']、gatedTools=7；重新开启后 visible=true、gatedTools=0。客户端 bundle 包含 ConversationPlugins 与 pscope-popover。
+- 工作区：给当前 cwd 设置 minimal 后 /session/reset，source=workspace、profile=minimal、diagrams=false、gatedTools=7；清除工作区后 source=default、profile=all、gatedTools=0。
 - 深色模式：把错误的 --dsw-alias-bg-elevated / line-subtle 等替换为真实的 --dsw-alias-bg-layer-1/2、border-l2、label-*、button-primary-fill；待用户刷新确认视觉效果。
 - 当前状态已恢复为默认 all，live agent 的 gate 数为 0，避免影响用户后续对话。
 - GitHub：main、v0.1.0 tag 与 Release 已发布到 https://github.com/UserShi/dsh-plugin-scope；Release 自带 dsh-plugin-scope-0.1.0.tgz。

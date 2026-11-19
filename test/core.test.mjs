@@ -28,7 +28,29 @@ test('default state contains the three built-in profiles', () => {
   assert.deepEqual(state.profiles.map(profile => profile.id), ['all', 'minimal', 'coding'])
   assert.equal(state.settings.defaultProfileId, 'all')
   assert.equal(state.settings.language, 'zh')
+  assert.deepEqual(state.workspaces, {})
   assert.equal(state.version, 1)
+})
+
+test('workspace settings are normalized and sessions fall back to them', () => {
+  const state = normalizeState({
+    workspaces: {
+      '/workspace/a': { profileId: 'minimal' },
+      '  ': { profileId: 'all' },
+    },
+  })
+  assert.deepEqual(Object.keys(state.workspaces), ['/workspace/a'])
+  assert.equal(state.workspaces['/workspace/a'].profileId, 'minimal')
+
+  const withoutSession = resolveSessionScope(state, 's1', '/workspace/a')
+  assert.equal(withoutSession.profileId, 'minimal')
+  assert.equal(withoutSession.source, 'workspace')
+  assert.equal(withoutSession.workspaceCwd, '/workspace/a')
+
+  state.sessions.s1 = { profileId: 'coding', overrides: { add: [], remove: [], includeTools: [], excludeTools: [] }, updatedAt: new Date().toISOString() }
+  const withSession = resolveSessionScope(state, 's1', '/workspace/a')
+  assert.equal(withSession.profileId, 'coding')
+  assert.equal(withSession.source, 'session')
 })
 
 test('language defaults to zh and only accepts zh or en', () => {
