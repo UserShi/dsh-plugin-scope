@@ -1,6 +1,6 @@
 # Plugin Scope for DeepSeek Harness
 
-> **v0.1.0 · Gate engine** — global / on-demand / off / per-conversation plugin scopes, with token estimates and integration with **dsh-market** and the native **Plugins** page.
+> **v0.2.0-dev · Gate engine + M4a skill/prompt mapping** — global / on-demand / off / per-conversation plugin scopes, with token estimates and integration with **dsh-market** and the native **Plugins** page.
 > Design: [docs/DESIGN.md](docs/DESIGN.md) · Roadmap: [docs/ROADMAP.md](docs/ROADMAP.md) · Publishing: [docs/GITHUB.md](docs/GITHUB.md)
 
 ## The problem
@@ -18,9 +18,15 @@ It also provides:
 - Scope profiles (All / Minimal / Coding / custom);
 - Per-plugin tool counts and token estimates;
 - Integration with **dsh-market / the native Plugins page**: scope badges and direct global/on-demand/off controls;
-- A mapping drawer: assign tools to a plugin; unmapped plugins stay Global and are never silently hidden.
+- A mapping drawer: assign tools, skills and prompt sections to a plugin; unmapped plugins stay Global and are never silently hidden.
 
 ![Architecture](docs/assets/architecture.png)
+
+## Status
+
+- **v0.1.0**: released on GitHub Release and npm (Gate engine, global toggles, marketplace integration).
+- **main / v0.2.0-dev**: M4a is in place — skill mapping, manual prompt-section mapping, a skill list in the mapping drawer, shadows only for skills that are actually visible, and a dark-mode fix.
+- **M4b / full Preset isolation**: not started yet.
 
 ## Install
 
@@ -34,7 +40,7 @@ It also provides:
 
 Or choose this directory in **Plugins → Add plugin**.
 
-### GitHub release (after publishing)
+### GitHub release (v0.1.0)
 
     dsh plugin --profile desktop add https://github.com/UserShi/dsh-plugin-scope/releases/download/v0.1.0/dsh-plugin-scope-0.1.0.tgz
 
@@ -50,7 +56,7 @@ npm page: https://www.npmjs.com/package/dsh-plugin-scope
 2. Choose **Global / On demand / Off** for each plugin.
 3. Add on-demand plugins to the **Scope profiles** (Coding / Minimal / ...).
 4. Use the **Plugin Scope** chip above the composer to switch the current conversation.
-5. Click **Map tools** on a plugin to assign its tools. Unmapped plugins stay Global: no savings, but no broken conversations.
+5. Click **Map contributions** on a plugin to assign its tools and skills, and optionally its prompt-section names. Unmapped plugins stay Global: no savings, but no broken conversations.
 
 ## How it works
 
@@ -62,8 +68,9 @@ npm page: https://www.npmjs.com/package/dsh-plugin-scope
 
 ## Limitations
 
-- Not a security sandbox: on-demand plugins still run in the Host process; v0.1 only guarantees **tool-schema** token savings.
-- Skill/prompt-section shadows apply only where a mapping exists; unmapped plugins stay Global.
+- Not a security sandbox: on-demand plugins still run in the Host process; v0.1/v0.2-dev still focus on **tool-schema** token savings.
+- Skill/prompt-section shadows apply only where a mapping exists; the skill list comes from the current session scope, and unmapped plugins stay Global.
+- **Full Preset isolation** (M4b) is not implemented yet; on-demand plugins still load their code.
 - No direct edits to **cordis.patch.yml**; all global changes go through **pluginManager**.
 - Session scope selections live in the plugin's own JSON; model-visible changes are logged by DSH.
 - Management plugins (this plugin, dsh-market, core packages) can only stay Global.

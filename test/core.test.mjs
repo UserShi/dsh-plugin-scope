@@ -2,6 +2,7 @@ import assert from 'node:assert/strict'
 import test from 'node:test'
 import {
   collectDeniedTools,
+  collectHiddenSections,
   collectHiddenSkills,
   defaultState,
   deleteProfile,
@@ -13,12 +14,12 @@ import {
   scopeLabel,
 } from '../lib/core.js'
 
-function record(name, scope, tools, skills) {
+function record(name, scope, tools, skills, sections) {
   return {
     name,
     enabled: true,
-    assignment: { scope, profiles: [], contribution: { tools: tools || [], skills: skills || [], sections: [] }, mappedBy: 'manual' },
-    contribution: { tools: tools || [], skills: skills || [], sections: [] },
+    assignment: { scope, profiles: [], contribution: { tools: tools || [], skills: skills || [], sections: sections || [] }, mappedBy: 'manual' },
+    contribution: { tools: tools || [], skills: skills || [], sections: sections || [] },
   }
 }
 
@@ -78,6 +79,15 @@ test('off and unselected on-demand tools are denied', () => {
   const denied = collectDeniedTools([off, onDemand, global], scope, state)
   assert.deepEqual(denied, ['diagram_png', 'diagram_save', 'off_tool'])
   assert.deepEqual(collectHiddenSkills([off, onDemand, global], scope, state), ['diagram-design'])
+})
+
+test('hidden prompt sections are collected for invisible plugins', () => {
+  const state = defaultState()
+  state.settings.defaultProfileId = 'minimal'
+  const onDemand = record('diagram', 'on-demand', [], ['diagram-design'], ['diagram-guidance', 'design-review'])
+  const scope = resolveSessionScope(state, 's1')
+  assert.deepEqual(collectHiddenSections([onDemand], scope, state), ['design-review', 'diagram-guidance'])
+  assert.deepEqual(collectHiddenSkills([onDemand], scope, state), ['diagram-design'])
 })
 
 test('on-demand becomes visible when the profile includes it', () => {

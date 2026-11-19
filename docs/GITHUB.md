@@ -1,7 +1,7 @@
 # GitHub 发布指南
 
 > 目标仓库：`https://github.com/UserShi/dsh-plugin-scope`（已创建，public）  
-> 当前状态：**main、v0.1.0 tag、GitHub Release 与 npm 0.1.0 均已发布**（Release 自带 `dsh-plugin-scope-0.1.0.tgz`）。
+> 当前状态：**稳定版 v0.1.0** 已发布到 GitHub Release 与 npm（Release 自带 `dsh-plugin-scope-0.1.0.tgz`）；**main 为 v0.2.0-dev**（M4a 技能/Prompt 映射，尚未发布）。
 
 ---
 

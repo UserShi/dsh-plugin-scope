@@ -1,6 +1,6 @@
-# v0.1 实现说明
+# v0.1–v0.2 实现说明（含 M4a）
 
-> 对应版本：dsh-plugin-scope 0.1.0（Gate 引擎）  
+> Stable：dsh-plugin-scope 0.1.0（Gate 引擎）；main：0.2.0-dev（M4a 技能/Prompt 映射）  
 > 设计基线：[docs/DESIGN.md](DESIGN.md)  
 > 运行环境：DeepSeek Harness 0.2.2-rc.5 / Desktop profile
 
@@ -15,7 +15,7 @@
 | package.json | dsh.bundle.patch + dsh.client + exports；无运行时依赖 |
 | cordis.patch.yml | 只插入一个 Host row |
 | locale/en.json, locale/zh.json | 插件管理器的标题/描述 |
-| test/core.test.mjs | 12 个纯函数测试 |
+| test/core.test.mjs | 13 个纯函数测试 |
 
 v0.1 是**纯 ESM JavaScript**，没有构建步骤。这样本地 link 安装和 GitHub 源码安装都不需要 pnpm 执行 prepare/build 脚本。TypeScript/tsdown 可以作为后续重构，不是当前运行前提。
 
@@ -35,7 +35,7 @@ v0.1 是**纯 ESM JavaScript**，没有构建步骤。这样本地 link 安装�
 1. 读取 session 的模板（无记录则默认模板；fork 会复制父 session 记录）。
 2. 收集应隐藏的工具名。
 3. 在 agent.ctx.effect 中调用 agent.ctx.tools.restrict({ deny })。
-4. 对已映射的技能注册同名空技能（modelInvocable:false），对已映射的 prompt section 注册空 section。
+4. 对已映射且在当前 scope 实际可见的技能注册同名空技能（modelInvocable:false）；对已映射的 prompt section 注册空 section。未知/不可见技能不会伪造 stub。
 5. 工具名不存在时从 deny 集合剔除，不让 agent 创建失败。
 
 工具变化由 DSH 自动写入 tool-addition/removal，因此会话可回放。
@@ -63,7 +63,7 @@ v0.1 是**纯 ESM JavaScript**，没有构建步骤。这样本地 link 安装�
 - dshmarket / dsh-whale-widget：无模型工具
 
 其余插件：读取 package.json 的 dsh.scope（如果作者声明）；否则 unknown，默认保持 Global。  
-Map tools 抽屉允许手动把当前会话可见工具归到插件下，保存为 mappedBy: manual。
+Map contributions 抽屉允许手动把当前会话可见工具、技能归到插件下，并可填写 prompt section 名称；保存为 mappedBy: manual。
 
 ## 3. HTTP API（实际实现）
 
@@ -73,6 +73,8 @@ Map tools 抽屉允许手动把当前会话可见工具归到插件下，保存�
 |---|---|---|
 | GET | /state?session= | 库存 + 作用域 + 估算 + live sessions |
 | GET | /tools?session= | 当前会话可见工具，用于映射抽屉 |
+| GET | /skills?session= | 当前会话可见技能（含 provider/source），用于映射抽屉 |
+| GET | /gates | 当前 live agent 的 deny 工具、隐藏技能、隐藏 section 诊断 |
 | POST | /plugin | { name, scope, profiles }；全局/按需/关闭 |
 | POST | /session | { sessionId, profileId, overrides } |
 | POST | /default | { profileId } |
@@ -107,14 +109,16 @@ Map tools 抽屉允许手动把当前会话可见工具归到插件下，保存�
 
 已在本机 desktop profile 安装并做运行时验证：
 
-- npm test：12/12 通过。
+- npm test：13/13 通过。
 - node --check lib/core.js lib/state.js lib/index.js lib/client.js：通过。
 - 安装：dsh plugin --profile desktop add link:/Users/haozhanshi/WorkSpace/deepseek-work/plugin-scope 成功；profile 依赖与 bundle 列表包含 dsh-plugin-scope。
 - GET /api/dsh-plugin-scope/state：返回 8 个 profile 插件、2 个 live agent。
 - Gate：把 dsh-ai-diagrams 设为 on-demand、默认模板 minimal 后，两个 live agent 的 gate 都登记了 7 个 diagram_* 工具和 diagram-design 技能；estimate 从 32 tools / 19,590 tokens 降到 25 tools / 18,291 tokens。
 - 全局开关：POST /plugin 把 dsh-ai-diagrams 设为 off 返回 application: applied，enabled 变为 false；设回 on-demand 后 enabled 恢复 true。
 - 客户端 bundle：GET /api/dsh-plugin-scope/client 的 client module graph 包含 dsh-plugin-scope；combo URL 返回 HTTP 200（40 KB）。
-- 当前状态已恢复为默认 all，两个 live agent 的 gate 数为 0，避免影响用户后续对话。
+- M4a：GET /skills 返回 7 个技能；把 session 临时切到 minimal 时 gatedTools=7、gatedSkills=1、gates=1，切回 all 后归零；映射弹窗、技能/section 保存和 /gates 诊断已接入。
+- 深色模式：把错误的 --dsw-alias-bg-elevated / line-subtle 等替换为真实的 --dsw-alias-bg-layer-1/2、border-l2、label-*、button-primary-fill；待用户刷新确认视觉效果。
+- 当前状态已恢复为默认 all，live agent 的 gate 数为 0，避免影响用户后续对话。
 - GitHub：main、v0.1.0 tag 与 Release 已发布到 https://github.com/UserShi/dsh-plugin-scope；Release 自带 dsh-plugin-scope-0.1.0.tgz。
 - npm：dsh-plugin-scope@0.1.0 已发布到 https://www.npmjs.com/package/dsh-plugin-scope（npm 的 staged publishing 留下一个 0.0.0-stage 占位版本；latest 是 0.1.0）。
 

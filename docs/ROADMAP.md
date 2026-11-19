@@ -1,7 +1,8 @@
 # Roadmap
 
 > 关联设计：[docs/DESIGN.md](DESIGN.md)  
-> 版本目标：v0.1 = Gate Engine + 全局开关 + 市场展示；v0.2 = 技能/prompt 门控 + Preset 隔离。
+> 版本目标：v0.1 = Gate Engine + 全局开关 + 市场展示；v0.2 = 技能/prompt 门控 + Preset 隔离。  
+> 当前：**v0.1.0 已发布**；main 为 **v0.2.0-dev**，M4a 已完成，M4b 未开始。
 
 ---
 
@@ -126,20 +127,26 @@
 
 **目标**：从「省工具 token」升级到「省技能/prompt token」和「完全不加载」。
 
-**M4a 技能/prompt 门控**
+**M4a 技能/prompt 门控（已完成，v0.2.0-dev）**
 
-- 技能 stub 遮蔽（仅 manifest/runtime 技能）。
-- prompt section 空文本遮蔽（仅 manifest 声明）。
-- 冲突检测：同名本地技能、受保护 section。
-- 映射过期检测。
+- [x] 技能 stub 遮蔽：只对当前 scope 实际可见的技能做遮蔽，避免伪造未安装技能。
+- [x] `GET /api/dsh-plugin-scope/skills`：按会话 scope 返回技能列表。
+- [x] 映射弹窗新增 **Skills** 勾选和 **Prompt sections** 手动输入。
+- [x] prompt section 空文本遮蔽：与工具/技能共用 contribution。
+- [x] 映射保存后重新应用 gate；技能列表 5 秒缓存。
+- [x] 深色模式修复：改用 `--dsw-alias-bg-layer-1`、`--dsw-alias-border-l2`、`--dsw-alias-label-*` 等真实 token。
+- [x] 会话对象新增 `gatedSkills` / `gatedSections` 计数；`GET /gates` 诊断。
+- [ ] 冲突检测：同名本地技能、受保护 section。
+- [ ] 映射过期检测。
+- [ ] 技能列表的 provider/source 过滤 UI（当前全部可见技能都可映射）。
 
-**M4b Preset Engine**
+**M4b Preset Engine（未开始）**
 
-- `presetSafe` 白名单。
-- 从基础 preset / bundle patch 解析 rows。
-- `agentPresets.register` / `select`；scope preset 的启动重建。
-- 空白会话选择；已开始会话锁定提示。
-- 失败/泄漏诊断；回退到 Gate。
+- [ ] `presetSafe` 白名单。
+- [ ] 从基础 preset / bundle patch 解析 rows。
+- [ ] `agentPresets.register` / `select`；scope preset 的启动重建。
+- [ ] 空白会话选择；已开始会话锁定提示。
+- [ ] 失败/泄漏诊断；回退到 Gate。
 
 **验收**
 
