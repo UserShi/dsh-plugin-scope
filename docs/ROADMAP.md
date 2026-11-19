@@ -156,6 +156,8 @@
 - [x] 对话插件面板分类折叠；说明改为 hover title，减少纵向占用。
 - [x] 费用估算：settings.pricePerMillion（默认 ¥2/1M），在对话、插件列表、工作区、插件详情追加费用。
 - [x] 插件作用域图标重新设计（透明渐变 + 分层 + 状态点）。
+- [x] 分组折叠箭头改为可读的 SVG chevron，字号与分组标题协调。
+- [x] 插件标题 hover 自定义 tooltip；已知插件说明中英文跟随切换，未知插件回退 manifest 描述。
 
 **M4b Preset Engine（未开始）**
 

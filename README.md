@@ -25,7 +25,7 @@ It also provides:
 - Usage stats: the conversation plugin panel shows calls, estimated tool tokens and model tokens; the plugin list, workspaces and marketplace scope list show cumulative totals.
 - Tag groups: tag plugins, give each tag keywords, and optionally auto-enable matching but currently disabled on-demand plugins when a user message contains a keyword (global switch + per-group switch).
 - Cost estimates: convert tokens to money at a configurable ¥/1M-token price in the conversation panel, plugin list, workspaces and plugin detail.
-- The conversation panel supports collapsible groups and moves plugin descriptions to hover titles.
+- The conversation panel supports collapsible groups and moves plugin descriptions to hover tooltips (known plugins follow the Chinese/English switch).
 
 ![Architecture](docs/assets/architecture.png)
 
@@ -33,7 +33,7 @@ It also provides:
 
 - **v0.1.0**: released on GitHub Release and npm (Gate engine, global toggles, marketplace integration).
 - **main / v0.2.0-dev**: M4a is in place — skill mapping, manual prompt-section mapping, a skill list in the mapping drawer, shadows only for skills that are actually visible, a Chinese/English switch (Chinese default), and a dark-mode fix.
-- **M4c (current)**: conversation/workspace/plugin cumulative usage and cost estimates, plugin tag groups, keyword auto-match, collapsible groups and a redesigned icon.
+- **M4c (current)**: conversation/workspace/plugin cumulative usage and cost estimates, plugin tag groups, keyword auto-match, collapsible groups, bilingual hover descriptions and a redesigned icon.
 - **M4b / full Preset isolation**: not started yet.
 
 ## Install
