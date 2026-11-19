@@ -38,9 +38,11 @@ DSH 的插件一装就是全局：每个插件的工具 schema 都会进入每�
 
     dsh plugin --profile desktop add https://github.com/UserShi/dsh-plugin-scope/releases/download/v0.1.0/dsh-plugin-scope-0.1.0.tgz
 
-### npm（发布后）
+### npm（已发布）
 
     dsh plugin --profile desktop add dsh-plugin-scope
+
+npm 页面：https://www.npmjs.com/package/dsh-plugin-scope
 
 ## 使用
 

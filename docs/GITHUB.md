@@ -1,7 +1,7 @@
 # GitHub 发布指南
 
 > 目标仓库：`https://github.com/UserShi/dsh-plugin-scope`（已创建，public）  
-> 当前状态：**main、v0.1.0 tag 与 GitHub Release 已发布**（Release 自带 `dsh-plugin-scope-0.1.0.tgz`）。npm 发布待 `npm login`。
+> 当前状态：**main、v0.1.0 tag、GitHub Release 与 npm 0.1.0 均已发布**（Release 自带 `dsh-plugin-scope-0.1.0.tgz`）。
 
 ---
 
@@ -16,7 +16,7 @@
 | SSH 到 GitHub | ✅ `Hi UserShi! You've successfully authenticated` |
 | 目标仓库 | ✅ public，main 与 v0.1.0 已推送 |
 | GitHub Release | ✅ https://github.com/UserShi/dsh-plugin-scope/releases/tag/v0.1.0 |
-| npm | 待 `npm login`（包名可用） |
+| npm | ✅ https://www.npmjs.com/package/dsh-plugin-scope (0.1.0) |
 
 SSH 授权、代码推送与 GitHub Release 已完成。剩余的是（可选的）npm 发布。
 
@@ -187,10 +187,17 @@ dsh plugin --profile desktop add github:UserShi/dsh-plugin-scope
 
 ### 8.3 npm
 
+0.1.0 已发布：https://www.npmjs.com/package/dsh-plugin-scope
+
 ```bash
-npm publish --access public
 dsh plugin --profile desktop add dsh-plugin-scope
 ```
+
+发布说明：
+
+- npm 对本次发布使用了 staged publishing：先创建了 `0.0.0-stage` 占位版本，0.1.0 审批后成为 `latest`；占位版本仍留在 versions 列表里，不影响安装。
+- 发布需要 **Granular Access Token + Bypass 2FA**，或 Classic Automation token；普通 token 会返回 403。
+- GitHub Actions 的 `Publish npm` 工作流需要在仓库 secret 中配置 `NPM_TOKEN`；如果之后还要用它发布，请确认 secret 是带 Bypass 2FA 的 token。
 
 ### 8.4 本地开发
 

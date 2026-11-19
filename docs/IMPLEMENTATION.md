@@ -115,7 +115,8 @@ Map tools 抽屉允许手动把当前会话可见工具归到插件下，保存�
 - 全局开关：POST /plugin 把 dsh-ai-diagrams 设为 off 返回 application: applied，enabled 变为 false；设回 on-demand 后 enabled 恢复 true。
 - 客户端 bundle：GET /api/dsh-plugin-scope/client 的 client module graph 包含 dsh-plugin-scope；combo URL 返回 HTTP 200（40 KB）。
 - 当前状态已恢复为默认 all，两个 live agent 的 gate 数为 0，避免影响用户后续对话。
-- GitHub：main、v0.1.0 tag 与 Release 已发布到 https://github.com/UserShi/dsh-plugin-scope；Release 自带 dsh-plugin-scope-0.1.0.tgz。npm 发布待 npm login。
+- GitHub：main、v0.1.0 tag 与 Release 已发布到 https://github.com/UserShi/dsh-plugin-scope；Release 自带 dsh-plugin-scope-0.1.0.tgz。
+- npm：dsh-plugin-scope@0.1.0 已发布到 https://www.npmjs.com/package/dsh-plugin-scope（npm 的 staged publishing 留下一个 0.0.0-stage 占位版本；latest 是 0.1.0）。
 
 尚未完成的验证（需要浏览器控制或用户确认）：
 
