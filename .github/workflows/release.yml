@@ -21,8 +21,3 @@ jobs:
         with:
           files: '*.tgz'
           generate_release_notes: true
-      - name: Publish to npm
-        if: ${{ secrets.NPM_TOKEN != '' }}
-        run: npm publish --access public
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
