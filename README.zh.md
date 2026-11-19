@@ -20,6 +20,7 @@ DSH 的插件一装就是全局：每个插件的工具 schema 都会进入每�
 - 与 **dsh-market / 原生 Plugins 页** 结合：插件详情显示作用域徽章，并可直接设置全局/按需/关闭；
 - 映射抽屉：把工具、技能和 prompt section 归到插件下；未映射插件保持全局、不会被静默隐藏。
 - 中英文界面切换，默认中文；选择保存在 profile 设置里。
+- 对话框右上角插件选择器：显示全局插件、本次对话已启用、可选按需插件和已关闭插件，支持按名称/说明模糊搜索，并在对话内一键启停按需插件。
 
 ![总体架构](docs/assets/architecture.png)
 
@@ -56,7 +57,7 @@ npm 页面：https://www.npmjs.com/package/dsh-plugin-scope
 1. 打开 **Settings → Plugin Scope**，或 **Plugins → Scopes**。
 2. 每个插件选 **全局 / 按需 / 关闭**。
 3. 在 **作用域模板** 里把按需插件加入 Coding / Minimal 等模板。
-4. 在对话底部输入框上方用 **Plugin Scope** chip 切换当前对话的模板。
+4. 在对话底部输入框上方用 **Plugin Scope** chip 切换当前对话的模板；也可以点对话框右上角的 **插件** 按钮，搜索并勾选本次对话要启用的按需插件。
 5. 点插件的 **Map contributions**，勾选该插件的工具和技能，并可按需填写 prompt section 名称；未映射的插件保持全局，不节省但不会破坏会话。
 
 ## 工作方式

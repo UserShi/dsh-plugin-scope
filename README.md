@@ -20,6 +20,7 @@ It also provides:
 - Integration with **dsh-market / the native Plugins page**: scope badges and direct global/on-demand/off controls;
 - A mapping drawer: assign tools, skills and prompt sections to a plugin; unmapped plugins stay Global and are never silently hidden.
 - Chinese/English UI switch, Chinese by default; the choice is stored in the profile settings.
+- A top-right conversation plugin picker: global plugins, enabled plugins, available on-demand plugins and off plugins, with fuzzy search over names and descriptions and one-click per-conversation toggles.
 
 ![Architecture](docs/assets/architecture.png)
 
@@ -56,7 +57,7 @@ npm page: https://www.npmjs.com/package/dsh-plugin-scope
 1. Open **Settings → Plugin Scope**, or **Plugins → Scopes**.
 2. Choose **Global / On demand / Off** for each plugin.
 3. Add on-demand plugins to the **Scope profiles** (Coding / Minimal / ...).
-4. Use the **Plugin Scope** chip above the composer to switch the current conversation.
+4. Use the **Plugin Scope** chip above the composer to switch the current conversation, or click **Plugins** at the top-right of the conversation to search and toggle on-demand plugins for this conversation.
 5. Click **Map contributions** on a plugin to assign its tools and skills, and optionally its prompt-section names. Unmapped plugins stay Global: no savings, but no broken conversations.
 
 ## How it works

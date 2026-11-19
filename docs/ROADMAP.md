@@ -133,6 +133,7 @@
 - [x] `GET /api/dsh-plugin-scope/skills`：按会话 scope 返回技能列表。
 - [x] 映射弹窗新增 **Skills** 勾选和 **Prompt sections** 手动输入。
 - [x] 中英文切换（默认中文），内置模板名/描述/计数本地化，选择持久化到 settings.language。
+- [x] 对话框右上角插件选择器：全局/已启用/可选/关闭分组，名称+说明模糊搜索，按需插件在对话内启停。
 - [x] prompt section 空文本遮蔽：与工具/技能共用 contribution。
 - [x] 映射保存后重新应用 gate；技能列表 5 秒缓存。
 - [x] 深色模式修复：改用 `--dsw-alias-bg-layer-1`、`--dsw-alias-border-l2`、`--dsw-alias-label-*` 等真实 token。

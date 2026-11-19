@@ -11,7 +11,7 @@
 | lib/core.js | 纯函数：状态归一化、作用域解析、工具/技能/section 收集、token 估算、模板 CRUD |
 | lib/state.js | profile 级 JSON 状态：原子写、备份、串行化、损坏恢复 |
 | lib/index.js | Host 插件：inventory、Gate、pluginManager 全局开关、HTTP API、agent/created |
-| lib/client.js | 浏览器半：Settings 页、Plugins/Settings tab、插件详情徽章/区块、对话 chip、映射抽屉 |
+| lib/client.js | 浏览器半：Settings 页、Plugins/Settings tab、插件详情徽章/区块、对话 chip、右上角对话插件选择器、映射抽屉 |
 | package.json | dsh.bundle.patch + dsh.client + exports；无运行时依赖 |
 | cordis.patch.yml | 只插入一个 Host row |
 | locale/en.json, locale/zh.json | 插件管理器的标题/描述 |
@@ -78,6 +78,7 @@ Map contributions 抽屉允许手动把当前会话可见工具、技能归到�
 | GET | /gates | 当前 live agent 的 deny 工具、隐藏技能、隐藏 section 诊断 |
 | POST | /plugin | { name, scope, profiles }；全局/按需/关闭 |
 | POST | /session | { sessionId, profileId, overrides } |
+| POST | /session/plugin | { sessionId, name, enabled }；只对 on-demand 插件启停本次对话 |
 | POST | /default | { profileId } |
 | POST | /profile | { action: create/update/delete, profile/id } |
 | POST | /mapping | { name, contribution } |
@@ -119,6 +120,7 @@ Map contributions 抽屉允许手动把当前会话可见工具、技能归到�
 - 客户端 bundle：GET /api/dsh-plugin-scope/client 的 client module graph 包含 dsh-plugin-scope；combo URL 返回 HTTP 200（40 KB）。
 - M4a：GET /skills 返回 7 个技能；把 session 临时切到 minimal 时 gatedTools=7、gatedSkills=1、gates=1，切回 all 后归零；映射弹窗、技能/section 保存和 /gates 诊断已接入。
 - 语言：POST /settings {language:'en'} 返回 settings.language='en'，切回 zh 成功；内置模板名/描述/计数在客户端本地化，默认 zh。
+- 对话插件选择器：POST /session/plugin 关闭 dsh-ai-diagrams 后 /state?session 的 visible=false、overrides.remove=['dsh-ai-diagrams']、gatedTools=7；重新开启后 visible=true、gatedTools=0。客户端 bundle 包含 ConversationPlugins 与 pscope-popover。
 - 深色模式：把错误的 --dsw-alias-bg-elevated / line-subtle 等替换为真实的 --dsw-alias-bg-layer-1/2、border-l2、label-*、button-primary-fill；待用户刷新确认视觉效果。
 - 当前状态已恢复为默认 all，live agent 的 gate 数为 0，避免影响用户后续对话。
 - GitHub：main、v0.1.0 tag 与 Release 已发布到 https://github.com/UserShi/dsh-plugin-scope；Release 自带 dsh-plugin-scope-0.1.0.tgz。
