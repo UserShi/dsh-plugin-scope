@@ -21,7 +21,7 @@ It also provides:
 - A mapping drawer: assign tools, skills and prompt sections to a plugin; unmapped plugins stay Global and are never silently hidden.
 - Chinese/English UI switch, Chinese by default; the choice is stored in the profile settings.
 - A top-right conversation plugin picker: global plugins, enabled plugins, available on-demand plugins and off plugins, with fuzzy search over names and descriptions and one-click per-conversation toggles.
-- Workspace scopes: each working directory can select a scope profile; conversations without their own override inherit the workspace, while an explicit conversation setting wins.
+- Workspace scopes: each working directory can select a scope profile and its own plugin list; conversations without their own override inherit the workspace, while an explicit conversation setting wins.
 
 ![Architecture](docs/assets/architecture.png)
 

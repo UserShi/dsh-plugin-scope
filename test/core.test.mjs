@@ -53,6 +53,19 @@ test('workspace settings are normalized and sessions fall back to them', () => {
   assert.equal(withSession.source, 'session')
 })
 
+test('workspace plugin overrides apply when a session has no own record', () => {
+  const state = defaultState()
+  state.workspaces['/workspace/a'] = {
+    profileId: 'all',
+    overrides: { add: [], remove: ['diagram'], includeTools: [], excludeTools: [] },
+    updatedAt: new Date().toISOString(),
+  }
+  const diagram = record('diagram', 'on-demand', ['diagram_save'])
+  const scope = resolveSessionScope(state, 's1', '/workspace/a')
+  assert.equal(scope.source, 'workspace')
+  assert.deepEqual(collectDeniedTools([diagram], scope, state), ['diagram_save'])
+})
+
 test('language defaults to zh and only accepts zh or en', () => {
   assert.equal(defaultState().settings.language, 'zh')
   assert.equal(normalizeState({ settings: { language: 'en' } }).settings.language, 'en')
