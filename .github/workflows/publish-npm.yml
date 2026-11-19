@@ -17,6 +17,29 @@ jobs:
           registry-url: 'https://registry.npmjs.org'
       - run: npm test
       - run: npm pack
-      - run: npm publish --access public
+      - name: Check npm identity
+        run: |
+          echo "## npm identity" >> "$GITHUB_STEP_SUMMARY"
+          echo "registry: $(npm config get registry)" >> "$GITHUB_STEP_SUMMARY"
+          npm whoami >> "$GITHUB_STEP_SUMMARY" 2>&1 || true
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+      - name: Publish to npm
+        run: |
+          set +e
+          npm publish --access public 2>&1 | tee npm-publish.log
+          status=${PIPESTATUS[0]}
+          if [ "$status" -ne 0 ]; then
+            echo "## npm publish failed" >> "$GITHUB_STEP_SUMMARY"
+            grep -E 'npm (error|ERR!)' npm-publish.log | tail -30 >> "$GITHUB_STEP_SUMMARY" || true
+          fi
+          exit "$status"
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+      - name: Upload npm publish log
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: npm-publish-log
+          path: npm-publish.log
+          if-no-files-found: ignore
