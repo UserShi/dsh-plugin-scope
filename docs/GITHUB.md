@@ -1,7 +1,7 @@
 # GitHub 发布指南
 
 > 目标仓库：`https://github.com/UserShi/dsh-plugin-scope`（已创建，public）  
-> 当前状态：**main 与 v0.1.0 tag 已推送**（SSH 授权完成）。GitHub Release 可通过网页创建并附上 `dsh-plugin-scope-0.1.0.tgz`。
+> 当前状态：**main、v0.1.0 tag 与 GitHub Release 已发布**（Release 自带 `dsh-plugin-scope-0.1.0.tgz`）。npm 发布待 `npm login`。
 
 ---
 
@@ -9,14 +9,16 @@
 
 | 项 | 结果 |
 |---|---|
-| `gh` CLI | 未安装 |
-| Git 用户名/邮箱 | `UserShi` / `247611737@qq.com` |
-| HTTPS 凭据 | 无（`git credential fill` 失败） |
-| SSH key | `~/.ssh/id_rsa` 存在 |
-| SSH 到 GitHub | `Permission denied (publickey)`，公钥未添加到 GitHub |
-| 目标仓库 | 404，尚未创建 |
+| `gh` CLI | 未安装（Release 用网页创建） |
+| Git 用户名/邮箱 | `shihaozhan` / `247611737@qq.com` |
+| HTTPS 凭据 | 未使用 |
+| SSH key | `~/.ssh/id_rsa`，已添加到 GitHub |
+| SSH 到 GitHub | ✅ `Hi UserShi! You've successfully authenticated` |
+| 目标仓库 | ✅ public，main 与 v0.1.0 已推送 |
+| GitHub Release | ✅ https://github.com/UserShi/dsh-plugin-scope/releases/tag/v0.1.0 |
+| npm | 待 `npm login`（包名可用） |
 
-因此：**推送需要先完成一次授权**。二选一即可。
+SSH 授权与代码推送已完成。剩余的是 Release 附件与（可选的）npm 发布。
 
 ---
 
@@ -98,7 +100,7 @@
 
 ## 6. CI 工作流
 
-`.github/workflows/ci.yml`：
+当前 CI 直接使用 Node 内置测试，不需要 pnpm 安装或构建：
 
 ```yaml
 name: CI
@@ -111,31 +113,26 @@ jobs:
   test:
     runs-on: ubuntu-latest
     strategy:
+      fail-fast: false
       matrix:
-        node: [22, 24]
+        node: [20, 22, 24]
     steps:
       - uses: actions/checkout@v4
-      - uses: pnpm/action-setup@v4
-        with:
-          version: 10
       - uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node }}
-          cache: pnpm
-      - run: pnpm install --frozen-lockfile
-      - run: pnpm typecheck
-      - run: pnpm test
-      - run: pnpm build
+      - run: npm test
+      - run: npm run check
       - run: npm pack --dry-run
 ```
 
-> 如果 `lib/` 提交到仓库，再加一步「构建后 git diff --exit-code lib」确保产物与源码一致。
+> `lib/` 是源文件（不是构建产物），无需做「构建后 diff」校验。
 
 ---
 
 ## 7. Release 工作流
 
-`.github/workflows/release.yml`：
+`.github/workflows/release.yml` 在 tag `v*` 时构建 tarball 并创建 GitHub Release：
 
 ```yaml
 name: Release
@@ -151,26 +148,25 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: pnpm/action-setup@v4
-        with: { version: 10 }
       - uses: actions/setup-node@v4
         with:
           node-version: 24
-          cache: pnpm
-      - run: pnpm install --frozen-lockfile
-      - run: pnpm build
+      - run: npm test
       - run: npm pack
       - uses: softprops/action-gh-release@v2
         with:
           files: '*.tgz'
-      # 可选 npm
-      # - run: npm publish --access public
-      #   env:
-      #     NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+          generate_release_notes: true
+      - name: Publish to npm
+        if: ${{ secrets.NPM_TOKEN != '' }}
+        run: npm publish --access public
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 ```
 
----
+> 当前 tag `v0.1.0` 已经推送，但 Release 尚未创建；可以直接在网页创建并拖入 `dsh-plugin-scope-0.1.0.tgz`，或配置 `NPM_TOKEN` 后让 workflow 处理。
 
+---
 ## 8. 安装方式（发布后）
 
 ### 8.1 GitHub Release tarball（推荐，最稳）
