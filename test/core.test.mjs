@@ -9,6 +9,7 @@ import {
   estimateTokens,
   normalizeScope,
   normalizeState,
+  matchTags,
   resolveSessionScope,
   resolveVisibility,
   scopeLabel,
@@ -29,6 +30,9 @@ test('default state contains the three built-in profiles', () => {
   assert.equal(state.settings.defaultProfileId, 'all')
   assert.equal(state.settings.language, 'zh')
   assert.deepEqual(state.workspaces, {})
+  assert.deepEqual(state.pluginTags, {})
+  assert.deepEqual(state.tagRules, {})
+  assert.equal(state.settings.autoMatchTags, false)
   assert.equal(state.version, 1)
 })
 
@@ -64,6 +68,19 @@ test('workspace plugin overrides apply when a session has no own record', () => 
   const scope = resolveSessionScope(state, 's1', '/workspace/a')
   assert.equal(scope.source, 'workspace')
   assert.deepEqual(collectDeniedTools([diagram], scope, state), ['diagram_save'])
+})
+
+test('tag rules normalize and match keywords case-insensitively', () => {
+  const state = normalizeState({
+    pluginTags: { 'dsh-ai-diagrams': ['图', 'diagram', '图'] },
+    tagRules: {
+      '图': { keywords: ['画图', 'Diagram'], enabled: true },
+      'off': { keywords: ['x'], enabled: false },
+    },
+  })
+  assert.deepEqual(state.pluginTags['dsh-ai-diagrams'], ['图', 'diagram'])
+  assert.deepEqual(matchTags('帮我画一个 DIAGRAM', state.tagRules), ['图'])
+  assert.deepEqual(matchTags('hello', state.tagRules), [])
 })
 
 test('language defaults to zh and only accepts zh or en', () => {

@@ -10,12 +10,14 @@
 |---|---|
 | lib/core.js | 纯函数：状态归一化、作用域解析、工具/技能/section 收集、token 估算、模板 CRUD |
 | lib/state.js | profile 级 JSON 状态：原子写、备份、串行化、损坏恢复 |
+| lib/stats.js | 纯函数：session log 折叠调用/工具 token/模型 usage、按插件/工作区归集 |
 | lib/index.js | Host 插件：inventory、Gate、pluginManager 全局开关、HTTP API、agent/created |
 | lib/client.js | 浏览器半：Settings 页、Plugins/Settings tab、插件详情徽章/区块、对话 chip、右上角对话插件选择器、映射抽屉 |
 | package.json | dsh.bundle.patch + dsh.client + exports；无运行时依赖 |
 | cordis.patch.yml | 只插入一个 Host row |
 | locale/en.json, locale/zh.json | 插件管理器的标题/描述 |
 | test/core.test.mjs | 16 个纯函数测试 |
+| test/stats.test.mjs | 4 个用量折叠/归集测试 |
 
 v0.1 是**纯 ESM JavaScript**，没有构建步骤。这样本地 link 安装和 GitHub 源码安装都不需要 pnpm 执行 prepare/build 脚本。TypeScript/tsdown 可以作为后续重构，不是当前运行前提。
 
@@ -55,6 +57,14 @@ v0.1 是**纯 ESM JavaScript**，没有构建步骤。这样本地 link 安装�
 优先用 agentPresets.acquireScope(presetId) 拿到当前 preset 的 scope key，再调用 ctx.tools.schemas(scopeKey)。  
 非 live 会话回落到全局 schemas。估算值是 JSON 长度 / 4，只用于相对比较。
 
+### 2.4.1 用量
+
+- 调用次数：`tool/call` + `tool/ptc-dispatch`（PTC 嵌套工具按真实工具名计数）。
+- 工具 tokens：工具参数 + 模型可见结果的 JSON 长度 / 4，属于估算。
+- 模型 tokens：`assistant/message.usage.totalTokens`（缺失时 input+output+cache）。
+- 按插件归集使用 contribution.tools；未映射工具进入 unattributed，不显示在插件行。
+- 会话统计来自 sessionQuery.readSession（live-preferred）；全部/工作区统计扫描最近 200 个会话，缓存 20 秒。
+
 ### 2.5 映射
 
 内置映射覆盖：
@@ -83,6 +93,10 @@ Map contributions 抽屉允许手动把当前会话可见工具、技能归到�
 | POST | /session/reset | { sessionId }；删除会话覆盖，回退到工作区/默认 |
 | POST | /workspace | { cwd, profileId, overrides? }；设置工作区模板 |
 | POST | /workspace/delete | { cwd }；清除工作区配置 |
+| GET | /stats?session= | 当前会话 / 插件 / 工作区 / 全部累计用量 |
+| POST | /tags | { name, tags }；插件标签 |
+| POST | /tag-rule | { tag, keywords, enabled }；标签组关键词/自动开关 |
+| POST | /auto-match | { sessionId, text }；手动触发关键词匹配（诊断） |
 | POST | /default | { profileId } |
 | POST | /profile | { action: create/update/delete, profile/id } |
 | POST | /mapping | { name, contribution } |
@@ -115,7 +129,7 @@ Map contributions 抽屉允许手动把当前会话可见工具、技能归到�
 
 已在本机 desktop profile 安装并做运行时验证：
 
-- npm test：16/16 通过。
+- npm test：21/21 通过。
 - node --check lib/core.js lib/state.js lib/index.js lib/client.js：通过。
 - 安装：dsh plugin --profile desktop add link:/Users/haozhanshi/WorkSpace/deepseek-work/plugin-scope 成功；profile 依赖与 bundle 列表包含 dsh-plugin-scope。
 - GET /api/dsh-plugin-scope/state：返回 8 个 profile 插件、2 个 live agent。
@@ -127,6 +141,8 @@ Map contributions 抽屉允许手动把当前会话可见工具、技能归到�
 - 对话插件选择器：POST /session/plugin 关闭 dsh-ai-diagrams 后 /state?session 的 visible=false、overrides.remove=['dsh-ai-diagrams']、gatedTools=7；重新开启后 visible=true、gatedTools=0。客户端 bundle 包含 ConversationPlugins 与 pscope-popover。
 - 工作区：给当前 cwd 设置 minimal 后 /session/reset，source=workspace、profile=minimal、diagrams=false、gatedTools=7；清除工作区后 source=default、profile=all、gatedTools=0。
 - 工作区插件列表：/workspace 传 overrides.remove=['dsh-ai-diagrams'] 后 source=workspace、diagrams=false、gatedTools=7；删除工作区后恢复 default/all。客户端包含 WorkspacePluginModal 与 pluginSettings。
+- 用量：/stats 扫描 3 个会话，total calls=1591、tool tokens≈1.33M、model usage total≈282M；session 当前 1439 calls、plugins 中 dsh-ai-diagrams=4 calls/4102 tokens、browser-skill=3 calls/223 tokens；workspaces 按 cwd 聚合成功。
+- 标签/自动匹配：给 dsh-ai-diagrams 打 diagram 标签、规则关键词（画图/diagram）、开启 autoMatchTags；session minimal 时 diagrams=false/gatedTools=7；POST /auto-match text=帮我画图 后 diagrams=true、overrides.add=['dsh-ai-diagrams']、gatedTools=0；清理后恢复。
 - 深色模式：把错误的 --dsw-alias-bg-elevated / line-subtle 等替换为真实的 --dsw-alias-bg-layer-1/2、border-l2、label-*、button-primary-fill；待用户刷新确认视觉效果。
 - 当前状态已恢复为默认 all，live agent 的 gate 数为 0，避免影响用户后续对话。
 - GitHub：main、v0.1.0 tag 与 Release 已发布到 https://github.com/UserShi/dsh-plugin-scope；Release 自带 dsh-plugin-scope-0.1.0.tgz。

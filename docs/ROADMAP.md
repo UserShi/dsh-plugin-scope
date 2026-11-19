@@ -2,7 +2,7 @@
 
 > 关联设计：[docs/DESIGN.md](DESIGN.md)  
 > 版本目标：v0.1 = Gate Engine + 全局开关 + 市场展示；v0.2 = 技能/prompt 门控 + Preset 隔离。  
-> 当前：**v0.1.0 已发布**；main 为 **v0.2.0-dev**，M4a 已完成，M4b 未开始。
+> 当前：**v0.1.0 已发布**；main 为 **v0.2.0-dev**，M4a/M4c 已完成，M4b 未开始。
 
 ---
 
@@ -142,6 +142,17 @@
 - [ ] 冲突检测：同名本地技能、受保护 section。
 - [ ] 映射过期检测。
 - [ ] 技能列表的 provider/source 过滤 UI（当前全部可见技能都可映射）。
+
+**M4c 用量统计 + 标签组（已完成，v0.2.0-dev）**
+
+- [x] `lib/stats.js`：从 session log 折叠调用次数、工具 token 估算、模型 usage；支持 `tool/call`、`tool/result`、`tool/ptc-dispatch`。
+- [x] `GET /stats?session=`：当前会话、按插件、按工作区、全部会话累计。
+- [x] 对话右上角插件面板显示本次调用/工具 tokens/模型 tokens；插件行显示单插件用量。
+- [x] Scopes 插件列表增加调用/Token 列；工作区行显示累计。
+- [x] 插件自定义标签；标签组界面按组配置关键词和自动开关。
+- [x] `agent/pre-step` 关键词匹配：自动启用未启用的按需标签组插件，复用 session overrides 和 Gate。
+- [x] 全局 `settings.autoMatchTags` 开关 + 每组自动开关。
+- [x] 中英文文案、测试和 API 文档。
 
 **M4b Preset Engine（未开始）**
 
