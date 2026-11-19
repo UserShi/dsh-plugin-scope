@@ -302,6 +302,8 @@ DSH 的硬规则：**模型看到的内容必须能从 session log 重建**。
 |---|---|---|
 | `PluginScopeService` | 状态、库存、解析、HTTP API、事件 | 不直接改 YAML |
 | `InventoryAdapter` | 把 bundle/row/工具/技能转成统一记录 | 不安装/卸载 |
+
+> Inventory 需要同时读 `listBundles()`（bundle 是否 selected、行清单、overrides）和 `listPlugins()`（运行时 entry、`enabled`、`readOnlyReason`）。一个 bundle 可能 selected，但其中某行被市场 patch 禁用；UI 要能区分“bundle 关闭”和“row 被 override 关闭”。
 | `StateStore` | 原子读写 JSON、迁移、备份 | 不写 session log |
 | `ContributionMap` | 插件 → 工具/技能/section/命令 | 不猜测着隐藏 |
 | `GateEngine` | 把有效作用域落到 `agent.ctx` | 不重挂载插件 |
