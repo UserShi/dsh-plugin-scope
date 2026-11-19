@@ -24,6 +24,8 @@ It also provides:
 - Workspace scopes: each working directory can select a scope profile and its own plugin list; conversations without their own override inherit the workspace, while an explicit conversation setting wins.
 - Usage stats: the conversation plugin panel shows calls, estimated tool tokens and model tokens; the plugin list, workspaces and marketplace scope list show cumulative totals.
 - Tag groups: tag plugins, give each tag keywords, and optionally auto-enable matching but currently disabled on-demand plugins when a user message contains a keyword (global switch + per-group switch).
+- Cost estimates: convert tokens to money at a configurable ¥/1M-token price in the conversation panel, plugin list, workspaces and plugin detail.
+- The conversation panel supports collapsible groups and moves plugin descriptions to hover titles.
 
 ![Architecture](docs/assets/architecture.png)
 
@@ -31,7 +33,7 @@ It also provides:
 
 - **v0.1.0**: released on GitHub Release and npm (Gate engine, global toggles, marketplace integration).
 - **main / v0.2.0-dev**: M4a is in place — skill mapping, manual prompt-section mapping, a skill list in the mapping drawer, shadows only for skills that are actually visible, a Chinese/English switch (Chinese default), and a dark-mode fix.
-- **M4c (current)**: conversation/workspace/plugin cumulative usage stats, plugin tag groups, and a keyword auto-match switch.
+- **M4c (current)**: conversation/workspace/plugin cumulative usage and cost estimates, plugin tag groups, keyword auto-match, collapsible groups and a redesigned icon.
 - **M4b / full Preset isolation**: not started yet.
 
 ## Install
@@ -64,7 +66,8 @@ npm page: https://www.npmjs.com/package/dsh-plugin-scope
 4. Use the **Plugin Scope** chip above the composer to switch the current conversation, or click **Plugins** at the top-right of the conversation to search and toggle on-demand plugins for this conversation.
 5. Click **Map contributions** on a plugin to assign its tools and skills, and optionally its prompt-section names. Unmapped plugins stay Global: no savings, but no broken conversations.
 6. Click **Edit tags** on a plugin to add tags; fill keywords and enable a group under **Tag groups**; turn on the auto-match switch under **Configuration**.
-7. The top-right plugin panel, the **plugin list** and **Workspaces** rows show calls/tokens.
+7. The top-right plugin panel, the **plugin list** and **Workspaces** rows show calls/tokens/cost.
+8. Adjust **Token price (¥/1M)** under **Configuration**; costs are estimates, not provider billing.
 
 ## How it works
 
@@ -80,6 +83,7 @@ npm page: https://www.npmjs.com/package/dsh-plugin-scope
 - Skill/prompt-section shadows apply only where a mapping exists; the skill list comes from the current session scope, and unmapped plugins stay Global.
 - **Full Preset isolation** (M4b) is not implemented yet; on-demand plugins still load their code.
 - Tool tokens are JSON-length estimates of arguments/results; model tokens are provider-reported (including cacheRead). Total/workspace scans cover up to the latest 200 sessions with a 20-second cache.
+- Cost = tokens / 1,000,000 × unit price; default ¥2/1M with one blended rate for input/output/cache. It is an estimate, not an exact provider bill.
 - Auto-match only enables **on-demand** plugins, and requires the global switch + group switch + a keyword hit; it never enables off/global plugins.
 - dsh-market Discover cards have no public per-card slot; cumulative usage appears in the Scopes plugin list, Workspaces and plugin detail, not inside Discover cards.
 - No direct edits to **cordis.patch.yml**; all global changes go through **pluginManager**.

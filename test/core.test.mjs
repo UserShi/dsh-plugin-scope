@@ -33,6 +33,7 @@ test('default state contains the three built-in profiles', () => {
   assert.deepEqual(state.pluginTags, {})
   assert.deepEqual(state.tagRules, {})
   assert.equal(state.settings.autoMatchTags, false)
+  assert.equal(state.settings.pricePerMillion, 2)
   assert.equal(state.version, 1)
 })
 
@@ -68,6 +69,12 @@ test('workspace plugin overrides apply when a session has no own record', () => 
   const scope = resolveSessionScope(state, 's1', '/workspace/a')
   assert.equal(scope.source, 'workspace')
   assert.deepEqual(collectDeniedTools([diagram], scope, state), ['diagram_save'])
+})
+
+test('pricePerMillion falls back to 2 and accepts non-negative values', () => {
+  assert.equal(normalizeState({ settings: { pricePerMillion: 3.5 } }).settings.pricePerMillion, 3.5)
+  assert.equal(normalizeState({ settings: { pricePerMillion: -1 } }).settings.pricePerMillion, 2)
+  assert.equal(normalizeState({ settings: { pricePerMillion: 'x' } }).settings.pricePerMillion, 2)
 })
 
 test('tag rules normalize and match keywords case-insensitively', () => {

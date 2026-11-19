@@ -153,6 +153,9 @@
 - [x] `agent/pre-step` 关键词匹配：自动启用未启用的按需标签组插件，复用 session overrides 和 Gate。
 - [x] 全局 `settings.autoMatchTags` 开关 + 每组自动开关。
 - [x] 中英文文案、测试和 API 文档。
+- [x] 对话插件面板分类折叠；说明改为 hover title，减少纵向占用。
+- [x] 费用估算：settings.pricePerMillion（默认 ¥2/1M），在对话、插件列表、工作区、插件详情追加费用。
+- [x] 插件作用域图标重新设计（透明渐变 + 分层 + 状态点）。
 
 **M4b Preset Engine（未开始）**
 

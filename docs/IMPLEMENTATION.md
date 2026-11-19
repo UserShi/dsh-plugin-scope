@@ -16,7 +16,7 @@
 | package.json | dsh.bundle.patch + dsh.client + exports；无运行时依赖 |
 | cordis.patch.yml | 只插入一个 Host row |
 | locale/en.json, locale/zh.json | 插件管理器的标题/描述 |
-| test/core.test.mjs | 16 个纯函数测试 |
+| test/core.test.mjs | 18 个纯函数测试 |
 | test/stats.test.mjs | 4 个用量折叠/归集测试 |
 
 v0.1 是**纯 ESM JavaScript**，没有构建步骤。这样本地 link 安装和 GitHub 源码安装都不需要 pnpm 执行 prepare/build 脚本。TypeScript/tsdown 可以作为后续重构，不是当前运行前提。
@@ -64,6 +64,7 @@ v0.1 是**纯 ESM JavaScript**，没有构建步骤。这样本地 link 安装�
 - 模型 tokens：`assistant/message.usage.totalTokens`（缺失时 input+output+cache）。
 - 按插件归集使用 contribution.tools；未映射工具进入 unattributed，不显示在插件行。
 - 会话统计来自 sessionQuery.readSession（live-preferred）；全部/工作区统计扫描最近 200 个会话，缓存 20 秒。
+- 费用 = tokens / 1,000,000 × settings.pricePerMillion（默认 ¥2/1M）；工具 tokens 和模型 usage 使用同一单价，属于估算，不代表 provider 实际账单。
 
 ### 2.5 映射
 
@@ -129,7 +130,7 @@ Map contributions 抽屉允许手动把当前会话可见工具、技能归到�
 
 已在本机 desktop profile 安装并做运行时验证：
 
-- npm test：21/21 通过。
+- npm test：22/22 通过。
 - node --check lib/core.js lib/state.js lib/index.js lib/client.js：通过。
 - 安装：dsh plugin --profile desktop add link:/Users/haozhanshi/WorkSpace/deepseek-work/plugin-scope 成功；profile 依赖与 bundle 列表包含 dsh-plugin-scope。
 - GET /api/dsh-plugin-scope/state：返回 8 个 profile 插件、2 个 live agent。
