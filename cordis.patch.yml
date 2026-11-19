@@ -1,0 +1,5 @@
+# Plugin Scope bundle patch: one Host row. The client half is attached to
+# this row by dsh-client-modules through package.json's dsh.client section.
+- insert:
+    - id: plugin-scope
+      name: 'dsh-plugin-scope'

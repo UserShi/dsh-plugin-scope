@@ -1,7 +1,7 @@
 # GitHub 发布指南
 
-> 目标仓库：`https://github.com/shihaozhan/dsh-plugin-scope`  
-> 当前状态：本地仓库已初始化并提交；**尚未推送**（本机没有可用的 GitHub 凭据）。
+> 目标仓库：`https://github.com/UserShi/dsh-plugin-scope`（已创建，public）  
+> 当前状态：本地仓库已提交 v0.1.0；**尚未推送**（本机 SSH 公钥未加到 GitHub，且没有 HTTPS/PAT 凭据）。
 
 ---
 
@@ -10,7 +10,7 @@
 | 项 | 结果 |
 |---|---|
 | `gh` CLI | 未安装 |
-| Git 用户名/邮箱 | `shihaozhan` / `247611737@qq.com` |
+| Git 用户名/邮箱 | `UserShi` / `247611737@qq.com` |
 | HTTPS 凭据 | 无（`git credential fill` 失败） |
 | SSH key | `~/.ssh/id_rsa` 存在 |
 | SSH 到 GitHub | `Permission denied (publickey)`，公钥未添加到 GitHub |
@@ -30,13 +30,13 @@
 3. 验证：
    ```bash
    ssh -T git@github.com
-   # Hi shihaozhan! You've successfully authenticated...
+   # Hi UserShi! You've successfully authenticated...
    ```
 4. 在 GitHub 创建空仓库 `dsh-plugin-scope`（不要勾 README、.gitignore、License）。
 5. 推送：
    ```bash
    cd /Users/haozhanshi/WorkSpace/deepseek-work/plugin-scope
-   git remote add origin git@github.com:shihaozhan/dsh-plugin-scope.git
+   git remote add origin git@github.com:UserShi/dsh-plugin-scope.git
    git push -u origin main
    ```
 
@@ -53,9 +53,9 @@
 4. 推送：
    ```bash
    cd /Users/haozhanshi/WorkSpace/deepseek-work/plugin-scope
-   git remote add origin https://github.com/shihaozhan/dsh-plugin-scope.git
+   git remote add origin https://github.com/UserShi/dsh-plugin-scope.git
    git push -u origin main
-   # Username: shihaozhan
+   # Username: UserShi
    # Password: <粘贴 PAT>
    ```
 5. 建议开启 macOS keychain 缓存：
@@ -177,7 +177,7 @@ jobs:
 
 ```bash
 dsh plugin --profile desktop add \
-  https://github.com/shihaozhan/dsh-plugin-scope/releases/download/v0.1.0/dsh-plugin-scope-0.1.0.tgz
+  https://github.com/UserShi/dsh-plugin-scope/releases/download/v0.1.0/dsh-plugin-scope-0.1.0.tgz
 ```
 
 或在 **Plugins → Add plugin** 的 spec 里粘贴上面的 URL。
@@ -185,7 +185,7 @@ dsh plugin --profile desktop add \
 ### 8.2 GitHub 源码
 
 ```bash
-dsh plugin --profile desktop add github:shihaozhan/dsh-plugin-scope
+dsh plugin --profile desktop add github:UserShi/dsh-plugin-scope
 ```
 
 要求：

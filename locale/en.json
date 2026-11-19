@@ -1,0 +1,6 @@
+{
+  "meta": {
+    "title": "Plugin Scope",
+    "description": "Choose which plugins are global, on demand or off for each conversation. Removes unused tool declarations from the model, estimates token cost, and integrates with the Plugins page and dsh-market."
+  }
+}

@@ -1,0 +1,6 @@
+{
+  "meta": {
+    "title": "插件作用域",
+    "description": "为每个对话选择插件是全局、按需还是关闭；从未选中的对话中移除工具声明，估算 token 成本，并与 Plugins 页和 dsh-market 集成。"
+  }
+}

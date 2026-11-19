@@ -1,6 +1,6 @@
 # DSH Plugin Scope — 设计说明
 
-> 状态：**v0.1 设计草案**（尚未开始功能实现）  
+> 状态：**v0.1.0 已实现（Gate 引擎）**；本文早期设计中的 Preset 引擎仍属于 v0.2。实际实现与设计差异见 §22。  
 > 目标运行环境：DeepSeek Harness **0.2.2-rc.5**，Desktop / Web profile  
 > 文档日期：2026-11-19  
 > 代号：`dsh-plugin-scope`（中文名「插件作用域」）
@@ -1184,7 +1184,7 @@ dsh-plugin-scope/
 
 ### 18.1 仓库
 
-- 地址：`https://github.com/shihaozhan/dsh-plugin-scope`
+- 地址：`https://github.com/UserShi/dsh-plugin-scope`
 - 可见性：public（设计阶段可先 private）
 - 默认分支：`main`
 - License：MIT（可改）
@@ -1197,14 +1197,14 @@ dsh-plugin-scope/
 3. 二选一推送：
    - **SSH**（推荐）：把本机 `~/.ssh/id_rsa.pub` 加到 GitHub → Settings → SSH keys；然后：
      ```bash
-     git remote add origin git@github.com:shihaozhan/dsh-plugin-scope.git
+     git remote add origin git@github.com:UserShi/dsh-plugin-scope.git
      git push -u origin main
      ```
    - **HTTPS + PAT**：创建一个 fine-grained PAT（仅此仓库，Contents: Read/Write）；然后：
      ```bash
-     git remote add origin https://github.com/shihaozhan/dsh-plugin-scope.git
+     git remote add origin https://github.com/UserShi/dsh-plugin-scope.git
      git push -u origin main
-     # 用户名 shihaozhan，密码填 PAT
+     # 用户名 UserShi，密码填 PAT
      ```
 4. 打 tag：
    ```bash
@@ -1244,7 +1244,7 @@ dsh-plugin-scope/
   ```
 - GitHub Release tarball：
   ```bash
-  dsh plugin --profile desktop add https://github.com/shihaozhan/dsh-plugin-scope/releases/download/v0.1.0/dsh-plugin-scope-0.1.0.tgz
+  dsh plugin --profile desktop add https://github.com/UserShi/dsh-plugin-scope/releases/download/v0.1.0/dsh-plugin-scope-0.1.0.tgz
   ```
 - npm：`dsh plugin --profile desktop add dsh-plugin-scope`
 
@@ -1333,3 +1333,10 @@ dsh-plugin-scope/
 - 用 **dsh-market / 原生 Plugins 页插槽** 做展示和快捷入口；v0.2 再考虑完全隔离 preset 和上游 PR。
 
 下一步：确认 §19 的 5 个问题后，按 M1 → M2 → M3 实现，先让一个真实会话看到「关掉绘图插件后工具消失、token 下降、session log 可回放」。
+
+---
+
+## 22. v0.1 实现
+
+v0.1.0 已实现 Gate 引擎、全局开关、Settings 页、Plugins/Settings tab、插件详情徽章/区块、对话 chip、token 估算和映射抽屉。  
+实际代码地图、API、与本文设计的差异、dsh-market 适配和验证清单见 [docs/IMPLEMENTATION.md](IMPLEMENTATION.md)。

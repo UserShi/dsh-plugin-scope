@@ -1,0 +1,71 @@
+{
+  "name": "dsh-plugin-scope",
+  "version": "0.1.0",
+  "description": "Per-conversation plugin scopes for DeepSeek Harness: global, on demand, off, with token estimates and dsh-market integration. · DSH 插件作用域：全局/按需/关闭，按对话筛选插件并节省工具声明 token。",
+  "keywords": [
+    "dsh",
+    "dsh-plugin",
+    "deepseek-harness",
+    "plugin-manager",
+    "scope",
+    "token-saving",
+    "dsh-market"
+  ],
+  "type": "module",
+  "main": "lib/index.js",
+  "exports": {
+    ".": "./lib/index.js",
+    "./client": "./lib/client.js",
+    "./locale/*.json": "./locale/*.json",
+    "./icon": "./icon.svg",
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "lib",
+    "locale",
+    "docs",
+    "icon.svg",
+    "cordis.patch.yml",
+    "README.md",
+    "README.zh.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "check": "node --check lib/core.js && node --check lib/state.js && node --check lib/index.js && node --check lib/client.js",
+    "test": "node --test test/*.test.mjs",
+    "pack": "npm pack --dry-run"
+  },
+  "dsh": {
+    "manifestVersion": 1,
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    },
+    "client": {
+      "platform": "web",
+      "inject": [
+        "@deepseek-ai/dsh-client-locale",
+        "@deepseek-ai/dsh-client-ui-conversation",
+        "@deepseek-ai/dsh-client-ui-plugin-manager",
+        "@deepseek-ai/dsh-client-ui-settings",
+        "@deepseek-ai/dsh-client-ui-sidebar",
+        "@deepseek-ai/dsh-client-ui-theme"
+      ]
+    }
+  },
+  "engines": {
+    "dsh": ">=0.2.2-rc.5 <0.3.0"
+  },
+  "icon": "icon.svg",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/UserShi/dsh-plugin-scope.git"
+  },
+  "homepage": "https://github.com/UserShi/dsh-plugin-scope",
+  "bugs": {
+    "url": "https://github.com/UserShi/dsh-plugin-scope/issues"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}
