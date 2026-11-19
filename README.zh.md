@@ -19,6 +19,7 @@ DSH 的插件一装就是全局：每个插件的工具 schema 都会进入每�
 - 每个插件的工具数量与 token 估算；
 - 与 **dsh-market / 原生 Plugins 页** 结合：插件详情显示作用域徽章，并可直接设置全局/按需/关闭；
 - 映射抽屉：把工具、技能和 prompt section 归到插件下；未映射插件保持全局、不会被静默隐藏。
+- 中英文界面切换，默认中文；选择保存在 profile 设置里。
 
 ![总体架构](docs/assets/architecture.png)
 

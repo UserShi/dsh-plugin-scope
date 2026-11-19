@@ -19,6 +19,7 @@ It also provides:
 - Per-plugin tool counts and token estimates;
 - Integration with **dsh-market / the native Plugins page**: scope badges and direct global/on-demand/off controls;
 - A mapping drawer: assign tools, skills and prompt sections to a plugin; unmapped plugins stay Global and are never silently hidden.
+- Chinese/English UI switch, Chinese by default; the choice is stored in the profile settings.
 
 ![Architecture](docs/assets/architecture.png)
 

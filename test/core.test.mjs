@@ -27,7 +27,15 @@ test('default state contains the three built-in profiles', () => {
   const state = defaultState()
   assert.deepEqual(state.profiles.map(profile => profile.id), ['all', 'minimal', 'coding'])
   assert.equal(state.settings.defaultProfileId, 'all')
+  assert.equal(state.settings.language, 'zh')
   assert.equal(state.version, 1)
+})
+
+test('language defaults to zh and only accepts zh or en', () => {
+  assert.equal(defaultState().settings.language, 'zh')
+  assert.equal(normalizeState({ settings: { language: 'en' } }).settings.language, 'en')
+  assert.equal(normalizeState({ settings: { language: 'fr' } }).settings.language, 'zh')
+  assert.equal(normalizeState({ settings: {} }).settings.language, 'zh')
 })
 
 test('normalizeScope accepts aliases and rejects unknown values', () => {
