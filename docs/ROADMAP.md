@@ -2,7 +2,7 @@
 
 > 关联设计：[docs/DESIGN.md](DESIGN.md)  
 > 版本目标：v0.1 = Gate Engine + 全局开关 + 市场展示；v0.2 = 技能/prompt 门控 + Preset 隔离。  
-> 当前：**v0.1.0 已发布**；main 为 **v0.2.0-dev**，M4a/M4c 已完成，M4b 未开始。
+> 当前：**v0.2.0 已发布**（M4a/M4c 完成）；M4b / Preset 完全隔离未开始。
 
 ---
 
@@ -127,7 +127,7 @@
 
 **目标**：从「省工具 token」升级到「省技能/prompt token」和「完全不加载」。
 
-**M4a 技能/prompt 门控（已完成，v0.2.0-dev）**
+**M4a 技能/prompt 门控（已完成，v0.2.0）**
 
 - [x] 技能 stub 遮蔽：只对当前 scope 实际可见的技能做遮蔽，避免伪造未安装技能。
 - [x] `GET /api/dsh-plugin-scope/skills`：按会话 scope 返回技能列表。
@@ -143,7 +143,7 @@
 - [ ] 映射过期检测。
 - [ ] 技能列表的 provider/source 过滤 UI（当前全部可见技能都可映射）。
 
-**M4c 用量统计 + 标签组（已完成，v0.2.0-dev）**
+**M4c 用量统计 + 标签组（已完成，v0.2.0）**
 
 - [x] `lib/stats.js`：从 session log 折叠调用次数、工具 token 估算、模型 usage；支持 `tool/call`、`tool/result`、`tool/ptc-dispatch`。
 - [x] `GET /stats?session=`：当前会话、按插件、按工作区、全部会话累计。

@@ -1,6 +1,6 @@
 # v0.1–v0.2 实现说明（含 M4a）
 
-> Stable：dsh-plugin-scope 0.1.0（Gate 引擎）；main：0.2.0-dev（M4a 技能/Prompt 映射）  
+> Stable：dsh-plugin-scope 0.2.0（Gate + 工作区 + 用量 + 标签组）；M4b / Preset 隔离未开始  
 > 设计基线：[docs/DESIGN.md](DESIGN.md)  
 > 运行环境：DeepSeek Harness 0.2.2-rc.5 / Desktop profile
 
@@ -146,7 +146,7 @@ Map contributions 抽屉允许手动把当前会话可见工具、技能归到�
 - 标签/自动匹配：给 dsh-ai-diagrams 打 diagram 标签、规则关键词（画图/diagram）、开启 autoMatchTags；session minimal 时 diagrams=false/gatedTools=7；POST /auto-match text=帮我画图 后 diagrams=true、overrides.add=['dsh-ai-diagrams']、gatedTools=0；清理后恢复。
 - 深色模式：把错误的 --dsw-alias-bg-elevated / line-subtle 等替换为真实的 --dsw-alias-bg-layer-1/2、border-l2、label-*、button-primary-fill；待用户刷新确认视觉效果。
 - 当前状态已恢复为默认 all，live agent 的 gate 数为 0，避免影响用户后续对话。
-- GitHub：main、v0.1.0 tag 与 Release 已发布到 https://github.com/UserShi/dsh-plugin-scope；Release 自带 dsh-plugin-scope-0.1.0.tgz。
+- GitHub：main、v0.2.0 tag 与 Release 已发布到 https://github.com/UserShi/dsh-plugin-scope；Release 自带 dsh-plugin-scope-0.2.0.tgz。
 - npm：dsh-plugin-scope@0.1.0 已发布到 https://www.npmjs.com/package/dsh-plugin-scope（npm 的 staged publishing 留下一个 0.0.0-stage 占位版本；latest 是 0.1.0）。
 
 尚未完成的验证（需要浏览器控制或用户确认）：

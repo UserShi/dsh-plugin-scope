@@ -1,7 +1,7 @@
 # Plugin Scope for DeepSeek Harness
 
-> **v0.2.0-dev · Gate 引擎 + M4a 技能/Prompt 映射** — 全局 / 按需 / 关闭 / 对话级作用域，带 token 估算，并与 **dsh-market** 和原生 **Plugins** 页集成。
-> 设计说明：[docs/DESIGN.md](docs/DESIGN.md) · 路线图：[docs/ROADMAP.md](docs/ROADMAP.md) · 发布说明：[docs/GITHUB.md](docs/GITHUB.md)
+> **v0.2.0 · Gate 引擎 + 工作区/用量/标签组** — 全局 / 按需 / 关闭 / 工作区 / 对话级作用域，带 token/费用统计、标签组自动匹配，并与 **dsh-market** 和原生 **Plugins** 页集成。
+> 设计说明：[docs/DESIGN.md](docs/DESIGN.md) · 路线图：[docs/ROADMAP.md](docs/ROADMAP.md) · 版本说明：[CHANGELOG.md](CHANGELOG.md) · 发布说明：[docs/GITHUB.md](docs/GITHUB.md)
 
 ## 它解决什么问题
 
@@ -31,9 +31,8 @@ DSH 的插件一装就是全局：每个插件的工具 schema 都会进入每�
 
 ## 状态
 
-- **v0.1.0**：已发布到 GitHub Release 与 npm（Gate 引擎、全局开关、市场集成）。
-- **main / v0.2.0-dev**：M4a 已完成——技能映射、prompt section 手动映射、映射弹窗技能列表、只对实际可见技能做遮蔽、中英文切换（默认中文），以及深色模式修复。
-- **M4c（当前）**：对话/工作区/插件累计用量与费用估算、插件标签组和关键词自动匹配开关、分类折叠、双语悬浮说明与图标重设计。
+- **v0.2.0（当前）**：工作区/会话/默认三级作用域、工作区插件列表、对话右上角插件选择器、用量与费用、标签组和关键词自动匹配、技能/Prompt 映射、中英文切换、深色模式修复。
+- **v0.1.0**：上一版稳定版（Gate 引擎、全局开关、市场集成）。
 - **M4b / Preset 完全隔离**：尚未开始。
 
 ## 安装
@@ -48,13 +47,15 @@ DSH 的插件一装就是全局：每个插件的工具 schema 都会进入每�
 
 或在 **Plugins → Add plugin** 里选择本目录。
 
-### GitHub Release（v0.1.0）
+### GitHub Release（v0.2.0）
 
-    dsh plugin --profile desktop add https://github.com/UserShi/dsh-plugin-scope/releases/download/v0.1.0/dsh-plugin-scope-0.1.0.tgz
+    dsh plugin --profile desktop add https://github.com/UserShi/dsh-plugin-scope/releases/download/v0.2.0/dsh-plugin-scope-0.2.0.tgz
 
-### npm（已发布）
+### npm（当前仍是 0.1.0）
 
     dsh plugin --profile desktop add dsh-plugin-scope
+
+0.2.0 尚未发布到 npm；要体验本版请用上面的 GitHub Release 或源码安装。
 
 npm 页面：https://www.npmjs.com/package/dsh-plugin-scope
 

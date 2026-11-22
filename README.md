@@ -1,7 +1,7 @@
 # Plugin Scope for DeepSeek Harness
 
-> **v0.2.0-dev · Gate engine + M4a skill/prompt mapping** — global / on-demand / off / per-conversation plugin scopes, with token estimates and integration with **dsh-market** and the native **Plugins** page.
-> Design: [docs/DESIGN.md](docs/DESIGN.md) · Roadmap: [docs/ROADMAP.md](docs/ROADMAP.md) · Publishing: [docs/GITHUB.md](docs/GITHUB.md)
+> **v0.2.0 · Gate engine + workspaces/usage/tag groups** — global / on-demand / off / workspace / per-conversation plugin scopes, with token and cost stats, tag-group auto-match, and integration with **dsh-market** and the native **Plugins** page.
+> Design: [docs/DESIGN.md](docs/DESIGN.md) · Roadmap: [docs/ROADMAP.md](docs/ROADMAP.md) · Changelog: [CHANGELOG.md](CHANGELOG.md) · Publishing: [docs/GITHUB.md](docs/GITHUB.md)
 
 ## The problem
 
@@ -31,9 +31,8 @@ It also provides:
 
 ## Status
 
-- **v0.1.0**: released on GitHub Release and npm (Gate engine, global toggles, marketplace integration).
-- **main / v0.2.0-dev**: M4a is in place — skill mapping, manual prompt-section mapping, a skill list in the mapping drawer, shadows only for skills that are actually visible, a Chinese/English switch (Chinese default), and a dark-mode fix.
-- **M4c (current)**: conversation/workspace/plugin cumulative usage and cost estimates, plugin tag groups, keyword auto-match, collapsible groups, bilingual hover descriptions and a redesigned icon.
+- **v0.2.0 (current)**: workspace/conversation/default scopes, workspace plugin lists, the conversation header picker, usage and cost stats, tag groups and keyword auto-match, skill/prompt mapping, Chinese/English switching and a dark-mode fix.
+- **v0.1.0**: previous stable release (Gate engine, global toggles, marketplace integration).
 - **M4b / full Preset isolation**: not started yet.
 
 ## Install
@@ -48,13 +47,15 @@ It also provides:
 
 Or choose this directory in **Plugins → Add plugin**.
 
-### GitHub release (v0.1.0)
+### GitHub release (v0.2.0)
 
-    dsh plugin --profile desktop add https://github.com/UserShi/dsh-plugin-scope/releases/download/v0.1.0/dsh-plugin-scope-0.1.0.tgz
+    dsh plugin --profile desktop add https://github.com/UserShi/dsh-plugin-scope/releases/download/v0.2.0/dsh-plugin-scope-0.2.0.tgz
 
-### npm (published)
+### npm (still 0.1.0)
 
     dsh plugin --profile desktop add dsh-plugin-scope
+
+0.2.0 is not on npm yet; use the GitHub Release or the source install above to try this version.
 
 npm page: https://www.npmjs.com/package/dsh-plugin-scope
 
