@@ -32,7 +32,7 @@
 - 旧的自定义 profile 工具/技能过滤不再生效；如需工具级过滤，使用会话/工作区 overrides 的 includeTools/excludeTools。
 - 旧会话/工作区没有 mode 时默认 `on-demand`；首次切换会话 mode 会保留从工作区继承的 overrides。
 - 费用估算、200 会话缓存、dsh-market Discover 卡片限制不变。
-- npm 仍为 0.1.0。
+- npm 0.3.0 已发布（2026-11-23）。
 
 ### English
 
@@ -64,7 +64,7 @@ Scope and tag-management refactor.
 - Legacy custom profile tool/skill filters no longer apply; use session/workspace includeTools/excludeTools for tool filtering.
 - Sessions/workspaces without a mode default to `on-demand`; first session mode change preserves inherited workspace overrides.
 - Cost estimates, 200-session stats cache and the dsh-market Discover card limitation are unchanged.
-- npm remains 0.1.0.
+- npm 0.3.0 is published (2026-11-23).
 
 ## v0.2.1 — 2026-11-22
 

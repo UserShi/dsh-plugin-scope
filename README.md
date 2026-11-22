@@ -50,11 +50,11 @@ Or choose this directory in **Plugins → Add plugin**.
 
     dsh plugin --profile desktop add https://github.com/UserShi/dsh-plugin-scope/releases/download/v0.3.0/dsh-plugin-scope-0.3.0.tgz
 
-### npm (still 0.1.0)
+### npm (v0.3.0)
 
     dsh plugin --profile desktop add dsh-plugin-scope
 
-0.3.0 is not on npm yet; use the GitHub Release or the source install above to try this version.
+0.3.0 is published on npm.
 
 npm page: https://www.npmjs.com/package/dsh-plugin-scope
 

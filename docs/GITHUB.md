@@ -1,7 +1,7 @@
 # GitHub 发布指南
 
 > 目标仓库：`https://github.com/UserShi/dsh-plugin-scope`（已创建，public）  
-> 当前状态：**v0.3.0** 已发布到 GitHub Release（自带 `dsh-plugin-scope-0.3.0.tgz`）；npm 仍为 0.1.0。
+> 当前状态：**v0.3.0** 已发布到 GitHub Release（自带 `dsh-plugin-scope-0.3.0.tgz`）和 npm。
 
 ---
 
@@ -16,9 +16,9 @@
 | SSH 到 GitHub | ✅ `Hi UserShi! You've successfully authenticated` |
 | 目标仓库 | ✅ public，main 与 v0.3.0 已推送 |
 | GitHub Release | ✅ https://github.com/UserShi/dsh-plugin-scope/releases/tag/v0.3.0 |
-| npm | ✅ https://www.npmjs.com/package/dsh-plugin-scope (0.1.0) |
+| npm | ✅ https://www.npmjs.com/package/dsh-plugin-scope (0.3.0) |
 
-SSH 授权、代码推送与 GitHub Release 已完成。剩余的是（可选的）npm 发布。
+SSH 授权、代码推送、GitHub Release 与 npm 发布均已完成。
 
 ---
 
