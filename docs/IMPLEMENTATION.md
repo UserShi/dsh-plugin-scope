@@ -1,6 +1,6 @@
-# v0.1–v0.2 实现说明（含 M4a）
+# v0.1–v0.3 实现说明（含 M4a / M4d）
 
-> Stable：dsh-plugin-scope 0.2.1（Gate + 工作区 + 用量 + 标签组 + 简化按需）；M4b / Preset 隔离未开始  
+> Stable：dsh-plugin-scope 0.3.0（Gate + 工作区 + 用量 + 标签列表 + 统一下拉作用域）；M4b / Preset 隔离未开始
 > 设计基线：[docs/DESIGN.md](DESIGN.md)  
 > 运行环境：DeepSeek Harness 0.2.2-rc.5 / Desktop profile
 
@@ -16,7 +16,7 @@
 | package.json | dsh.bundle.patch + dsh.client + exports；无运行时依赖 |
 | cordis.patch.yml | 只插入一个 Host row |
 | locale/en.json, locale/zh.json | 插件管理器的标题/描述 |
-| test/core.test.mjs | 18 个纯函数测试 |
+| test/core.test.mjs | 20 个纯函数测试 |
 | test/stats.test.mjs | 4 个用量折叠/归集测试 |
 
 v0.1 是**纯 ESM JavaScript**，没有构建步骤。这样本地 link 安装和 GitHub 源码安装都不需要 pnpm 执行 prepare/build 脚本。TypeScript/tsdown 可以作为后续重构，不是当前运行前提。
@@ -28,9 +28,10 @@ v0.1 是**纯 ESM JavaScript**，没有构建步骤。这样本地 link 安装�
 - 全局：所有对话可见。
 - 按需：默认隐藏；只有对话/工作区 override 的 add 或标签自动匹配把它加入时才可见；否则工具声明被 tools.restrict 移除。作用域模板不再决定按需插件可见性。
 - 关闭：调用 pluginManager.setBundleEnabled(name, false)；所有对话不可见。
-- 工作区级：state.workspaces[cwd] 记录 profileId + overrides；对话没有 session 记录时使用 cwd 对应工作区。
-- 对话级：每个 session 记录 profileId + overrides（add/remove/includeTools/excludeTools）；有记录时优先于工作区。
-- 语言：settings.language 为 zh/en，默认 zh；作用于客户端文案和内置模板名/描述。
+- 工作区级：state.workspaces[cwd] 记录 mode（global/on-demand/off）+ overrides；对话没有 session 记录时使用 cwd 对应工作区。
+- 对话级：每个 session 记录 mode + overrides（add/remove/includeTools/excludeTools）；有记录时优先于工作区。
+- 作用域模板/profile 选择已从 UI 移除；profileId 仅作为旧数据兼容字段保留，插件可见性不再依赖 profile。
+- 语言：settings.language 为 zh/en，默认 zh。
 
 ### 2.2 Gate
 
@@ -89,14 +90,15 @@ Map contributions 抽屉允许手动把当前会话可见工具、技能归到�
 | GET | /skills?session= | 当前会话可见技能（含 provider/source），用于映射抽屉 |
 | GET | /gates | 当前 live agent 的 deny 工具、隐藏技能、隐藏 section 诊断 |
 | POST | /plugin | { name, scope, profiles }；全局/按需/关闭；profiles 仅为兼容字段，按需可见性不再依赖它 |
-| POST | /session | { sessionId, profileId, overrides } |
+| POST | /session | { sessionId, mode, overrides? }；会话作用域，省略 overrides 时保留继承值 |
 | POST | /session/plugin | { sessionId, name, enabled }；只对 on-demand 插件启停本次对话 |
 | POST | /session/reset | { sessionId }；删除会话覆盖，回退到工作区/默认 |
-| POST | /workspace | { cwd, profileId, overrides? }；设置工作区模板 |
+| POST | /workspace | { cwd, mode, profileId?, overrides? }；工作区作用域 |
 | POST | /workspace/delete | { cwd }；清除工作区配置 |
 | GET | /stats?session= | 当前会话 / 插件 / 工作区 / 全部累计用量 |
 | POST | /tags | { name, tags }；插件标签 |
-| POST | /tag-rule | { tag, keywords, enabled }；标签组关键词/自动开关 |
+| POST | /tag | { action: create/rename/delete/move, tag/name, direction? }；标签列表 CRUD |
+| POST | /tag-rule | { tag, keywords, enabled }；标签关键词/自动开关 |
 | POST | /auto-match | { sessionId, text }；手动触发关键词匹配（诊断） |
 | POST | /default | { profileId } |
 | POST | /profile | { action: create/update/delete, profile/id } |
@@ -130,7 +132,7 @@ Map contributions 抽屉允许手动把当前会话可见工具、技能归到�
 
 已在本机 desktop profile 安装并做运行时验证：
 
-- npm test：22/22 通过。
+- npm test：24/24 通过。
 - node --check lib/core.js lib/state.js lib/index.js lib/client.js：通过。
 - 安装：dsh plugin --profile desktop add link:/Users/haozhanshi/WorkSpace/deepseek-work/plugin-scope 成功；profile 依赖与 bundle 列表包含 dsh-plugin-scope。
 - GET /api/dsh-plugin-scope/state：返回 8 个 profile 插件、2 个 live agent。

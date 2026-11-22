@@ -34,6 +34,7 @@ test('default state contains the three built-in profiles', () => {
   assert.deepEqual(state.tagRules, {})
   assert.equal(state.settings.autoMatchTags, false)
   assert.equal(state.settings.pricePerMillion, 2)
+  assert.deepEqual(state.tagOrder, [])
   assert.equal(state.version, 1)
 })
 
@@ -48,13 +49,15 @@ test('workspace settings are normalized and sessions fall back to them', () => {
   assert.equal(state.workspaces['/workspace/a'].profileId, 'minimal')
 
   const withoutSession = resolveSessionScope(state, 's1', '/workspace/a')
-  assert.equal(withoutSession.profileId, 'minimal')
+  assert.equal(withoutSession.profileId, 'all')
+  assert.equal(withoutSession.mode, 'on-demand')
   assert.equal(withoutSession.source, 'workspace')
   assert.equal(withoutSession.workspaceCwd, '/workspace/a')
 
-  state.sessions.s1 = { profileId: 'coding', overrides: { add: [], remove: [], includeTools: [], excludeTools: [] }, updatedAt: new Date().toISOString() }
+  state.sessions.s1 = { mode: 'off', overrides: { add: [], remove: [], includeTools: [], excludeTools: [] }, updatedAt: new Date().toISOString() }
   const withSession = resolveSessionScope(state, 's1', '/workspace/a')
-  assert.equal(withSession.profileId, 'coding')
+  assert.equal(withSession.profileId, 'all')
+  assert.equal(withSession.mode, 'off')
   assert.equal(withSession.source, 'session')
 })
 
@@ -120,12 +123,13 @@ test('normalizeState keeps user profiles, merges defaults and normalizes assignm
   assert.deepEqual(state.sessions.sessionA.overrides.excludeTools, [])
 })
 
-test('resolveSessionScope falls back to the default profile', () => {
+test('resolveSessionScope retires profile selection and defaults to on-demand mode', () => {
   const state = defaultState()
   state.settings.defaultProfileId = 'minimal'
   const scope = resolveSessionScope(state, 'missing')
-  assert.equal(scope.profileId, 'minimal')
-  assert.equal(scope.profile.id, 'minimal')
+  assert.equal(scope.profileId, 'all')
+  assert.equal(scope.mode, 'on-demand')
+  assert.equal(scope.profile.id, 'all')
 })
 
 test('global plugins are visible regardless of the profile', () => {
@@ -181,15 +185,44 @@ test('session overrides can add or remove an on-demand plugin', () => {
   assert.deepEqual(collectDeniedTools([onDemand], scope, state), [])
 })
 
-test('tool include and exclude filters apply after plugin visibility', () => {
+test('session tool include and exclude filters apply after plugin visibility', () => {
   const state = defaultState()
-  state.settings.defaultProfileId = 'minimal'
-  state.profiles = state.profiles.map(profile => profile.id === 'minimal'
-    ? { ...profile, tools: { include: ['diagram_png'], exclude: ['diagram_save'] } }
-    : profile)
+  state.sessions.s1 = {
+    mode: 'on-demand',
+    overrides: { add: [], remove: [], includeTools: ['diagram_png'], excludeTools: ['diagram_save'] },
+    updatedAt: new Date().toISOString(),
+  }
   const onDemand = record('diagram', 'on-demand', ['diagram_save', 'diagram_png'])
   const scope = resolveSessionScope(state, 's1')
   assert.deepEqual(collectDeniedTools([onDemand], scope, state), ['diagram_save'])
+})
+
+test('scope mode global enables on-demand plugins and off hides them', () => {
+  const state = defaultState()
+  state.workspaces['/workspace/a'] = {
+    mode: 'global',
+    overrides: { add: [], remove: [], includeTools: [], excludeTools: [] },
+    updatedAt: new Date().toISOString(),
+  }
+  const onDemand = record('diagram', 'on-demand', ['diagram_save'])
+  const globalScope = resolveSessionScope(state, 's1', '/workspace/a')
+  assert.equal(globalScope.mode, 'global')
+  assert.deepEqual(resolveVisibility(onDemand, globalScope, state), { visible: true, reason: 'mode-global' })
+
+  state.sessions.s1 = { mode: 'off', overrides: { add: [], remove: [], includeTools: [], excludeTools: [] }, updatedAt: new Date().toISOString() }
+  const offScope = resolveSessionScope(state, 's1', '/workspace/a')
+  assert.equal(offScope.mode, 'off')
+  assert.deepEqual(resolveVisibility(onDemand, offScope, state), { visible: false, reason: 'on-demand' })
+})
+
+test('tag order is normalized from tag rules and plugin tags', () => {
+  const state = normalizeState({
+    tagOrder: ['b', 'a', 'b'],
+    pluginTags: { p1: ['c', 'a'] },
+    tagRules: { d: { keywords: ['x'], enabled: true } },
+  })
+  assert.deepEqual(state.tagOrder, ['b', 'a', 'c', 'd'])
+  assert.equal(state.tagRules.c.enabled, true)
 })
 
 test('estimateTokens is stable for an empty and a populated schema', () => {

@@ -1,6 +1,6 @@
 # Plugin Scope for DeepSeek Harness
 
-> **v0.2.1 · Gate engine + workspaces/usage/tag groups** — global / on-demand / off / workspace / per-conversation plugin scopes, with token and cost stats, tag-group auto-match, and integration with **dsh-market** and the native **Plugins** page.
+> **v0.3.0 · Gate engine + scopes/usage/tags** — global / on-demand / off / workspace / per-conversation plugin scopes, with token and cost stats, tag-group auto-match, and integration with **dsh-market** and the native **Plugins** page.
 > Design: [docs/DESIGN.md](docs/DESIGN.md) · Roadmap: [docs/ROADMAP.md](docs/ROADMAP.md) · Changelog: [CHANGELOG.md](CHANGELOG.md) · Publishing: [docs/GITHUB.md](docs/GITHUB.md)
 
 ## The problem
@@ -10,20 +10,19 @@ DSH plugins are global by default: every installed plugin's tool schemas ride al
 
 - **Global** — always available, e.g. the marketplace or the skills manager.
 - **On demand** — hidden by default; enable it in a conversation, or let tag keywords auto-match it. No tool-schema tokens while disabled.
-- **Off** — disabled in the profile, never loaded.
-- **Session** — switch the current conversation's scope from a chip.
+- **Off** — disabled, never loaded.
+- **Workspace / session** — choose Global / On-demand / Off from a dropdown; the session setting wins.
 
 It also provides:
 
-- Scope profiles (All / Minimal / Coding / custom);
 - Per-plugin tool counts and token estimates;
 - Integration with **dsh-market / the native Plugins page**: scope badges and direct global/on-demand/off controls;
 - A mapping drawer: assign tools, skills and prompt sections to a plugin; unmapped plugins stay Global and are never silently hidden.
-- Chinese/English UI switch, Chinese by default; the choice is stored in the profile settings.
+- Chinese/English UI switch, Chinese by default; the choice is stored locally.
 - A top-right conversation plugin picker: global plugins, enabled plugins, available on-demand plugins and off plugins, with fuzzy search over names and descriptions and one-click per-conversation toggles.
-- Workspace scopes: each working directory can select a scope profile and its own plugin list; conversations without their own override inherit the workspace, while an explicit conversation setting wins.
+- Workspace scopes: each working directory selects Global / On-demand / Off and its own plugin list; conversations without their own override inherit the workspace, while an explicit conversation setting wins.
 - Usage stats: the conversation plugin panel shows calls, estimated tool tokens and model tokens; the plugin list, workspaces and marketplace scope list show cumulative totals.
-- Tag groups: tag plugins, give each tag keywords, and optionally auto-enable matching but currently disabled on-demand plugins when a user message contains a keyword (global switch + per-group switch).
+- Tag list: create, rename, delete and reorder tags; renames and deletes sync to every tagged plugin. With auto-match on, a message keyword enables matching on-demand plugins (global switch + per-tag switch).
 - Cost estimates: convert tokens to money at a configurable ¥/1M-token price in the conversation panel, plugin list, workspaces and plugin detail.
 - The conversation panel supports collapsible groups and moves plugin descriptions to hover tooltips (known plugins follow the Chinese/English switch).
 
@@ -31,8 +30,8 @@ It also provides:
 
 ## Status
 
-- **v0.2.1 (current)**: workspace/conversation/default scopes, workspace plugin lists, the conversation header picker, usage and cost stats, tag groups and keyword auto-match, skill/prompt mapping, Chinese/English switching and a dark-mode fix.
-- **v0.1.0**: previous stable release (Gate engine, global toggles, marketplace integration).
+- **v0.3.0 (current)**: scope profiles removed; workspace/conversation/plugin dropdowns select Global/On-demand/Off; the tag list supports create/rename/delete/reorder and syncs tagged plugins; usage, cost, keyword auto-match, skill/prompt mapping remain.
+- **v0.2.1**: previous release (simplified on-demand activation).
 - **M4b / full Preset isolation**: not started yet.
 
 ## Install
@@ -47,26 +46,26 @@ It also provides:
 
 Or choose this directory in **Plugins → Add plugin**.
 
-### GitHub release (v0.2.1)
+### GitHub release (v0.3.0)
 
-    dsh plugin --profile desktop add https://github.com/UserShi/dsh-plugin-scope/releases/download/v0.2.1/dsh-plugin-scope-0.2.1.tgz
+    dsh plugin --profile desktop add https://github.com/UserShi/dsh-plugin-scope/releases/download/v0.3.0/dsh-plugin-scope-0.3.0.tgz
 
 ### npm (still 0.1.0)
 
     dsh plugin --profile desktop add dsh-plugin-scope
 
-0.2.1 is not on npm yet; use the GitHub Release or the source install above to try this version.
+0.3.0 is not on npm yet; use the GitHub Release or the source install above to try this version.
 
 npm page: https://www.npmjs.com/package/dsh-plugin-scope
 
 ## Usage
 
 1. Open **Settings → Plugin Scope**, or **Plugins → Scopes**.
-2. Choose **Global / On demand / Off** for each plugin.
-3. Choose a scope profile for the current working directory under **Workspaces**; on-demand plugins no longer need profile membership and stay hidden by default.
-4. Use the **Plugin Scope** chip above the composer to switch the current conversation, or click **Plugins** at the top-right of the conversation to search and toggle on-demand plugins for this conversation.
+2. Choose **Global / On demand / Off** from each plugin's dropdown.
+3. Choose **Global / On demand / Off** for the current working directory under **Workspaces**; on-demand plugins stay hidden by default.
+4. Use the **Plugin Scope** chip or the top-right **Plugins** panel to switch the conversation scope and toggle on-demand plugins.
 5. Click **Map contributions** on a plugin to assign its tools and skills, and optionally its prompt-section names. Unmapped plugins stay Global: no savings, but no broken conversations.
-6. Click **Edit tags** on a plugin to add tags; fill keywords and enable a group under **Tag groups**; turn on the auto-match switch under **Configuration**.
+6. Create a tag, add keywords and enable auto-match under **Tags**; click **Edit tags** on a plugin to pick from the managed list. Renaming or deleting a tag syncs every tagged plugin.
 7. The top-right plugin panel, the **plugin list** and **Workspaces** rows show calls/tokens/cost.
 8. Adjust **Token price (¥/1M)** under **Configuration**; costs are estimates, not provider billing.
 

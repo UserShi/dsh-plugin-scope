@@ -1,5 +1,71 @@
 # Changelog
 
+## v0.3.0 — 2026-11-22
+
+### 中文
+
+作用域与标签管理重构。
+
+**移除作用域模板**
+
+- 删除「作用域模板」区域、默认模板下拉、工作区模板下拉、会话模板下拉；
+- Profile 不再决定插件可见性；旧的 profile 数据保留用于兼容，但不再暴露给用户；
+- 插件可见性只由三层决定：插件 scope → 工作区/会话 mode → 会话/工作区 override。
+
+**统一下拉作用域**
+
+- 插件行、插件详情、工作区行、会话 chip、会话表的下拉框都只有 **全局 / 按需 / 关闭**；
+- 工作区 mode：全局 = 该工作区默认启用所有按需插件；按需 = 默认隐藏，由标签/手动触发；关闭 = 默认隐藏；
+- 会话 mode 优先于工作区，并会保留继承来的 workspace overrides；
+- 所有下拉修改后立即刷新 Gate 并同步到对话面板。
+
+**标签列表增删改查**
+
+- 标签不再是插件标签的派生集合，而是独立有序列表 `tagOrder`；
+- 支持新建、重命名、删除、上移/下移；
+- 重命名会同步迁移 `pluginTags` 和 `tagRules`；删除会从所有插件和规则中移除；
+- 插件标签选择改为从管理列表勾选，显示顺序跟随标签列表；
+- 标签关键词和自动匹配开关保留在每个标签行。
+
+**兼容与限制**
+
+- 旧的自定义 profile 工具/技能过滤不再生效；如需工具级过滤，使用会话/工作区 overrides 的 includeTools/excludeTools。
+- 旧会话/工作区没有 mode 时默认 `on-demand`；首次切换会话 mode 会保留从工作区继承的 overrides。
+- 费用估算、200 会话缓存、dsh-market Discover 卡片限制不变。
+- npm 仍为 0.1.0。
+
+### English
+
+Scope and tag-management refactor.
+
+**Scope profiles removed**
+
+- Removed the Scope profiles section, the default-profile dropdown, workspace profile dropdown and session profile dropdown.
+- Profiles no longer decide plugin visibility; legacy profile data is kept for compatibility but is not exposed.
+- Visibility is now: plugin scope → workspace/session mode → session/workspace overrides.
+
+**Unified scope dropdowns**
+
+- Plugin rows, plugin detail, workspace rows, the session chip and the sessions table only offer **Global / On-demand / Off**.
+- Workspace mode: Global = enable all on-demand plugins by default in that workspace; On-demand = hidden by default, tag/manual activation; Off = hidden by default.
+- Session mode overrides workspace mode and preserves inherited workspace overrides.
+- Every dropdown change reapplies the Gate and syncs the conversation panel.
+
+**Tag list CRUD**
+
+- Tags are now an independent ordered list (`tagOrder`) instead of a derived set of plugin tags.
+- Create, rename, delete and move up/down.
+- Rename migrates `pluginTags` and `tagRules`; delete removes the tag everywhere.
+- Plugin tagging now selects from the managed list; display order follows the tag list.
+- Per-tag keywords and auto-match switches remain.
+
+**Compatibility and limits**
+
+- Legacy custom profile tool/skill filters no longer apply; use session/workspace includeTools/excludeTools for tool filtering.
+- Sessions/workspaces without a mode default to `on-demand`; first session mode change preserves inherited workspace overrides.
+- Cost estimates, 200-session stats cache and the dsh-market Discover card limitation are unchanged.
+- npm remains 0.1.0.
+
 ## v0.2.1 — 2026-11-22
 
 ### 中文
