@@ -1,6 +1,6 @@
 {
   "name": "dsh-plugin-scope",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "Per-conversation plugin scopes for DeepSeek Harness: global, on demand, off, with token estimates and dsh-market integration. · DSH 插件作用域：全局/按需/关闭，按对话筛选插件并节省工具声明 token。",
   "keywords": [
     "dsh",

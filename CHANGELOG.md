@@ -1,5 +1,29 @@
 # Changelog
 
+## v0.2.1 — 2026-11-22
+
+### 中文
+
+按需插件的交互简化：不再按作用域模板逐个勾选。
+
+- 插件列表、插件详情和工作区插件弹窗移除「全部/最小/编码/…」模板复选框；
+- 按需插件默认隐藏，不再因为模板包含而自动出现；
+- 在对话右上角插件面板手动启用，或由标签关键词自动匹配触发；
+- 修复自动匹配的一个问题：之前模板已包含插件时不会写入 session override，导致标签命中后仍不可见；
+- 作用域模板继续用于工具/技能/提示词过滤，不再决定按需插件可见性；
+- 插件列表的「按需」下方改为一行说明，提示启用方式。
+
+### English
+
+Simplified on-demand behavior: no more per-profile checkbox matrix.
+
+- Removed the profile checkboxes from the plugin list, plugin detail and workspace plugin modal.
+- On-demand plugins are hidden by default and no longer appear just because a profile includes them.
+- Enable them manually in the conversation plugin panel, or let tag keywords auto-match them.
+- Fixed auto-match: when a profile already included the plugin, no session override was written, so a keyword hit still left it hidden.
+- Scope profiles still control tool/skill/prompt filters, but no longer decide on-demand plugin visibility.
+- The plugin list now shows a short hint under “On demand” instead of profile chips.
+
 ## v0.2.0 — 2026-11-22
 
 ### 中文

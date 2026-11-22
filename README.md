@@ -1,6 +1,6 @@
 # Plugin Scope for DeepSeek Harness
 
-> **v0.2.0 · Gate engine + workspaces/usage/tag groups** — global / on-demand / off / workspace / per-conversation plugin scopes, with token and cost stats, tag-group auto-match, and integration with **dsh-market** and the native **Plugins** page.
+> **v0.2.1 · Gate engine + workspaces/usage/tag groups** — global / on-demand / off / workspace / per-conversation plugin scopes, with token and cost stats, tag-group auto-match, and integration with **dsh-market** and the native **Plugins** page.
 > Design: [docs/DESIGN.md](docs/DESIGN.md) · Roadmap: [docs/ROADMAP.md](docs/ROADMAP.md) · Changelog: [CHANGELOG.md](CHANGELOG.md) · Publishing: [docs/GITHUB.md](docs/GITHUB.md)
 
 ## The problem
@@ -9,7 +9,7 @@ DSH plugins are global by default: every installed plugin's tool schemas ride al
 **Plugin Scope** adds a budget layer:
 
 - **Global** — always available, e.g. the marketplace or the skills manager.
-- **On demand** — visible only in conversations/profiles that select it; no tool-schema tokens elsewhere.
+- **On demand** — hidden by default; enable it in a conversation, or let tag keywords auto-match it. No tool-schema tokens while disabled.
 - **Off** — disabled in the profile, never loaded.
 - **Session** — switch the current conversation's scope from a chip.
 
@@ -31,7 +31,7 @@ It also provides:
 
 ## Status
 
-- **v0.2.0 (current)**: workspace/conversation/default scopes, workspace plugin lists, the conversation header picker, usage and cost stats, tag groups and keyword auto-match, skill/prompt mapping, Chinese/English switching and a dark-mode fix.
+- **v0.2.1 (current)**: workspace/conversation/default scopes, workspace plugin lists, the conversation header picker, usage and cost stats, tag groups and keyword auto-match, skill/prompt mapping, Chinese/English switching and a dark-mode fix.
 - **v0.1.0**: previous stable release (Gate engine, global toggles, marketplace integration).
 - **M4b / full Preset isolation**: not started yet.
 
@@ -47,15 +47,15 @@ It also provides:
 
 Or choose this directory in **Plugins → Add plugin**.
 
-### GitHub release (v0.2.0)
+### GitHub release (v0.2.1)
 
-    dsh plugin --profile desktop add https://github.com/UserShi/dsh-plugin-scope/releases/download/v0.2.0/dsh-plugin-scope-0.2.0.tgz
+    dsh plugin --profile desktop add https://github.com/UserShi/dsh-plugin-scope/releases/download/v0.2.1/dsh-plugin-scope-0.2.1.tgz
 
 ### npm (still 0.1.0)
 
     dsh plugin --profile desktop add dsh-plugin-scope
 
-0.2.0 is not on npm yet; use the GitHub Release or the source install above to try this version.
+0.2.1 is not on npm yet; use the GitHub Release or the source install above to try this version.
 
 npm page: https://www.npmjs.com/package/dsh-plugin-scope
 
@@ -63,7 +63,7 @@ npm page: https://www.npmjs.com/package/dsh-plugin-scope
 
 1. Open **Settings → Plugin Scope**, or **Plugins → Scopes**.
 2. Choose **Global / On demand / Off** for each plugin.
-3. Add on-demand plugins to the **Scope profiles** (Coding / Minimal / ...), then choose a profile for the current working directory under **Workspaces**.
+3. Choose a scope profile for the current working directory under **Workspaces**; on-demand plugins no longer need profile membership and stay hidden by default.
 4. Use the **Plugin Scope** chip above the composer to switch the current conversation, or click **Plugins** at the top-right of the conversation to search and toggle on-demand plugins for this conversation.
 5. Click **Map contributions** on a plugin to assign its tools and skills, and optionally its prompt-section names. Unmapped plugins stay Global: no savings, but no broken conversations.
 6. Click **Edit tags** on a plugin to add tags; fill keywords and enable a group under **Tag groups**; turn on the auto-match switch under **Configuration**.

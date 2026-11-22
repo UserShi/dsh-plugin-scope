@@ -157,13 +157,14 @@ test('hidden prompt sections are collected for invisible plugins', () => {
   assert.deepEqual(collectHiddenSkills([onDemand], scope, state), ['diagram-design'])
 })
 
-test('on-demand becomes visible when the profile includes it', () => {
+test('on-demand stays hidden even when a profile includes it', () => {
   const state = defaultState()
   state.settings.defaultProfileId = 'all'
+  state.profiles = state.profiles.map(profile => profile.id === 'all' ? { ...profile, plugins: ['*'] } : profile)
   const onDemand = record('diagram', 'on-demand', ['diagram_save'])
   const scope = resolveSessionScope(state, 's1')
-  assert.equal(resolveVisibility(onDemand, scope, state).visible, true)
-  assert.deepEqual(collectDeniedTools([onDemand], scope, state), [])
+  assert.deepEqual(resolveVisibility(onDemand, scope, state), { visible: false, reason: 'on-demand' })
+  assert.deepEqual(collectDeniedTools([onDemand], scope, state), ['diagram_save'])
 })
 
 test('session overrides can add or remove an on-demand plugin', () => {

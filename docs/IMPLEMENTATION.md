@@ -1,6 +1,6 @@
 # v0.1–v0.2 实现说明（含 M4a）
 
-> Stable：dsh-plugin-scope 0.2.0（Gate + 工作区 + 用量 + 标签组）；M4b / Preset 隔离未开始  
+> Stable：dsh-plugin-scope 0.2.1（Gate + 工作区 + 用量 + 标签组 + 简化按需）；M4b / Preset 隔离未开始  
 > 设计基线：[docs/DESIGN.md](DESIGN.md)  
 > 运行环境：DeepSeek Harness 0.2.2-rc.5 / Desktop profile
 
@@ -26,7 +26,7 @@ v0.1 是**纯 ESM JavaScript**，没有构建步骤。这样本地 link 安装�
 ### 2.1 作用域
 
 - 全局：所有对话可见。
-- 按需：只有选中它的模板/对话可见；未选中时工具声明被 tools.restrict 移除。
+- 按需：默认隐藏；只有对话/工作区 override 的 add 或标签自动匹配把它加入时才可见；否则工具声明被 tools.restrict 移除。作用域模板不再决定按需插件可见性。
 - 关闭：调用 pluginManager.setBundleEnabled(name, false)；所有对话不可见。
 - 工作区级：state.workspaces[cwd] 记录 profileId + overrides；对话没有 session 记录时使用 cwd 对应工作区。
 - 对话级：每个 session 记录 profileId + overrides（add/remove/includeTools/excludeTools）；有记录时优先于工作区。
@@ -88,7 +88,7 @@ Map contributions 抽屉允许手动把当前会话可见工具、技能归到�
 | GET | /tools?session= | 当前会话可见工具，用于映射抽屉 |
 | GET | /skills?session= | 当前会话可见技能（含 provider/source），用于映射抽屉 |
 | GET | /gates | 当前 live agent 的 deny 工具、隐藏技能、隐藏 section 诊断 |
-| POST | /plugin | { name, scope, profiles }；全局/按需/关闭 |
+| POST | /plugin | { name, scope, profiles }；全局/按需/关闭；profiles 仅为兼容字段，按需可见性不再依赖它 |
 | POST | /session | { sessionId, profileId, overrides } |
 | POST | /session/plugin | { sessionId, name, enabled }；只对 on-demand 插件启停本次对话 |
 | POST | /session/reset | { sessionId }；删除会话覆盖，回退到工作区/默认 |
@@ -146,7 +146,7 @@ Map contributions 抽屉允许手动把当前会话可见工具、技能归到�
 - 标签/自动匹配：给 dsh-ai-diagrams 打 diagram 标签、规则关键词（画图/diagram）、开启 autoMatchTags；session minimal 时 diagrams=false/gatedTools=7；POST /auto-match text=帮我画图 后 diagrams=true、overrides.add=['dsh-ai-diagrams']、gatedTools=0；清理后恢复。
 - 深色模式：把错误的 --dsw-alias-bg-elevated / line-subtle 等替换为真实的 --dsw-alias-bg-layer-1/2、border-l2、label-*、button-primary-fill；待用户刷新确认视觉效果。
 - 当前状态已恢复为默认 all，live agent 的 gate 数为 0，避免影响用户后续对话。
-- GitHub：main、v0.2.0 tag 与 Release 已发布到 https://github.com/UserShi/dsh-plugin-scope；Release 自带 dsh-plugin-scope-0.2.0.tgz。
+- GitHub：main、v0.2.1 tag 与 Release 已发布到 https://github.com/UserShi/dsh-plugin-scope；Release 自带 dsh-plugin-scope-0.2.1.tgz。
 - npm：dsh-plugin-scope@0.1.0 已发布到 https://www.npmjs.com/package/dsh-plugin-scope（npm 的 staged publishing 留下一个 0.0.0-stage 占位版本；latest 是 0.1.0）。
 
 尚未完成的验证（需要浏览器控制或用户确认）：

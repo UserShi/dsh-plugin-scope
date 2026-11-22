@@ -1,6 +1,6 @@
 # Plugin Scope for DeepSeek Harness
 
-> **v0.2.0 · Gate 引擎 + 工作区/用量/标签组** — 全局 / 按需 / 关闭 / 工作区 / 对话级作用域，带 token/费用统计、标签组自动匹配，并与 **dsh-market** 和原生 **Plugins** 页集成。
+> **v0.2.1 · Gate 引擎 + 工作区/用量/标签组** — 全局 / 按需 / 关闭 / 工作区 / 对话级作用域，带 token/费用统计、标签组自动匹配，并与 **dsh-market** 和原生 **Plugins** 页集成。
 > 设计说明：[docs/DESIGN.md](docs/DESIGN.md) · 路线图：[docs/ROADMAP.md](docs/ROADMAP.md) · 版本说明：[CHANGELOG.md](CHANGELOG.md) · 发布说明：[docs/GITHUB.md](docs/GITHUB.md)
 
 ## 它解决什么问题
@@ -9,7 +9,7 @@ DSH 的插件一装就是全局：每个插件的工具 schema 都会进入每�
 **Plugin Scope** 给 DSH 加一层「插件预算」：
 
 - **全局**：所有对话常驻，例如市场、技能管理器。
-- **按需**：只在选了它的对话/模板里出现；不选就不占工具声明 token。
+- **按需**：默认隐藏；在对话中手动启用，或由标签关键词自动匹配触发；不启用就不占工具声明 token。
 - **关闭**：从 profile 禁用，彻底不加载。
 - **对话级**：在会话 chip 里切换本次对话的作用域。
 
@@ -31,7 +31,7 @@ DSH 的插件一装就是全局：每个插件的工具 schema 都会进入每�
 
 ## 状态
 
-- **v0.2.0（当前）**：工作区/会话/默认三级作用域、工作区插件列表、对话右上角插件选择器、用量与费用、标签组和关键词自动匹配、技能/Prompt 映射、中英文切换、深色模式修复。
+- **v0.2.1（当前）**：工作区/会话/默认三级作用域、工作区插件列表、对话右上角插件选择器、用量与费用、标签组和关键词自动匹配、技能/Prompt 映射、中英文切换、深色模式修复。
 - **v0.1.0**：上一版稳定版（Gate 引擎、全局开关、市场集成）。
 - **M4b / Preset 完全隔离**：尚未开始。
 
@@ -47,15 +47,15 @@ DSH 的插件一装就是全局：每个插件的工具 schema 都会进入每�
 
 或在 **Plugins → Add plugin** 里选择本目录。
 
-### GitHub Release（v0.2.0）
+### GitHub Release（v0.2.1）
 
-    dsh plugin --profile desktop add https://github.com/UserShi/dsh-plugin-scope/releases/download/v0.2.0/dsh-plugin-scope-0.2.0.tgz
+    dsh plugin --profile desktop add https://github.com/UserShi/dsh-plugin-scope/releases/download/v0.2.1/dsh-plugin-scope-0.2.1.tgz
 
 ### npm（当前仍是 0.1.0）
 
     dsh plugin --profile desktop add dsh-plugin-scope
 
-0.2.0 尚未发布到 npm；要体验本版请用上面的 GitHub Release 或源码安装。
+0.2.1 尚未发布到 npm；要体验本版请用上面的 GitHub Release 或源码安装。
 
 npm 页面：https://www.npmjs.com/package/dsh-plugin-scope
 
@@ -63,7 +63,7 @@ npm 页面：https://www.npmjs.com/package/dsh-plugin-scope
 
 1. 打开 **Settings → Plugin Scope**，或 **Plugins → Scopes**。
 2. 每个插件选 **全局 / 按需 / 关闭**。
-3. 在 **作用域模板** 里把按需插件加入 Coding / Minimal 等模板；在 **工作区** 里给当前工作目录选择模板。
+3. 在 **工作区** 里给当前工作目录选择作用域模板；按需插件不再需要加入模板，默认隐藏。
 4. 在对话底部输入框上方用 **Plugin Scope** chip 切换当前对话的模板；也可以点对话框右上角的 **插件** 按钮，搜索并勾选本次对话要启用的按需插件。
 5. 点插件的 **Map contributions**，勾选该插件的工具和技能，并可按需填写 prompt section 名称；未映射的插件保持全局，不节省但不会破坏会话。
 6. 在插件行点 **编辑标签** 给插件打标签；在 **标签组** 里填关键词、打开组开关；在 **配置** 里打开「根据对话关键词自动启用标签组插件」。
