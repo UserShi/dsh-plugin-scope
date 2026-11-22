@@ -2,6 +2,8 @@ name: Publish npm
 
 on:
   workflow_dispatch:
+  push:
+    tags: ['npm-v*']
 
 permissions:
   contents: read
