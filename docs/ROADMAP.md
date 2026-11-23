@@ -2,7 +2,7 @@
 
 > 关联设计：[docs/DESIGN.md](DESIGN.md)  
 > 版本目标：v0.1 = Gate Engine + 全局开关 + 市场展示；v0.2 = 技能/prompt 门控 + Preset 隔离。  
-> 当前：**v0.3.3 已发布**（对话下方调用卡 + 单轮调用历史）；M4a/M4c/M4d 已完成，M4b / Preset 完全隔离未开始。
+> 当前：**v0.3.4 已发布**（映射诊断 + 文档收尾）；M4a/M4c/M4d 已完成，M4b / Preset 完全隔离因 DSH profile-level bundle 加载而阻塞。
 
 ---
 
