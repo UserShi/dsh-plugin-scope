@@ -1,5 +1,35 @@
 # Changelog
 
+## v0.4.2 — 2026-11-23
+
+### 中文
+
+- Profile Preset 产品化：
+  - per-workspace 子集：工作区插件弹窗中多选 preset bundle；
+  - per-session：会话表新增 Preset 下拉（跟随工作区 / 不使用 / 全部池）；
+  - 自定义 subset 通过 `POST /session` 的 `presetBundles` 设置。
+- preset 改为懒注册：
+  - 首个需要该子集的空白会话才注册；
+  - 并发创建有 pending guard，避免重复 preset ID；
+  - 子集注册失败自动回退全量池。
+- 增加 `presetWarning`、session `presetBundles/presetId` 状态。
+- Host 补丁缺失检测保留。
+- 测试 26/26 通过。
+
+### English
+
+- Productized Profile Presets:
+  - per-workspace subsets in the workspace plugin modal;
+  - per-session Preset dropdown (inherit / none / full pool);
+  - custom subsets via `POST /session` `presetBundles`.
+- Presets are registered lazily:
+  - only when a blank session needs that subset;
+  - concurrent creation is guarded with a pending map;
+  - subset registration failure falls back to the full pool.
+- Added `presetWarning` and session `presetBundles/presetId` state.
+- Missing Host patch detection remains.
+- 26/26 tests pass.
+
 ## v0.4.1 — 2026-11-23
 
 ### 中文

@@ -230,10 +230,18 @@ Host 会把这些 bundle 的 layer 放入 `presetLayers`，不再进入 root com
 
 启动时：
 
-1. 读取 profile 的 `presetBundles`；
+1. 读取 profile 的 `presetBundles`（池）；
 2. 解析默认 preset 文档 + 每个 bundle 的 patch rows；
-3. 注册 `scope:profile` preset；
-4. 新空白会话选择该 preset；已开始会话保持原 preset（registry 锁定）。
+3. 检查 Host 补丁是否生效；
+4. 不立即注册；等待空白会话。
+
+会话创建/重选时：
+
+1. 读取会话 `presetBundles`，否则工作区 `presetBundles`，否则使用全部池；
+2. 空数组 → 不选 scope preset（Gate/标准）；
+3. 子集 → 懒注册 `scope:profile:<hash>`；全部池 → `scope:profile`；
+4. 子集注册失败自动回退全量池；
+5. 已开始会话由 registry 锁定，不能切换。
 
 `diagnostics.presetIsolation` 暴露：
 
@@ -252,14 +260,17 @@ Host 会把这些 bundle 的 layer 放入 `presetLayers`，不再进入 root com
 隔离 web profile 中：
 
 - root `dsh-ai-diagrams` row `enabled=false`，root tools 无 `diagram_*`；
-- 新会话 preset `scope:profile`，tools 47 个，含 7 个 `diagram_*`；
-- 管理页新增 `Profile 预设隔离` 区块：勾选 bundle、保存到 profile `package.json`、显示 Host/错误状态；保存后需重启。
+- 工作区空 preset + session 跟随 → tools 40，无 diagram；
+- 工作区全量/session 全量 → tools 47，含 7 个 `diagram_*`；
+- 管理页有 `Profile 预设隔离` 和 workspace 多选；sessions 表有 Preset 下拉；
+- 子集 preset 懒注册，并发注册有 pending guard。
 
 ### 10.4 当前限制
 
-- profile 级固定集合，不是 per-session / per-workspace 动态 preset；
+- 未应用 Host 补丁的标准 DSH 上该功能不生效（插件保持 Gate）；
+- 已开始会话不能迁移，继续保持原 preset；
 - 有 client half 的 bundle 只警告，可能缺少客户端 UI；
-- 注册失败只写日志/诊断，不自动回退 Gate；
-- 未应用 Host 补丁的标准 DSH 上该功能不生效（插件保持 Gate）。
+- 多个不同子集并发使用会分别注册 preset，插件代码按子集加载，但不是进程级只加载一个子集；
+- 注册失败会回退全量池；若全量池也失败，仅诊断，需手动清空 preset 回退 Gate。
 
 Host 变更建议见 [docs/DSH_HOST_PRESET_PROPOSAL.md](docs/DSH_HOST_PRESET_PROPOSAL.md)。
