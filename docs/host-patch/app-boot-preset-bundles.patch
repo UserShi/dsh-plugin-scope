@@ -1,0 +1,41 @@
+--- /tmp/appboot-npm/package/src/profile.ts	1985-10-26 16:15:00
++++ /tmp/profile-preset.ts	2026-11-23 21:18:39
+@@ -90,6 +90,8 @@
+   dir: string
+   /** Bundle layers in `dsh.profile.bundles` order. */
+   layers: ProfileLayer[]
++  /** Bundle layers withheld from root and reserved for preset mounting. */
++  presetLayers: ProfileLayer[]
+   /** Absolute path of the profile's own patch file. */
+   patchPath: string
+   /** The profile's own patches; empty when the file is absent. */
+@@ -683,7 +685,9 @@
+ ): Profile {
+   const manifest = dropRetiredBundles(dir, readProfileManifest(binName, dir))
+   const bundles = manifest.dsh?.profile?.bundles ?? []
++  const presetBundles = new Set(manifest.dsh?.profile?.presetBundles ?? [])
+   const layers: ProfileLayer[] = []
++  const presetLayers: ProfileLayer[] = []
+   const skippedBundles: SkippedBundle[] = []
+   const exemptions = bundles.length === 0 ? {} : readProfileVersionExemptions(dir)
+   for (const packageName of bundles) {
+@@ -700,7 +704,9 @@
+       if (issue !== undefined && !issue.exempted) throw new Error(pluginCompatibilityWarning(issue))
+       const patchPaths = bundlePatchPaths(packageDir, bundle)
+       const patches = patchPaths.flatMap(patchPath => loadOverlayPatches(binName, patchPath))
+-      layers.push({ packageName, packageDir, patchPaths, patches })
++      const layer = { packageName, packageDir, patchPaths, patches }
++      if (presetBundles.has(packageName)) presetLayers.push(layer)
++      else layers.push(layer)
+     } catch (error) {
+       skippedBundles.push({ packageName, reason: String(error) })
+     }
+@@ -709,7 +715,7 @@
+   const patches = options.userLayer !== false && existsSync(patchPath)
+     ? loadOverlayPatches(binName, patchPath)
+     : []
+-  return { name: basename(dir), dir, layers, patchPath, patches, skippedBundles }
++  return { name: basename(dir), dir, layers, presetLayers, patchPath, patches, skippedBundles }
+ }
+ 
+ /**

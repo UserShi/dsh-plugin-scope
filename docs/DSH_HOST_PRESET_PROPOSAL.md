@@ -1,6 +1,6 @@
 # DSH Host 变更提案：Profile-bundle / Preset 能力
 
-状态：**Proposal / 阻塞**
+状态：**Prototype verified / 待集成 M4b**
 目标版本：DSH Host（当前本地 0.2.2-rc.5）
 关联：[M4b Preset Engine](ROADMAP.md#m4b-preset-engine阻塞未开始)
 
@@ -139,6 +139,20 @@ await ctx.agentPresets.register({
 
 这已足够让 Plugin Scope 的 on-demand 工具插件从「声明级节省」进入「零加载」，同时不碰 UI/client bundle。
 
-## 5. 当前结论
+## 5. 原型验证
+
+已在隔离的 DSH 运行时验证最小 Host 能力：
+
+- 从本机 `app.asar` 解包出可写运行时（不改签名安装包）；
+- 给 `dsh-app-boot` 打补丁，支持 `dsh.profile.presetBundles`；
+- 在临时 profile 中把 `dsh-ai-diagrams` 放入 `presetBundles`；
+- 启动后：
+  - `dsh-ai-diagrams` row 的 `enabled=false`；
+  - `/tools` 中不存在 `diagram_*`；
+  - 说明 bundle 没有在 root 加载。
+- 补丁：[docs/host-patch/app-boot-preset-bundles.patch](host-patch/app-boot-preset-bundles.patch)。
+- 验证后已停止隔离运行时；未修改桌面 profile。
+
+## 6. 当前结论
 
 在 Host 提供上述能力前，M4b 不应在 Plugin Scope 内部伪造实现。
