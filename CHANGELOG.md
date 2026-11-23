@@ -1,5 +1,21 @@
 # Changelog
 
+## v0.4.3 — 2026-11-23
+
+### 中文
+
+- 工作区 preset 变更后自动重选空白会话；工作区删除也恢复 profile 全量池。
+- 已开始会话仍由 registry 锁定，不会迁移。
+- 验证：工作区空 → 40 tools/无 diagram；工作区全量 → 47 tools/7 diagram。
+- 测试 26/26 通过。
+
+### English
+
+- After a workspace preset change, blank conversations are re-selected automatically; deleting a workspace restores the profile full pool.
+- Started sessions remain locked by the registry.
+- Verified: empty workspace -> 40 tools/no diagram; full workspace -> 47 tools/7 diagram.
+- 26/26 tests pass.
+
 ## v0.4.2 — 2026-11-23
 
 ### 中文

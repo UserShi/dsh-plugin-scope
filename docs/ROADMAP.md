@@ -3,7 +3,7 @@
 > 关联设计：[docs/DESIGN.md](DESIGN.md)  
 > 版本目标：v0.1 = Gate Engine + 全局开关 + 市场展示；v0.2 = 技能/prompt 门控 + Preset 隔离。  
 > 阶段验证：[docs/VALIDATION.md](VALIDATION.md)  
-> 当前：**v0.4.2 已发布**（映射诊断 + 文档收尾）；M4a/M4c/M4d 已完成，M4b / Preset 完全隔离因 DSH profile-level bundle 加载而阻塞。
+> 当前：**v0.4.3 已发布**（映射诊断 + 文档收尾）；M4a/M4c/M4d 已完成，M4b / Preset 完全隔离因 DSH profile-level bundle 加载而阻塞。
 
 ---
 
@@ -210,8 +210,8 @@
 - [x] CI（test/check/pack，Node 20/22/24）。
 - [x] Release 工作流。
 - [x] GitHub Release `.tgz`。
-- [x] npm 发布（当前 0.4.2）。
-- [x] 发布后回归：全新 web profile + npm 0.4.2 安装 + API 200 + UI 侧栏/管理页验证（桌面 profile 迁移另测）。
+- [x] npm 发布（当前 0.4.3）。
+- [x] 发布后回归：全新 web profile + npm 0.4.3 安装 + API 200 + UI 侧栏/管理页验证（桌面 profile 迁移另测）。
 - [x] 文档：安装、快速开始、作用域语义、限制。
 - [x] FAQ / 故障排查：README + DETAIL。
 

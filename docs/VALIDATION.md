@@ -2,7 +2,7 @@
 
 验证时间：2026-11-23
 
-插件版本：**0.4.2**  
+插件版本：**0.4.3**  
 DSH：0.2.2-rc.5（桌面 + 隔离 Host 运行时）
 
 ## 总览
@@ -70,7 +70,7 @@ session presetBundles = [ai]      -> tools 47
 
 ```json
 {
-  "version": "0.4.2",
+  "version": "0.4.3",
   "preset": {
     "enabled": true,
     "registered": true,
@@ -116,10 +116,10 @@ session presetBundles = [ai]      -> tools 47
 
 ## Release
 
-- tag：`v0.4.2`
-- GitHub Release：https://github.com/UserShi/dsh-plugin-scope/releases/tag/v0.4.2
-- npm：`dsh-plugin-scope@0.4.2`
-- Release asset：`dsh-plugin-scope-0.4.2.tgz`
+- tag：`v0.4.3`
+- GitHub Release：https://github.com/UserShi/dsh-plugin-scope/releases/tag/v0.4.3
+- npm：`dsh-plugin-scope@0.4.3`
+- Release asset：`dsh-plugin-scope-0.4.3.tgz`
 - 代码：`f80babf`
 
 ## M4b 已知限制
