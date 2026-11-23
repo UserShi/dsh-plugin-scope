@@ -2,7 +2,7 @@
 
 验证时间：2026-11-23
 
-插件版本：**0.4.3**  
+插件版本：**0.4.3**
 DSH：0.2.2-rc.5（桌面 + 隔离 Host 运行时）
 
 ## 总览
@@ -120,7 +120,31 @@ session presetBundles = [ai]      -> tools 47
 - GitHub Release：https://github.com/UserShi/dsh-plugin-scope/releases/tag/v0.4.3
 - npm：`dsh-plugin-scope@0.4.3`
 - Release asset：`dsh-plugin-scope-0.4.3.tgz`
-- 代码：`f80babf`
+- 代码：`a3c59b4`
+
+## 验证循环（最多两次）
+
+### 循环 1
+
+```text
+npm test: 26/26
+isolated: 0.4.3, root row false, 47 tools / 7 diagram
+workspace empty -> 40 tools / 0 diagram
+workspace full  -> 47 tools / 7 diagram
+desktop: 0.4.3, preset disabled, gates 2
+```
+
+### 循环 2（发布后）
+
+```text
+GitHub CI / Release / Publish npm: success
+npm latest: 0.4.3
+isolated: 0.4.3, preset registered, root row false, 47 / 7
+desktop: 0.4.3, preset disabled, gates 2
+npm test: 26/26
+```
+
+两次循环均通过，未发现新的阻塞缺陷。
 
 ## M4b 已知限制
 
