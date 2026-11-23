@@ -1,5 +1,23 @@
 # Changelog
 
+## v0.3.1 — 2026-11-23
+
+### 中文
+
+- 左侧栏新增 **插件作用域** 入口（sidebar.panellist），与 Plugins、Skills 等入口并列。
+- 点击入口直接打开独立的 **Plugin Scope** 主面板（main key plugin-scope），不再需要进入 Settings 或 Plugins 页查找。
+- 主面板复用现有管理页：插件作用域、工作区、标签列表、会话、费用配置。
+- 新增可折叠侧栏的图标适配（16/18px，active 态）。
+- 客户端依赖显式声明 @deepseek-ai/dsh-client-ui-layout。
+
+### English
+
+- Added a **Plugin Scope** entry to the left sidebar (sidebar.panellist), alongside Plugins and Skills.
+- Clicking it opens the dedicated Plugin Scope main panel (main key plugin-scope) directly, without going through Settings or the Plugins page.
+- The panel reuses the existing management UI: plugin scopes, workspaces, tags, sessions and cost settings.
+- Added sidebar icon sizing for both expanded and collapsed rail states.
+- Explicitly depends on @deepseek-ai/dsh-client-ui-layout.
+
 ## v0.3.0 — 2026-11-22
 
 ### 中文

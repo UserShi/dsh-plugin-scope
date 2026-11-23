@@ -1,6 +1,6 @@
 # Plugin Scope for DeepSeek Harness
 
-> **v0.3.0 · Gate 引擎 + 作用域/用量/标签列表** — 全局 / 按需 / 关闭 / 工作区 / 对话级作用域，带 token/费用统计、标签组自动匹配，并与 **dsh-market** 和原生 **Plugins** 页集成。
+> **v0.3.1 · Gate 引擎 + 作用域/用量/标签列表 + 侧栏入口** — 全局 / 按需 / 关闭 / 工作区 / 对话级作用域，带 token/费用统计、标签组自动匹配，并与 **dsh-market** 和原生 **Plugins** 页集成。
 > 设计说明：[docs/DESIGN.md](docs/DESIGN.md) · 路线图：[docs/ROADMAP.md](docs/ROADMAP.md) · 版本说明：[CHANGELOG.md](CHANGELOG.md) · 发布说明：[docs/GITHUB.md](docs/GITHUB.md)
 
 ## 它解决什么问题
@@ -15,6 +15,7 @@ DSH 的插件一装就是全局：每个插件的工具 schema 都会进入每�
 
 同时提供：
 
+- 左侧栏 **插件作用域** 入口：点击直接打开独立管理页；
 - 每个插件的工具数量与 token 估算；
 - 与 **dsh-market / 原生 Plugins 页** 结合：插件详情显示作用域徽章，并可直接设置全局/按需/关闭；
 - 映射抽屉：把工具、技能和 prompt section 归到插件下；未映射插件保持全局、不会被静默隐藏。
@@ -30,7 +31,8 @@ DSH 的插件一装就是全局：每个插件的工具 schema 都会进入每�
 
 ## 状态
 
-- **v0.3.0（当前）**：删除作用域模板；工作区/会话/插件统一下拉选择全局/按需/关闭；标签列表支持增删改查、排序，改名/删除同步到已打标插件；保留用量、费用、关键词自动匹配、技能/Prompt 映射。
+- **v0.3.1（当前）**：新增左侧栏 **插件作用域** 入口，点击直达管理页。
+- **v0.3.0**：删除作用域模板；工作区/会话/插件统一下拉选择全局/按需/关闭；标签列表支持增删改查、排序，改名/删除同步到已打标插件；保留用量、费用、关键词自动匹配、技能/Prompt 映射。
 - **v0.2.1**：上一版（按需交互简化）。
 - **M4b / Preset 完全隔离**：尚未开始。
 
@@ -46,21 +48,21 @@ DSH 的插件一装就是全局：每个插件的工具 schema 都会进入每�
 
 或在 **Plugins → Add plugin** 里选择本目录。
 
-### GitHub Release（v0.3.0）
+### GitHub Release（v0.3.1）
 
-    dsh plugin --profile desktop add https://github.com/UserShi/dsh-plugin-scope/releases/download/v0.3.0/dsh-plugin-scope-0.3.0.tgz
+    dsh plugin --profile desktop add https://github.com/UserShi/dsh-plugin-scope/releases/download/v0.3.1/dsh-plugin-scope-0.3.1.tgz
 
-### npm（v0.3.0）
+### npm（v0.3.1）
 
     dsh plugin --profile desktop add dsh-plugin-scope
 
-0.3.0 已发布到 npm。
+0.3.1 已发布到 npm。
 
 npm 页面：https://www.npmjs.com/package/dsh-plugin-scope
 
 ## 使用
 
-1. 打开 **Settings → Plugin Scope**，或 **Plugins → Scopes**。
+1. 点左侧栏 **插件作用域**，或打开 **Settings → Plugin Scope** / **Plugins → Scopes**。
 2. 每个插件的下拉框选 **全局 / 按需 / 关闭**。
 3. 在 **工作区** 行给当前目录选 **全局 / 按需 / 关闭**；按需插件默认隐藏。
 4. 在对话底部 **Plugin Scope** chip 或右上角 **插件** 面板切换会话作用域，并手动启停按需插件。

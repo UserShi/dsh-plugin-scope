@@ -1,6 +1,6 @@
 # v0.1–v0.3 实现说明（含 M4a / M4d）
 
-> Stable：dsh-plugin-scope 0.3.0（Gate + 工作区 + 用量 + 标签列表 + 统一下拉作用域）；M4b / Preset 隔离未开始
+> Stable：dsh-plugin-scope 0.3.1（Gate + 工作区 + 用量 + 标签列表 + 统一下拉作用域 + 侧栏入口）；M4b / Preset 隔离未开始
 > 设计基线：[docs/DESIGN.md](DESIGN.md)  
 > 运行环境：DeepSeek Harness 0.2.2-rc.5 / Desktop profile
 
@@ -12,7 +12,7 @@
 | lib/state.js | profile 级 JSON 状态：原子写、备份、串行化、损坏恢复 |
 | lib/stats.js | 纯函数：session log 折叠调用/工具 token/模型 usage、按插件/工作区归集 |
 | lib/index.js | Host 插件：inventory、Gate、pluginManager 全局开关、HTTP API、agent/created |
-| lib/client.js | 浏览器半：Settings 页、Plugins/Settings tab、插件详情徽章/区块、对话 chip、右上角对话插件选择器、映射抽屉 |
+| lib/client.js | 浏览器半：Settings 页、Plugins/Settings tab、左侧栏入口 + main panel、插件详情徽章/区块、对话 chip、右上角对话插件选择器、映射抽屉 |
 | package.json | dsh.bundle.patch + dsh.client + exports；无运行时依赖 |
 | cordis.patch.yml | 只插入一个 Host row |
 | locale/en.json, locale/zh.json | 插件管理器的标题/描述 |
