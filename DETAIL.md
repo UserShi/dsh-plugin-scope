@@ -214,4 +214,4 @@ M4b 的目标是「未选中插件完全不加载」。当前 DSH 的 profile bu
 - profile bundle → preset row 的按会话组合；或
 - pluginManager 的 per-agent bundle 加载。
 
-在此之前，Plugin Scope 保持 Gate 模式；强行注册 synthetic preset 可能造成重复服务/泄漏，不建议。
+在此之前，Plugin Scope 保持 Gate 模式；强行注册 synthetic preset 可能造成重复服务/泄漏，不建议。Host 变更建议见 [docs/DSH_HOST_PRESET_PROPOSAL.md](docs/DSH_HOST_PRESET_PROPOSAL.md)。

@@ -177,7 +177,7 @@
 
 **M4b Preset Engine（阻塞，未开始）**
 
-> 阻塞原因：当前 DSH profile bundles 在 profile root 加载；`agentPresets` 只能组合 Agent 子图，不能卸载 root 已加载的 bundle。插件侧无法安全实现 per-session 零加载，需 DSH Host 支持 profile bundle → preset row 的按会话组合，或 per-agent bundle 加载。详见 [DETAIL.md](../DETAIL.md#10-m4b-阻塞说明)。
+> 阻塞原因：当前 DSH profile bundles 在 profile root 加载；`agentPresets` 只能组合 Agent 子图，不能卸载 root 已加载的 bundle。插件侧无法安全实现 per-session 零加载，需 DSH Host 支持 profile bundle → preset row 的按会话组合，或 per-agent bundle 加载。详见 [DETAIL.md](../DETAIL.md#10-m4b-阻塞说明) 与 [DSH Host 提案](DSH_HOST_PRESET_PROPOSAL.md)。
 
 - [ ] `presetSafe` 白名单。
 - [ ] 从基础 preset / bundle patch 解析 rows。
