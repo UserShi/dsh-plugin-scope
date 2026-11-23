@@ -16,7 +16,7 @@
 | SSH 到 GitHub | ✅ `Hi UserShi! You've successfully authenticated` |
 | 目标仓库 | ✅ public，main 与 v0.3.1 已推送 |
 | GitHub Release | ✅ https://github.com/UserShi/dsh-plugin-scope/releases/tag/v0.3.1 |
-| npm | ✅ https://www.npmjs.com/package/dsh-plugin-scope (0.3.0) |
+| npm | ✅ https://www.npmjs.com/package/dsh-plugin-scope (0.3.1) |
 
 SSH 授权、代码推送、GitHub Release 与 npm 发布均已完成。
 
