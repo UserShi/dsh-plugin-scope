@@ -31,6 +31,8 @@ It also provides:
 
 ![Architecture](docs/assets/architecture.png)
 
+![Plugin Scope page](docs/assets/plugin-scope-page.png)
+
 ## Status
 
 - **v0.3.4 (current)**: mapping diagnostics (stale/duplicate/protected sections), skill provider/source filter, DETAIL/FAQ/examples.

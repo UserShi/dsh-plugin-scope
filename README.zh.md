@@ -31,6 +31,8 @@ DSH 的插件一装就是全局：每个插件的工具 schema 都会进入每�
 
 ![总体架构](docs/assets/architecture.png)
 
+![Plugin Scope 管理页](docs/assets/plugin-scope-page.png)
+
 ## 状态
 
 - **v0.3.4（当前）**：映射诊断（过期/重复/受保护 section）、技能 provider/source 过滤；DETAIL、FAQ、示例补齐。

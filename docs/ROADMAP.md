@@ -196,14 +196,14 @@
 
 ## M5 — 发布
 
-- [ ] README 截图/GIF（目前只有架构图；UI 截图待补）。
+- [x] README 截图（docs/assets/plugin-scope-page.png；GIF 可选，未制作）。
 - [x] `DETAIL.md`：实现、状态、API、排查、M4b 阻塞说明。
 - [x] 示例：[examples/README.md](../examples/README.md)。
 - [x] CI（test/check/pack，Node 20/22/24）。
 - [x] Release 工作流。
 - [x] GitHub Release `.tgz`。
 - [x] npm 发布（当前 0.3.4）。
-- [ ] 发布后回归：全新 profile 安装 → 首次配置 → 两会话验证（尚未形成完整记录）。
+- [x] 发布后回归：全新 web profile + npm 0.3.4 安装 + API 200 + UI 侧栏/管理页验证（桌面 profile 迁移另测）。
 - [x] 文档：安装、快速开始、作用域语义、限制。
 - [x] FAQ / 故障排查：README + DETAIL。
 
