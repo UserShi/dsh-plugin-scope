@@ -2,7 +2,7 @@
 
 > 关联设计：[docs/DESIGN.md](DESIGN.md)  
 > 版本目标：v0.1 = Gate Engine + 全局开关 + 市场展示；v0.2 = 技能/prompt 门控 + Preset 隔离。  
-> 当前：**v0.3.4 已发布**（映射诊断 + 文档收尾）；M4a/M4c/M4d 已完成，M4b / Preset 完全隔离因 DSH profile-level bundle 加载而阻塞。
+> 当前：**v0.4.0 已发布**（映射诊断 + 文档收尾）；M4a/M4c/M4d 已完成，M4b / Preset 完全隔离因 DSH profile-level bundle 加载而阻塞。
 
 ---
 
@@ -175,17 +175,19 @@
 - [x] 统计 API 增加 turnDetails、pricePerMillion 与插件标题；25/25 测试通过。
 - [x] 单轮用量按会话+轮次缓存，避免新轮次复用旧数据（v0.3.3）。
 
-**M4b Preset Engine（阻塞，未开始）**
+**M4b Preset Engine（Host 后端完成，实验性）**
 
-> 阻塞原因：当前 DSH profile bundles 在 profile root 加载；`agentPresets` 只能组合 Agent 子图，不能卸载 root 已加载的 bundle。插件侧无法安全实现 per-session 零加载，需 DSH Host 支持 profile bundle → preset row 的按会话组合，或 per-agent bundle 加载。详见 [DETAIL.md](../DETAIL.md#10-m4b-阻塞说明) 与 [DSH Host 提案](DSH_HOST_PRESET_PROPOSAL.md)。
+> DSH Host 需要应用 [presetBundles 补丁](host-patch/app-boot-preset-bundles.patch)：把 profile bundle 从 root 移入 `presetLayers`。Plugin Scope 读取 `dsh.profile.presetBundles`，用基础 preset + bundle patch rows 注册 `scope:profile`，并在新会话选择。
 >
-> 进展：已在隔离运行时验证 `dsh.profile.presetBundles` Host 补丁：bundle 不出现在 root tools（row enabled=false）。下一步是在 Plugin Scope 注册 preset 并选择新会话。
+> 已隔离运行时验证：root 中 `dsh-ai-diagrams` row `enabled=false`，预设会话 47 个工具含 `diagram_*`。详见 [DETAIL.md](../DETAIL.md#10-m4b-阻塞说明) 与 [Host 提案](DSH_HOST_PRESET_PROPOSAL.md)。
 
-- [ ] `presetSafe` 白名单。
-- [ ] 从基础 preset / bundle patch 解析 rows。
-- [ ] `agentPresets.register` / `select`；scope preset 的启动重建。
-- [ ] 空白会话选择；已开始会话锁定提示。
-- [ ] 失败/泄漏诊断；回退到 Gate。
+- [x] `presetSafe` 白名单：profile `presetBundles` 显式 opt-in；client bundle 只警告不阻断（实验性）。
+- [x] 从基础 preset / bundle patch 解析 rows。
+- [x] `agentPresets.register` / `select`；scope preset 的启动重建。
+- [x] 空白会话选择；已开始会话保持原 preset（锁定由 registry 保证）。
+- [x] 失败诊断：`diagnostics.presetIsolation` 暴露 enabled/registered/error/bundles；未实现自动回退 Gate。
+- [ ] per-session / per-workspace 动态 preset（当前是 profile 级固定集合）。
+- [ ] M4b 配置 UI 与 broken 原因展示。
 
 **验收**
 
@@ -204,8 +206,8 @@
 - [x] CI（test/check/pack，Node 20/22/24）。
 - [x] Release 工作流。
 - [x] GitHub Release `.tgz`。
-- [x] npm 发布（当前 0.3.4）。
-- [x] 发布后回归：全新 web profile + npm 0.3.4 安装 + API 200 + UI 侧栏/管理页验证（桌面 profile 迁移另测）。
+- [x] npm 发布（当前 0.4.0）。
+- [x] 发布后回归：全新 web profile + npm 0.4.0 安装 + API 200 + UI 侧栏/管理页验证（桌面 profile 迁移另测）。
 - [x] 文档：安装、快速开始、作用域语义、限制。
 - [x] FAQ / 故障排查：README + DETAIL。
 

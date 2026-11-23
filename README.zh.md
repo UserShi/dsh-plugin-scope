@@ -1,6 +1,6 @@
 # Plugin Scope for DeepSeek Harness
 
-> **v0.3.4 · Gate 引擎 + 作用域/用量/标签/侧栏 + 调用历史 + 映射诊断** — 全局 / 按需 / 关闭 / 工作区 / 对话级作用域，带 token/费用统计、标签组自动匹配，并与 **dsh-market** 和原生 **Plugins** 页集成。
+> **v0.4.0 · Gate 引擎 + 作用域/用量/标签/侧栏 + 调用历史 + 映射诊断** — 全局 / 按需 / 关闭 / 工作区 / 对话级作用域，带 token/费用统计、标签组自动匹配，并与 **dsh-market** 和原生 **Plugins** 页集成。
 > 详细实现：[DETAIL.md](DETAIL.md) · 示例：[examples/README.md](examples/README.md) · 设计：[docs/DESIGN.md](docs/DESIGN.md) · 路线图：[docs/ROADMAP.md](docs/ROADMAP.md) · 版本说明：[CHANGELOG.md](CHANGELOG.md)
 
 ## 它解决什么问题
@@ -20,6 +20,7 @@ DSH 的插件一装就是全局：每个插件的工具 schema 都会进入每�
 - 与 **dsh-market / 原生 Plugins 页** 结合：插件详情显示作用域徽章，并可直接设置全局/按需/关闭；
 - 映射抽屉：把工具、技能和 prompt section 归到插件下；未映射插件保持全局、不会被静默隐藏。
 - 映射诊断：标记过期工具/技能、重复归属和受保护 section；技能列表支持按 provider/source 过滤。
+- **Profile Preset Engine（实验性）**：应用 Host 的 `presetBundles` 补丁后，list 中的 bundle 不再进入 profile root；Plugin Scope 用基础 preset + bundle patch 注册 `scope:profile`，并让新会话选择它。需要 DSH Host 补丁，详见 [docs/DSH_HOST_PRESET_PROPOSAL.md](docs/DSH_HOST_PRESET_PROPOSAL.md)。
 - 中英文界面切换，默认中文；选择保存在本地设置里。
 - 对话框右上角插件选择器：显示全局插件、本次对话已启用、可选按需插件和已关闭插件，支持按名称/说明模糊搜索，并在对话内一键启停按需插件。
 - 工作区级配置：每个工作目录可以选择全局 / 按需 / 关闭，并单独配置该工作区启用的插件列表；对话没有单独设置时自动继承工作区，设置过则优先使用会话配置。
@@ -35,7 +36,7 @@ DSH 的插件一装就是全局：每个插件的工具 schema 都会进入每�
 
 ## 状态
 
-- **v0.3.4（当前）**：映射诊断（过期/重复/受保护 section）、技能 provider/source 过滤；DETAIL、FAQ、示例补齐。
+- **v0.4.0（当前）**：Profile Preset Engine 后端（实验性，需 Host 补丁）；映射诊断、技能过滤、DETAIL/FAQ/示例。
 - **v0.3.3**：单轮调用卡 + 调用历史。
 - **v0.3.2**：单轮调用卡与调用历史。
 - **v0.3.1**：新增左侧栏 **插件作用域** 入口，点击直达管理页。
@@ -55,15 +56,15 @@ DSH 的插件一装就是全局：每个插件的工具 schema 都会进入每�
 
 或在 **Plugins → Add plugin** 里选择本目录。
 
-### GitHub Release（v0.3.4）
+### GitHub Release（v0.4.0）
 
-    dsh plugin --profile desktop add https://github.com/UserShi/dsh-plugin-scope/releases/download/v0.3.4/dsh-plugin-scope-0.3.4.tgz
+    dsh plugin --profile desktop add https://github.com/UserShi/dsh-plugin-scope/releases/download/v0.4.0/dsh-plugin-scope-0.4.0.tgz
 
-### npm（v0.3.4）
+### npm（v0.4.0）
 
     dsh plugin --profile desktop add dsh-plugin-scope
 
-0.3.4 已发布到 npm。
+0.4.0 已发布到 npm。
 
 npm 页面：https://www.npmjs.com/package/dsh-plugin-scope
 

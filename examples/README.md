@@ -48,7 +48,32 @@ curl -s "$API/stats?session=SESSION&refresh=1" | jq '.session.turnDetails[-1]'
 Each turn includes `calls`, `tokens`, `usage.total`, `plugins[].calls`,
 `plugins[].tokens` and `plugins[].tools` for mapped tool detail.
 
-## 5. Read mapping diagnostics
+## 5. Profile preset isolation (experimental)
+
+Requires the Host patch in [docs/host-patch/app-boot-preset-bundles.patch](../docs/host-patch/app-boot-preset-bundles.patch).
+
+```json
+{
+  "dsh": {
+    "profile": {
+      "bundles": ["@deepseek-ai/dsh-base", "@deepseek-ai/dsh-web-app", "dsh-plugin-scope", "dsh-ai-diagrams"],
+      "presetBundles": ["dsh-ai-diagrams"]
+    }
+  }
+}
+```
+
+Restart the profile. Check:
+
+```bash
+curl -s "$API/state?session=SESSION" | jq '.diagnostics.presetIsolation'
+curl -s "$API/tools?session=SESSION" | jq '[.tools[].name | select(startswith("diagram_"))]'
+```
+
+Expected: root `dsh-ai-diagrams` row is `enabled=false`; a new blank conversation has the
+preset and diagram tools.
+
+## 6. Read mapping diagnostics
 
 ```bash
 curl -s "$API/state?session=SESSION" | jq '.plugins[] | {name, mappingDiagnostics}'

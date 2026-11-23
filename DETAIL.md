@@ -207,11 +207,59 @@ npm pack --dry-run
 
 当前：26 个纯函数测试。
 
-## 10. M4b 阻塞说明
+## 10. M4b：Profile Preset Engine（实验性）
 
-M4b 的目标是「未选中插件完全不加载」。当前 DSH 的 profile bundles 在 **profile root** 加载；`agentPresets` 只能组合 Agent 子图，不能卸载 root 已经加载的 bundle。插件侧无法安全实现 per-session 零加载，需 DSH Host 提供：
+### 10.1 Host 补丁
 
-- profile bundle → preset row 的按会话组合；或
-- pluginManager 的 per-agent bundle 加载。
+应用 [docs/host-patch/app-boot-preset-bundles.patch](docs/host-patch/app-boot-preset-bundles.patch) 后，profile 可声明：
 
-在此之前，Plugin Scope 保持 Gate 模式；强行注册 synthetic preset 可能造成重复服务/泄漏，不建议。Host 变更建议见 [docs/DSH_HOST_PRESET_PROPOSAL.md](docs/DSH_HOST_PRESET_PROPOSAL.md)。
+```json
+{
+  "dsh": {
+    "profile": {
+      "bundles": ["@deepseek-ai/dsh-base", "@deepseek-ai/dsh-web-app", "dsh-plugin-scope", "dsh-ai-diagrams"],
+      "presetBundles": ["dsh-ai-diagrams"]
+    }
+  }
+}
+```
+
+Host 会把这些 bundle 的 layer 放入 `presetLayers`，不再进入 root composition。
+
+### 10.2 Plugin Scope 行为
+
+启动时：
+
+1. 读取 profile 的 `presetBundles`；
+2. 解析默认 preset 文档 + 每个 bundle 的 patch rows；
+3. 注册 `scope:profile` preset；
+4. 新空白会话选择该 preset；已开始会话保持原 preset（registry 锁定）。
+
+`diagnostics.presetIsolation` 暴露：
+
+```json
+{
+  "enabled": true,
+  "registered": true,
+  "error": null,
+  "bundles": ["dsh-ai-diagrams"],
+  "presetId": "scope:profile"
+}
+```
+
+### 10.3 验证结果
+
+隔离 web profile 中：
+
+- root `dsh-ai-diagrams` row `enabled=false`，root tools 无 `diagram_*`；
+- 新会话 preset `scope:profile`，tools 47 个，含 7 个 `diagram_*`；
+- 配置 UI 未实现，需手动编辑 profile `package.json` 后重启。
+
+### 10.4 当前限制
+
+- profile 级固定集合，不是 per-session / per-workspace 动态 preset；
+- 有 client half 的 bundle 只警告，可能缺少客户端 UI；
+- 注册失败只写日志/诊断，不自动回退 Gate；
+- 未应用 Host 补丁的标准 DSH 上该功能不生效（插件保持 Gate）。
+
+Host 变更建议见 [docs/DSH_HOST_PRESET_PROPOSAL.md](docs/DSH_HOST_PRESET_PROPOSAL.md)。

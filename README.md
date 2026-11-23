@@ -1,6 +1,6 @@
 # Plugin Scope for DeepSeek Harness
 
-> **v0.3.4 · Gate engine + scopes/usage/tags/sidebar + call history + mapping diagnostics** — global / on-demand / off / workspace / per-conversation plugin scopes, with token and cost stats, tag-group auto-match, and integration with **dsh-market** and the native **Plugins** page.
+> **v0.4.0 · Gate engine + scopes/usage/tags/sidebar + call history + mapping diagnostics** — global / on-demand / off / workspace / per-conversation plugin scopes, with token and cost stats, tag-group auto-match, and integration with **dsh-market** and the native **Plugins** page.
 > Details: [DETAIL.md](DETAIL.md) · Examples: [examples/README.md](examples/README.md) · Design: [docs/DESIGN.md](docs/DESIGN.md) · Roadmap: [docs/ROADMAP.md](docs/ROADMAP.md) · Changelog: [CHANGELOG.md](CHANGELOG.md)
 
 ## The problem
@@ -20,6 +20,7 @@ It also provides:
 - Integration with **dsh-market / the native Plugins page**: scope badges and direct global/on-demand/off controls;
 - A mapping drawer: assign tools, skills and prompt sections to a plugin; unmapped plugins stay Global and are never silently hidden.
 - Mapping diagnostics: stale tools/skills, duplicate ownership and protected sections; the skill list filters by provider/source.
+- **Profile Preset Engine (experimental)**: with the Host `presetBundles` patch applied, listed bundles leave the profile root; Plugin Scope registers `scope:profile` from the base preset + bundle patch rows and selects it for new sessions. Requires the DSH Host patch; see [docs/DSH_HOST_PRESET_PROPOSAL.md](docs/DSH_HOST_PRESET_PROPOSAL.md).
 - Chinese/English UI switch, Chinese by default; the choice is stored locally.
 - A top-right conversation plugin picker: global plugins, enabled plugins, available on-demand plugins and off plugins, with fuzzy search over names and descriptions and one-click per-conversation toggles.
 - Workspace scopes: each working directory selects Global / On-demand / Off and its own plugin list; conversations without their own override inherit the workspace, while an explicit conversation setting wins.
@@ -35,7 +36,7 @@ It also provides:
 
 ## Status
 
-- **v0.3.4 (current)**: mapping diagnostics (stale/duplicate/protected sections), skill provider/source filter, DETAIL/FAQ/examples.
+- **v0.4.0 (current)**: experimental Profile Preset Engine backend (needs the Host patch); mapping diagnostics, skill filter, DETAIL/FAQ/examples.
 - **v0.3.3**: per-turn usage cards and call history.
 - **v0.3.2**: per-turn usage cards and call history.
 - **v0.3.1**: added the **Plugin Scope** entry to the left sidebar, opening the management page directly.
@@ -55,15 +56,15 @@ It also provides:
 
 Or choose this directory in **Plugins → Add plugin**.
 
-### GitHub release (v0.3.4)
+### GitHub release (v0.4.0)
 
-    dsh plugin --profile desktop add https://github.com/UserShi/dsh-plugin-scope/releases/download/v0.3.4/dsh-plugin-scope-0.3.4.tgz
+    dsh plugin --profile desktop add https://github.com/UserShi/dsh-plugin-scope/releases/download/v0.4.0/dsh-plugin-scope-0.4.0.tgz
 
-### npm (v0.3.4)
+### npm (v0.4.0)
 
     dsh plugin --profile desktop add dsh-plugin-scope
 
-0.3.4 is published on npm.
+0.4.0 is published on npm.
 
 npm page: https://www.npmjs.com/package/dsh-plugin-scope
 

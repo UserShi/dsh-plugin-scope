@@ -1,6 +1,6 @@
 # v0.1–v0.3 实现说明（含 M4a / M4d）
 
-> Stable：dsh-plugin-scope 0.3.4（Gate + 工作区 + 用量 + 标签列表 + 统一下拉作用域 + 侧栏入口 + 单轮调用历史 + 映射诊断）；M4b / Preset 隔离阻塞
+> Stable：dsh-plugin-scope 0.4.0（Gate + 工作区 + 用量 + 标签列表 + 统一下拉作用域 + 侧栏入口 + 单轮调用历史 + 映射诊断）；M4b / Preset 隔离阻塞
 > 设计基线：[docs/DESIGN.md](DESIGN.md)  
 > 运行环境：DeepSeek Harness 0.2.2-rc.5 / Desktop profile
 
@@ -11,7 +11,7 @@
 | lib/core.js | 纯函数：状态归一化、作用域解析、工具/技能/section 收集、token 估算、映射诊断 |
 | lib/state.js | profile 级 JSON 状态：原子写、备份、串行化、损坏恢复 |
 | lib/stats.js | 纯函数：session log 折叠调用/工具 token/模型 usage、按插件/工作区归集、按 turn 折叠 |
-| lib/index.js | Host 插件：inventory、Gate、pluginManager 全局开关、HTTP API、agent/created |
+| lib/index.js | Host 插件：inventory、Gate、pluginManager 全局开关、profile preset 注册、HTTP API、agent/created |
 | lib/client.js | 浏览器半：Settings 页、Plugins/Settings tab、左侧栏入口 + main panel、插件详情徽章/区块、对话 chip、右上角对话插件选择器、映射抽屉 |
 | package.json | dsh.bundle.patch + dsh.client + exports；无运行时依赖 |
 | cordis.patch.yml | 只插入一个 Host row |
@@ -85,7 +85,8 @@ Map contributions 抽屉允许手动把当前会话可见工具、技能归到�
 
 | 方法 | 路径 | 说明 |
 |---|---|---|
-| GET | /state?session= | 库存 + 作用域 + 估算 + live sessions + mappingDiagnostics |
+| GET | /state?session= | 库存 + 作用域 + 估算 + live sessions + mappingDiagnostics + presetIsolation |
+| GET | /preset-inspect | preset roster/document/composition + scope preset + session preset |
 | GET | /tools?session= | 当前会话可见工具，用于映射抽屉 |
 | GET | /skills?session= | 当前会话可见技能（含 provider/source），用于映射抽屉 |
 | GET | /gates | 当前 live agent 的 deny 工具、隐藏技能、隐藏 section 诊断 |

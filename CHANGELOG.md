@@ -1,5 +1,31 @@
 # Changelog
 
+## v0.4.0 — 2026-11-23
+
+### 中文
+
+- 新增实验性 **Profile Preset Engine**：
+  - Host `presetBundles` 补丁把 bundle 从 root 移入 preset layers；
+  - Plugin Scope 解析默认 preset + bundle patch rows，注册 `scope:profile`；
+  - 新空白会话自动选择，已开始会话保持锁定；
+  - `diagnostics.presetIsolation` 暴露启用/注册/错误/bundle 列表。
+- 隔离运行时验证：root 不加载 `dsh-ai-diagrams`，preset 会话获得 47 个工具（含 7 个 diagram 工具）。
+- 映射诊断、技能 provider/source 过滤、DETAIL/FAQ/示例保留。
+- 已知限制：profile 级固定集合；有 client half 的 bundle 只警告；失败不自动回退 Gate；需 Host 补丁。
+- 测试 26/26 通过。
+
+### English
+
+- Added experimental **Profile Preset Engine**:
+  - the Host `presetBundles` patch moves bundles from root into preset layers;
+  - Plugin Scope parses the default preset plus bundle patch rows and registers `scope:profile`;
+  - new blank sessions select it automatically; started sessions stay locked;
+  - `diagnostics.presetIsolation` reports enabled/registered/error/bundles.
+- Verified in an isolated runtime: `dsh-ai-diagrams` is absent from root and a preset session receives 47 tools (including 7 diagram tools).
+- Mapping diagnostics, skill provider/source filter, DETAIL/FAQ/examples remain.
+- Known limits: profile-level fixed set; client-half bundles only warn; no automatic Gate fallback on failure; requires the Host patch.
+- 26/26 tests pass.
+
 ## v0.3.4 — 2026-11-23
 
 ### 中文

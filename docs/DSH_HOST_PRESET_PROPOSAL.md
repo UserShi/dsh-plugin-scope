@@ -1,6 +1,6 @@
 # DSH Host 变更提案：Profile-bundle / Preset 能力
 
-状态：**Prototype verified / 待集成 M4b**
+状态：**Prototype verified / Plugin Scope 已集成（实验性）**
 目标版本：DSH Host（当前本地 0.2.2-rc.5）
 关联：[M4b Preset Engine](ROADMAP.md#m4b-preset-engine阻塞未开始)
 
