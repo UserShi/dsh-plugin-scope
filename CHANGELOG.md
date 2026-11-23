@@ -1,5 +1,29 @@
 # Changelog
 
+## v0.3.4 — 2026-11-23
+
+### 中文
+
+- 新增映射诊断：过期工具/技能、重复归属工具/技能、受保护 Prompt section 警告。
+- 插件列表和映射弹窗展示诊断；只提示，不自动删除映射。
+- 映射弹窗的技能列表新增 provider/source 过滤。
+- 新增 DETAIL.md（架构、状态、API、排查、M4b 阻塞说明）。
+- 新增 examples/README.md（作用域、工作区、标签匹配、单轮统计、诊断示例）。
+- README 增加 FAQ/故障排查；M0/M4a/M5 状态更新。
+- M4b Preset Engine 记录为阻塞：DSH profile bundles 在 root 加载，agentPresets 无法 per-session 卸载。
+- 测试 26/26 通过。
+
+### English
+
+- Added mapping diagnostics: stale tools/skills, duplicate ownership, protected prompt sections.
+- Plugin list and mapping modal show warnings; mappings are never deleted automatically.
+- Added provider/source filtering to the mapping modal's skill list.
+- Added DETAIL.md (architecture, state, API, troubleshooting, M4b blocker).
+- Added examples/README.md (scopes, workspace, tag matching, per-turn stats, diagnostics).
+- README gains an FAQ/troubleshooting section; M0/M4a/M5 status updated.
+- M4b Preset Engine recorded as blocked: DSH profile bundles load at root and agentPresets cannot unload them per session.
+- 26/26 tests pass.
+
 ## v0.3.3 — 2026-11-23
 
 ### 中文

@@ -6,6 +6,7 @@ import {
   collectHiddenSkills,
   defaultState,
   deleteProfile,
+  diagnoseMappings,
   estimateTokens,
   normalizeScope,
   normalizeState,
@@ -236,6 +237,21 @@ test('scopeLabel is human readable', () => {
   assert.equal(scopeLabel('global'), 'Global')
   assert.equal(scopeLabel('on-demand'), 'On demand')
   assert.equal(scopeLabel('off'), 'Off')
+})
+
+test('diagnoseMappings finds stale, duplicate and protected mappings', () => {
+  const records = [
+    record('one', 'global', ['diagram_save', 'missing_tool'], ['diagram-design', 'shared-skill']),
+    record('two', 'on-demand', ['diagram_save'], ['shared-skill'], ['harness:identity', 'safe-section']),
+  ]
+  const diagnostics = diagnoseMappings(records, { tools: ['diagram_save'], skills: ['diagram-design', 'shared-skill'] })
+  assert.deepEqual(diagnostics.one.staleTools, ['missing_tool'])
+  assert.deepEqual(diagnostics.one.staleSkills, [])
+  assert.deepEqual(diagnostics.one.duplicateTools, ['diagram_save'])
+  assert.deepEqual(diagnostics.one.duplicateSkills, ['shared-skill'])
+  assert.deepEqual(diagnostics.two.duplicateTools, ['diagram_save'])
+  assert.deepEqual(diagnostics.two.duplicateSkills, ['shared-skill'])
+  assert.deepEqual(diagnostics.two.protectedSections, ['harness:identity'])
 })
 
 test('built-in profiles cannot be deleted', () => {

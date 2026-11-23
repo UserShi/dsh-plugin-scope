@@ -13,7 +13,7 @@
 - [x] `docs/DESIGN.md`
 - [x] 架构图（HTML/PNG）
 - [x] 仓库骨架与发布说明
-- [ ] 用户确认核心语义 / 仓库授权
+- [x] 用户确认核心语义 / 仓库授权（public 仓库、SSH、GitHub Release、npm 均已授权并发布）
 
 **退出标准**
 
@@ -139,9 +139,9 @@
 - [x] 映射保存后重新应用 gate；技能列表 5 秒缓存。
 - [x] 深色模式修复：改用 `--dsw-alias-bg-layer-1`、`--dsw-alias-border-l2`、`--dsw-alias-label-*` 等真实 token。
 - [x] 会话对象新增 `gatedSkills` / `gatedSections` 计数；`GET /gates` 诊断。
-- [ ] 冲突检测：同名本地技能、受保护 section。
-- [ ] 映射过期检测。
-- [ ] 技能列表的 provider/source 过滤 UI（当前全部可见技能都可映射）。
+- [x] 冲突检测：同名本地技能、受保护 section（实现为 mappingDiagnostics 警告，不自动删除映射）。
+- [x] 映射过期检测：工具/技能已不存在时标记 staleTools/staleSkills。
+- [x] 技能列表的 provider/source 过滤 UI。
 
 **M4c 用量统计 + 标签组（已完成，v0.2.0）**
 
@@ -175,7 +175,9 @@
 - [x] 统计 API 增加 turnDetails、pricePerMillion 与插件标题；25/25 测试通过。
 - [x] 单轮用量按会话+轮次缓存，避免新轮次复用旧数据（v0.3.3）。
 
-**M4b Preset Engine（未开始）**
+**M4b Preset Engine（阻塞，未开始）**
+
+> 阻塞原因：当前 DSH profile bundles 在 profile root 加载；`agentPresets` 只能组合 Agent 子图，不能卸载 root 已加载的 bundle。插件侧无法安全实现 per-session 零加载，需 DSH Host 支持 profile bundle → preset row 的按会话组合，或 per-agent bundle 加载。详见 [DETAIL.md](../DETAIL.md#10-m4b-阻塞说明)。
 
 - [ ] `presetSafe` 白名单。
 - [ ] 从基础 preset / bundle patch 解析 rows。
@@ -194,11 +196,16 @@
 
 ## M5 — 发布
 
-- README 截图/GIF、DETAIL.md、示例。
-- CI（typecheck/test/build/pack）、Release 工作流。
-- GitHub Release `.tgz`；可选 npm。
-- 发布后回归：全新 profile 安装 → 首次配置 → 两会话验证。
-- 文档：安装、快速开始、作用域语义、限制、FAQ、故障排查。
+- [ ] README 截图/GIF（目前只有架构图；UI 截图待补）。
+- [x] `DETAIL.md`：实现、状态、API、排查、M4b 阻塞说明。
+- [x] 示例：[examples/README.md](../examples/README.md)。
+- [x] CI（test/check/pack，Node 20/22/24）。
+- [x] Release 工作流。
+- [x] GitHub Release `.tgz`。
+- [x] npm 发布（当前 0.3.4）。
+- [ ] 发布后回归：全新 profile 安装 → 首次配置 → 两会话验证（尚未形成完整记录）。
+- [x] 文档：安装、快速开始、作用域语义、限制。
+- [x] FAQ / 故障排查：README + DETAIL。
 
 ---
 

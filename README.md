@@ -1,7 +1,7 @@
 # Plugin Scope for DeepSeek Harness
 
-> **v0.3.3 · Gate engine + scopes/usage/tags/sidebar + call history** — global / on-demand / off / workspace / per-conversation plugin scopes, with token and cost stats, tag-group auto-match, and integration with **dsh-market** and the native **Plugins** page.
-> Design: [docs/DESIGN.md](docs/DESIGN.md) · Roadmap: [docs/ROADMAP.md](docs/ROADMAP.md) · Changelog: [CHANGELOG.md](CHANGELOG.md) · Publishing: [docs/GITHUB.md](docs/GITHUB.md)
+> **v0.3.4 · Gate engine + scopes/usage/tags/sidebar + call history + mapping diagnostics** — global / on-demand / off / workspace / per-conversation plugin scopes, with token and cost stats, tag-group auto-match, and integration with **dsh-market** and the native **Plugins** page.
+> Details: [DETAIL.md](DETAIL.md) · Examples: [examples/README.md](examples/README.md) · Design: [docs/DESIGN.md](docs/DESIGN.md) · Roadmap: [docs/ROADMAP.md](docs/ROADMAP.md) · Changelog: [CHANGELOG.md](CHANGELOG.md)
 
 ## The problem
 
@@ -19,6 +19,7 @@ It also provides:
 - Per-plugin tool counts and token estimates;
 - Integration with **dsh-market / the native Plugins page**: scope badges and direct global/on-demand/off controls;
 - A mapping drawer: assign tools, skills and prompt sections to a plugin; unmapped plugins stay Global and are never silently hidden.
+- Mapping diagnostics: stale tools/skills, duplicate ownership and protected sections; the skill list filters by provider/source.
 - Chinese/English UI switch, Chinese by default; the choice is stored locally.
 - A top-right conversation plugin picker: global plugins, enabled plugins, available on-demand plugins and off plugins, with fuzzy search over names and descriptions and one-click per-conversation toggles.
 - Workspace scopes: each working directory selects Global / On-demand / Off and its own plugin list; conversations without their own override inherit the workspace, while an explicit conversation setting wins.
@@ -32,7 +33,8 @@ It also provides:
 
 ## Status
 
-- **v0.3.3 (current)**: per-turn plugin usage under each completed turn; the plugin panel has Manage / Call history tabs with per-turn detail and per-turn request caching.
+- **v0.3.4 (current)**: mapping diagnostics (stale/duplicate/protected sections), skill provider/source filter, DETAIL/FAQ/examples.
+- **v0.3.3**: per-turn usage cards and call history.
 - **v0.3.2**: per-turn usage cards and call history.
 - **v0.3.1**: added the **Plugin Scope** entry to the left sidebar, opening the management page directly.
 - **v0.3.0**: scope profiles removed; workspace/conversation/plugin dropdowns select Global/On-demand/Off; the tag list supports create/rename/delete/reorder and syncs tagged plugins; usage, cost, keyword auto-match, skill/prompt mapping remain.
@@ -51,15 +53,15 @@ It also provides:
 
 Or choose this directory in **Plugins → Add plugin**.
 
-### GitHub release (v0.3.3)
+### GitHub release (v0.3.4)
 
-    dsh plugin --profile desktop add https://github.com/UserShi/dsh-plugin-scope/releases/download/v0.3.3/dsh-plugin-scope-0.3.3.tgz
+    dsh plugin --profile desktop add https://github.com/UserShi/dsh-plugin-scope/releases/download/v0.3.4/dsh-plugin-scope-0.3.4.tgz
 
-### npm (v0.3.3)
+### npm (v0.3.4)
 
     dsh plugin --profile desktop add dsh-plugin-scope
 
-0.3.3 is published on npm.
+0.3.4 is published on npm.
 
 npm page: https://www.npmjs.com/package/dsh-plugin-scope
 
@@ -81,6 +83,34 @@ npm page: https://www.npmjs.com/package/dsh-plugin-scope
 3. On **agent/created**, apply **tools.restrict** / skill shadows / prompt-section shadows to **agent.ctx**.
 4. Tool-set changes are logged by DSH as **tool-addition/removal**; sessions remain replayable.
 5. Global toggles call **pluginManager.setBundleEnabled/setPluginEnabled**; HMR applies immediately, otherwise a restart is reported.
+
+## FAQ / troubleshooting
+
+**Why is an on-demand plugin missing?**
+
+Check the conversation/workspace mode (`on-demand` or `off`), explicit add/remove overrides, or enable it manually from the top-right **Plugins** panel.
+
+**Why does tag auto-match not fire?**
+
+It requires the global auto-match switch, the tag group's own switch, a keyword hit in the user message, and an on-demand plugin that is currently hidden.
+
+**Why are the usage card or call history empty?**
+
+Only **mapped plugin** calls in completed turns are counted. Core tools such as `run_code`/`bash` and unmapped tools are excluded. Add mappings first.
+
+**Why does cost differ from provider billing?**
+
+Costs are estimates: tool tokens are estimated from argument/result JSON length, and input/output/cache share the configured price. The default is ¥2/1M tokens.
+
+**No Plugin Scope entry in the sidebar?**
+
+Install 0.3.1+ and restart DSH so the client re-injects the `sidebar.panellist` and `main` registrations.
+
+**What do the mapping warnings mean?**
+
+`stale` means a mapped tool/skill no longer exists; `duplicate` means two plugins claim the same contribution; `protected` means a protected prompt section was mapped. Warnings never delete mappings automatically.
+
+More: [DETAIL.md](DETAIL.md) · [Troubleshooting](DETAIL.md#8-排查)
 
 ## Limitations
 

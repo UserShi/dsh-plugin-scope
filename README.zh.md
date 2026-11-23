@@ -1,7 +1,7 @@
 # Plugin Scope for DeepSeek Harness
 
-> **v0.3.3 · Gate 引擎 + 作用域/用量/标签/侧栏 + 调用历史** — 全局 / 按需 / 关闭 / 工作区 / 对话级作用域，带 token/费用统计、标签组自动匹配，并与 **dsh-market** 和原生 **Plugins** 页集成。
-> 设计说明：[docs/DESIGN.md](docs/DESIGN.md) · 路线图：[docs/ROADMAP.md](docs/ROADMAP.md) · 版本说明：[CHANGELOG.md](CHANGELOG.md) · 发布说明：[docs/GITHUB.md](docs/GITHUB.md)
+> **v0.3.4 · Gate 引擎 + 作用域/用量/标签/侧栏 + 调用历史 + 映射诊断** — 全局 / 按需 / 关闭 / 工作区 / 对话级作用域，带 token/费用统计、标签组自动匹配，并与 **dsh-market** 和原生 **Plugins** 页集成。
+> 详细实现：[DETAIL.md](DETAIL.md) · 示例：[examples/README.md](examples/README.md) · 设计：[docs/DESIGN.md](docs/DESIGN.md) · 路线图：[docs/ROADMAP.md](docs/ROADMAP.md) · 版本说明：[CHANGELOG.md](CHANGELOG.md)
 
 ## 它解决什么问题
 
@@ -19,6 +19,7 @@ DSH 的插件一装就是全局：每个插件的工具 schema 都会进入每�
 - 每个插件的工具数量与 token 估算；
 - 与 **dsh-market / 原生 Plugins 页** 结合：插件详情显示作用域徽章，并可直接设置全局/按需/关闭；
 - 映射抽屉：把工具、技能和 prompt section 归到插件下；未映射插件保持全局、不会被静默隐藏。
+- 映射诊断：标记过期工具/技能、重复归属和受保护 section；技能列表支持按 provider/source 过滤。
 - 中英文界面切换，默认中文；选择保存在本地设置里。
 - 对话框右上角插件选择器：显示全局插件、本次对话已启用、可选按需插件和已关闭插件，支持按名称/说明模糊搜索，并在对话内一键启停按需插件。
 - 工作区级配置：每个工作目录可以选择全局 / 按需 / 关闭，并单独配置该工作区启用的插件列表；对话没有单独设置时自动继承工作区，设置过则优先使用会话配置。
@@ -32,7 +33,8 @@ DSH 的插件一装就是全局：每个插件的工具 schema 都会进入每�
 
 ## 状态
 
-- **v0.3.3（当前）**：对话下方显示本轮插件调用；插件面板新增「管理 / 调用历史」两个 tab，支持单轮明细；按轮缓存用量请求。
+- **v0.3.4（当前）**：映射诊断（过期/重复/受保护 section）、技能 provider/source 过滤；DETAIL、FAQ、示例补齐。
+- **v0.3.3**：单轮调用卡 + 调用历史。
 - **v0.3.2**：单轮调用卡与调用历史。
 - **v0.3.1**：新增左侧栏 **插件作用域** 入口，点击直达管理页。
 - **v0.3.0**：删除作用域模板；工作区/会话/插件统一下拉选择全局/按需/关闭；标签列表支持增删改查、排序，改名/删除同步到已打标插件；保留用量、费用、关键词自动匹配、技能/Prompt 映射。
@@ -51,15 +53,15 @@ DSH 的插件一装就是全局：每个插件的工具 schema 都会进入每�
 
 或在 **Plugins → Add plugin** 里选择本目录。
 
-### GitHub Release（v0.3.3）
+### GitHub Release（v0.3.4）
 
-    dsh plugin --profile desktop add https://github.com/UserShi/dsh-plugin-scope/releases/download/v0.3.3/dsh-plugin-scope-0.3.3.tgz
+    dsh plugin --profile desktop add https://github.com/UserShi/dsh-plugin-scope/releases/download/v0.3.4/dsh-plugin-scope-0.3.4.tgz
 
-### npm（v0.3.3）
+### npm（v0.3.4）
 
     dsh plugin --profile desktop add dsh-plugin-scope
 
-0.3.3 已发布到 npm。
+0.3.4 已发布到 npm。
 
 npm 页面：https://www.npmjs.com/package/dsh-plugin-scope
 
@@ -81,6 +83,34 @@ npm 页面：https://www.npmjs.com/package/dsh-plugin-scope
 3. 在 **agent/created** 时，对 **agent.ctx** 应用 **tools.restrict** / 技能遮蔽 / prompt section 遮蔽。
 4. 工具集合变化由 DSH 自动写成 **tool-addition/removal**，会话可回放、可恢复。
 5. 全局开关调用 **pluginManager.setBundleEnabled/setPluginEnabled**，HMR 下即时，否则提示重启。
+
+## 常见问题 / 排查
+
+**按需插件不出现？**
+
+检查当前会话/工作区作用域是否为 `on-demand` 或 `off`；看插件是否被显式加入或移除；或在对话右上角「插件」面板手动启用。
+
+**标签自动匹配不触发？**
+
+需要同时满足：配置里全局自动匹配打开、标签组的自动匹配打开、用户消息命中关键词、插件是 on-demand 且当前不可见。
+
+**调用卡或调用历史为空？**
+
+只统计已完成轮次中的**已映射插件**调用；`run_code`、`bash` 等 core 工具和未映射工具不会进入插件历史。先在插件「映射工具」里补映射。
+
+**费用为什么和 provider 账单不一致？**
+
+费用是估算：工具 token 由参数/结果 JSON 长度折算，输入/输出/缓存共用配置单价。默认 ¥2/1M，可在配置中修改。
+
+**左侧栏没有「插件作用域」？**
+
+确认安装的是 0.3.1+；重启 DSH 让 client 重新注入 `sidebar.panellist` 和 `main` 注册。
+
+**映射警告是什么意思？**
+
+`stale` 表示工具/技能已不存在；`duplicate` 表示同一贡献被多个插件声明；`protected` 表示映射了受保护 Prompt section。警告只提示，不自动删除。
+
+更多： [DETAIL.md](DETAIL.md) · [故障排查](DETAIL.md#8-排查)
 
 ## 限制
 

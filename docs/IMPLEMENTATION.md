@@ -1,6 +1,6 @@
 # v0.1–v0.3 实现说明（含 M4a / M4d）
 
-> Stable：dsh-plugin-scope 0.3.3（Gate + 工作区 + 用量 + 标签列表 + 统一下拉作用域 + 侧栏入口 + 单轮调用历史）；M4b / Preset 隔离未开始
+> Stable：dsh-plugin-scope 0.3.4（Gate + 工作区 + 用量 + 标签列表 + 统一下拉作用域 + 侧栏入口 + 单轮调用历史 + 映射诊断）；M4b / Preset 隔离阻塞
 > 设计基线：[docs/DESIGN.md](DESIGN.md)  
 > 运行环境：DeepSeek Harness 0.2.2-rc.5 / Desktop profile
 
@@ -8,7 +8,7 @@
 
 | 文件 | 作用 |
 |---|---|
-| lib/core.js | 纯函数：状态归一化、作用域解析、工具/技能/section 收集、token 估算、模板 CRUD |
+| lib/core.js | 纯函数：状态归一化、作用域解析、工具/技能/section 收集、token 估算、映射诊断 |
 | lib/state.js | profile 级 JSON 状态：原子写、备份、串行化、损坏恢复 |
 | lib/stats.js | 纯函数：session log 折叠调用/工具 token/模型 usage、按插件/工作区归集、按 turn 折叠 |
 | lib/index.js | Host 插件：inventory、Gate、pluginManager 全局开关、HTTP API、agent/created |
@@ -85,7 +85,7 @@ Map contributions 抽屉允许手动把当前会话可见工具、技能归到�
 
 | 方法 | 路径 | 说明 |
 |---|---|---|
-| GET | /state?session= | 库存 + 作用域 + 估算 + live sessions |
+| GET | /state?session= | 库存 + 作用域 + 估算 + live sessions + mappingDiagnostics |
 | GET | /tools?session= | 当前会话可见工具，用于映射抽屉 |
 | GET | /skills?session= | 当前会话可见技能（含 provider/source），用于映射抽屉 |
 | GET | /gates | 当前 live agent 的 deny 工具、隐藏技能、隐藏 section 诊断 |
@@ -132,7 +132,7 @@ Map contributions 抽屉允许手动把当前会话可见工具、技能归到�
 
 已在本机 desktop profile 安装并做运行时验证：
 
-- npm test：25/25 通过。
+- npm test：26/26 通过。
 - node --check lib/core.js lib/state.js lib/index.js lib/client.js：通过。
 - 安装：dsh plugin --profile desktop add link:/Users/haozhanshi/WorkSpace/deepseek-work/plugin-scope 成功；profile 依赖与 bundle 列表包含 dsh-plugin-scope。
 - GET /api/dsh-plugin-scope/state：返回 8 个 profile 插件、2 个 live agent。
