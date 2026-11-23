@@ -1,5 +1,31 @@
 # Changelog
 
+## v0.4.1 — 2026-11-23
+
+### 中文
+
+- 新增 Profile Preset 配置 UI：
+  - 列出 profile 已安装 bundle，勾选后写入 `dsh.profile.presetBundles`；
+  - 显示 Host 能力、注册状态、错误和 client-half 警告；
+  - 保存后提示重启 DSH。
+- 新增 `GET /preset` 与 `POST /preset/save`。
+- 增加 Host 补丁缺失检测：检测到 bundle 仍在 root 挂载时中止 preset 注册，避免重复服务。
+- preset 会话跳过 Gate；preset bundle 不再误报 stale 映射。
+- 保存前备份 profile `package.json` 为 `.plugin-scope-backup`。
+- 测试 26/26 通过。
+
+### English
+
+- Added the Profile Preset configuration UI:
+  - lists profile-installed bundles and writes selected names to `dsh.profile.presetBundles`;
+  - shows Host capability, registration status, errors and client-half warnings;
+  - tells the user to restart DSH after saving.
+- Added `GET /preset` and `POST /preset/save`.
+- Added missing-Host-patch detection: registration aborts if a listed bundle is still mounted at root, preventing duplicate services.
+- Preset sessions skip Gate; preset bundles no longer show false stale mappings.
+- The original profile `package.json` is backed up as `.plugin-scope-backup`.
+- 26/26 tests pass.
+
 ## v0.4.0 — 2026-11-23
 
 ### 中文

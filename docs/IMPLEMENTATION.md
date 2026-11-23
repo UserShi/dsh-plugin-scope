@@ -1,6 +1,6 @@
 # v0.1–v0.3 实现说明（含 M4a / M4d）
 
-> Stable：dsh-plugin-scope 0.4.0（Gate + 工作区 + 用量 + 标签列表 + 统一下拉作用域 + 侧栏入口 + 单轮调用历史 + 映射诊断）；M4b / Preset 隔离阻塞
+> Stable：dsh-plugin-scope 0.4.1（Gate + 工作区 + 用量 + 标签列表 + 统一下拉作用域 + 侧栏入口 + 单轮调用历史 + 映射诊断）；M4b / Preset 隔离阻塞
 > 设计基线：[docs/DESIGN.md](DESIGN.md)  
 > 运行环境：DeepSeek Harness 0.2.2-rc.5 / Desktop profile
 
@@ -86,6 +86,8 @@ Map contributions 抽屉允许手动把当前会话可见工具、技能归到�
 | 方法 | 路径 | 说明 |
 |---|---|---|
 | GET | /state?session= | 库存 + 作用域 + 估算 + live sessions + mappingDiagnostics + presetIsolation |
+| GET | /preset | selected bundles + candidates + host capability |
+| POST | /preset/save | write profile `presetBundles`; restart required |
 | GET | /preset-inspect | preset roster/document/composition + scope preset + session preset |
 | GET | /tools?session= | 当前会话可见工具，用于映射抽屉 |
 | GET | /skills?session= | 当前会话可见技能（含 provider/source），用于映射抽屉 |

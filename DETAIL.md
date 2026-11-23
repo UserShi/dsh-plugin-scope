@@ -253,7 +253,7 @@ Host 会把这些 bundle 的 layer 放入 `presetLayers`，不再进入 root com
 
 - root `dsh-ai-diagrams` row `enabled=false`，root tools 无 `diagram_*`；
 - 新会话 preset `scope:profile`，tools 47 个，含 7 个 `diagram_*`；
-- 配置 UI 未实现，需手动编辑 profile `package.json` 后重启。
+- 管理页新增 `Profile 预设隔离` 区块：勾选 bundle、保存到 profile `package.json`、显示 Host/错误状态；保存后需重启。
 
 ### 10.4 当前限制
 
