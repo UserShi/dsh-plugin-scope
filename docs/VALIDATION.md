@@ -125,10 +125,11 @@ session presetBundles = [ai]      -> tools 47
 ## Release
 
 - tag：`v0.4.4`
+- 待办：`docs/BACKLOG.md`
 - GitHub Release：https://github.com/UserShi/dsh-plugin-scope/releases/tag/v0.4.4
 - npm：`dsh-plugin-scope@0.4.4`
 - Release asset：`dsh-plugin-scope-0.4.4.tgz`
-- 代码：待发布提交
+- 代码：`5920e78`
 
 ## 验证循环（最多两次）
 
