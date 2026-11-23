@@ -1,6 +1,6 @@
 # Plugin Scope for DeepSeek Harness
 
-> **v0.3.2 · Gate engine + scopes/usage/tags/sidebar + call history** — global / on-demand / off / workspace / per-conversation plugin scopes, with token and cost stats, tag-group auto-match, and integration with **dsh-market** and the native **Plugins** page.
+> **v0.3.3 · Gate engine + scopes/usage/tags/sidebar + call history** — global / on-demand / off / workspace / per-conversation plugin scopes, with token and cost stats, tag-group auto-match, and integration with **dsh-market** and the native **Plugins** page.
 > Design: [docs/DESIGN.md](docs/DESIGN.md) · Roadmap: [docs/ROADMAP.md](docs/ROADMAP.md) · Changelog: [CHANGELOG.md](CHANGELOG.md) · Publishing: [docs/GITHUB.md](docs/GITHUB.md)
 
 ## The problem
@@ -32,7 +32,8 @@ It also provides:
 
 ## Status
 
-- **v0.3.2 (current)**: per-turn plugin usage under each completed turn; the plugin panel now has Manage / Call history tabs with per-turn detail.
+- **v0.3.3 (current)**: per-turn plugin usage under each completed turn; the plugin panel has Manage / Call history tabs with per-turn detail and per-turn request caching.
+- **v0.3.2**: per-turn usage cards and call history.
 - **v0.3.1**: added the **Plugin Scope** entry to the left sidebar, opening the management page directly.
 - **v0.3.0**: scope profiles removed; workspace/conversation/plugin dropdowns select Global/On-demand/Off; the tag list supports create/rename/delete/reorder and syncs tagged plugins; usage, cost, keyword auto-match, skill/prompt mapping remain.
 - **v0.2.1**: previous release (simplified on-demand activation).
@@ -50,15 +51,15 @@ It also provides:
 
 Or choose this directory in **Plugins → Add plugin**.
 
-### GitHub release (v0.3.2)
+### GitHub release (v0.3.3)
 
-    dsh plugin --profile desktop add https://github.com/UserShi/dsh-plugin-scope/releases/download/v0.3.2/dsh-plugin-scope-0.3.2.tgz
+    dsh plugin --profile desktop add https://github.com/UserShi/dsh-plugin-scope/releases/download/v0.3.3/dsh-plugin-scope-0.3.3.tgz
 
-### npm (v0.3.2)
+### npm (v0.3.3)
 
     dsh plugin --profile desktop add dsh-plugin-scope
 
-0.3.2 is published on npm.
+0.3.3 is published on npm.
 
 npm page: https://www.npmjs.com/package/dsh-plugin-scope
 

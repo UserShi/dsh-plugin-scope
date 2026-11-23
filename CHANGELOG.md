@@ -1,5 +1,19 @@
 # Changelog
 
+## v0.3.3 — 2026-11-23
+
+### 中文
+
+- 修复单轮调用卡的用量请求缓存：改为按「会话 + 轮次」缓存，避免复用上一轮数据导致当前轮卡片不显示。
+- 保持 0.3.2 的每轮调用卡、管理/调用历史双 tab、单轮插件与工具明细。
+- 25/25 测试通过。
+
+### English
+
+- Fixed per-turn usage request caching: cache is now keyed by session + turn, so a newly completed turn cannot reuse stale data and hide its card.
+- Keeps the v0.3.2 per-turn usage card, Manage / Call history tabs, and per-turn plugin/tool detail.
+- 25/25 tests pass.
+
 ## v0.3.2 — 2026-11-23
 
 ### 中文

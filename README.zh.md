@@ -1,6 +1,6 @@
 # Plugin Scope for DeepSeek Harness
 
-> **v0.3.2 · Gate 引擎 + 作用域/用量/标签/侧栏 + 调用历史** — 全局 / 按需 / 关闭 / 工作区 / 对话级作用域，带 token/费用统计、标签组自动匹配，并与 **dsh-market** 和原生 **Plugins** 页集成。
+> **v0.3.3 · Gate 引擎 + 作用域/用量/标签/侧栏 + 调用历史** — 全局 / 按需 / 关闭 / 工作区 / 对话级作用域，带 token/费用统计、标签组自动匹配，并与 **dsh-market** 和原生 **Plugins** 页集成。
 > 设计说明：[docs/DESIGN.md](docs/DESIGN.md) · 路线图：[docs/ROADMAP.md](docs/ROADMAP.md) · 版本说明：[CHANGELOG.md](CHANGELOG.md) · 发布说明：[docs/GITHUB.md](docs/GITHUB.md)
 
 ## 它解决什么问题
@@ -32,7 +32,8 @@ DSH 的插件一装就是全局：每个插件的工具 schema 都会进入每�
 
 ## 状态
 
-- **v0.3.2（当前）**：对话下方显示本轮插件调用；插件面板新增「管理 / 调用历史」两个 tab，支持单轮明细。
+- **v0.3.3（当前）**：对话下方显示本轮插件调用；插件面板新增「管理 / 调用历史」两个 tab，支持单轮明细；按轮缓存用量请求。
+- **v0.3.2**：单轮调用卡与调用历史。
 - **v0.3.1**：新增左侧栏 **插件作用域** 入口，点击直达管理页。
 - **v0.3.0**：删除作用域模板；工作区/会话/插件统一下拉选择全局/按需/关闭；标签列表支持增删改查、排序，改名/删除同步到已打标插件；保留用量、费用、关键词自动匹配、技能/Prompt 映射。
 - **v0.2.1**：上一版（按需交互简化）。
@@ -50,15 +51,15 @@ DSH 的插件一装就是全局：每个插件的工具 schema 都会进入每�
 
 或在 **Plugins → Add plugin** 里选择本目录。
 
-### GitHub Release（v0.3.2）
+### GitHub Release（v0.3.3）
 
-    dsh plugin --profile desktop add https://github.com/UserShi/dsh-plugin-scope/releases/download/v0.3.2/dsh-plugin-scope-0.3.2.tgz
+    dsh plugin --profile desktop add https://github.com/UserShi/dsh-plugin-scope/releases/download/v0.3.3/dsh-plugin-scope-0.3.3.tgz
 
-### npm（v0.3.2）
+### npm（v0.3.3）
 
     dsh plugin --profile desktop add dsh-plugin-scope
 
-0.3.2 已发布到 npm。
+0.3.3 已发布到 npm。
 
 npm 页面：https://www.npmjs.com/package/dsh-plugin-scope
 

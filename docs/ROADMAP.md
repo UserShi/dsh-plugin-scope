@@ -2,7 +2,7 @@
 
 > 关联设计：[docs/DESIGN.md](DESIGN.md)  
 > 版本目标：v0.1 = Gate Engine + 全局开关 + 市场展示；v0.2 = 技能/prompt 门控 + Preset 隔离。  
-> 当前：**v0.3.2 已发布**（对话下方调用卡 + 单轮调用历史）；M4a/M4c/M4d 已完成，M4b / Preset 完全隔离未开始。
+> 当前：**v0.3.3 已发布**（对话下方调用卡 + 单轮调用历史）；M4a/M4c/M4d 已完成，M4b / Preset 完全隔离未开始。
 
 ---
 
@@ -173,6 +173,7 @@
 - [x] 每一轮完成后在对话下方显示插件调用卡（conversation.chat.turnTail）（v0.3.2）。
 - [x] 对话插件面板「管理 / 调用历史」双 tab；历史列表 + 单轮插件/工具明细。
 - [x] 统计 API 增加 turnDetails、pricePerMillion 与插件标题；25/25 测试通过。
+- [x] 单轮用量按会话+轮次缓存，避免新轮次复用旧数据（v0.3.3）。
 
 **M4b Preset Engine（未开始）**
 

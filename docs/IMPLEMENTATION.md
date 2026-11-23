@@ -1,6 +1,6 @@
 # v0.1–v0.3 实现说明（含 M4a / M4d）
 
-> Stable：dsh-plugin-scope 0.3.2（Gate + 工作区 + 用量 + 标签列表 + 统一下拉作用域 + 侧栏入口 + 单轮调用历史）；M4b / Preset 隔离未开始
+> Stable：dsh-plugin-scope 0.3.3（Gate + 工作区 + 用量 + 标签列表 + 统一下拉作用域 + 侧栏入口 + 单轮调用历史）；M4b / Preset 隔离未开始
 > 设计基线：[docs/DESIGN.md](DESIGN.md)  
 > 运行环境：DeepSeek Harness 0.2.2-rc.5 / Desktop profile
 
