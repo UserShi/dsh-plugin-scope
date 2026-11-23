@@ -14,7 +14,7 @@ DSH：0.2.2-rc.5（桌面 + 隔离 Host 运行时）
 | M2 作用域 | ✅ | 工作区、会话、继承与覆盖 |
 | M3 市场 / 原生插件页 | ✅ | scope 徽章与直接设置 |
 | M4a 技能/Prompt + 映射诊断 | ✅ | stale/duplicate/protected、provider/source 过滤 |
-| M4b Preset Engine | ⚠️ 后端 + UI + per-workspace/per-session 完成，产品化收尾 | 需要 Host 补丁；已开始会话不迁移 |
+| M4b Preset Engine | ⚠️ 后端 + UI + per-workspace/per-session 完成 | 需要 Host 补丁；已开始会话迁移/client UI/上游合入未完成 |
 | M4c 用量 / 标签 | ✅ | 调用次数、token、费用、标签自动匹配 |
 | M4d 作用域简化 / 标签列表 | ✅ | 全局/按需/关闭、标签增删改查、侧栏入口 |
 | M5 发布 / 文档 | ✅ | 截图、DETAIL、FAQ、示例、CI、Release、npm、fresh profile |
@@ -120,7 +120,7 @@ session presetBundles = [ai]      -> tools 47
 - GitHub Release：https://github.com/UserShi/dsh-plugin-scope/releases/tag/v0.4.2
 - npm：`dsh-plugin-scope@0.4.2`
 - Release asset：`dsh-plugin-scope-0.4.2.tgz`
-- 代码：待发布提交
+- 代码：`f80babf`
 
 ## M4b 已知限制
 
