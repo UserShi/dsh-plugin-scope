@@ -1,6 +1,6 @@
 # Plugin Scope for DeepSeek Harness
 
-> **v0.3.1 · Gate 引擎 + 作用域/用量/标签列表 + 侧栏入口** — 全局 / 按需 / 关闭 / 工作区 / 对话级作用域，带 token/费用统计、标签组自动匹配，并与 **dsh-market** 和原生 **Plugins** 页集成。
+> **v0.3.2 · Gate 引擎 + 作用域/用量/标签/侧栏 + 调用历史** — 全局 / 按需 / 关闭 / 工作区 / 对话级作用域，带 token/费用统计、标签组自动匹配，并与 **dsh-market** 和原生 **Plugins** 页集成。
 > 设计说明：[docs/DESIGN.md](docs/DESIGN.md) · 路线图：[docs/ROADMAP.md](docs/ROADMAP.md) · 版本说明：[CHANGELOG.md](CHANGELOG.md) · 发布说明：[docs/GITHUB.md](docs/GITHUB.md)
 
 ## 它解决什么问题
@@ -23,6 +23,7 @@ DSH 的插件一装就是全局：每个插件的工具 schema 都会进入每�
 - 对话框右上角插件选择器：显示全局插件、本次对话已启用、可选按需插件和已关闭插件，支持按名称/说明模糊搜索，并在对话内一键启停按需插件。
 - 工作区级配置：每个工作目录可以选择全局 / 按需 / 关闭，并单独配置该工作区启用的插件列表；对话没有单独设置时自动继承工作区，设置过则优先使用会话配置。
 - 用量统计：对话右上角插件面板显示本次对话调用次数、工具 token 估算和模型 token；插件列表、工作区、市场 scope 列表显示累计。
+- 每轮结束后在对话下方显示本轮插件调用卡；插件面板提供「管理 / 调用历史」两个 tab，历史可按轮查看插件与工具明细。
 - 标签列表：主动新建/重命名/删除/排序标签；给插件打标后，标签改名或删除会同步到所有已打标插件。开启自动匹配后，用户消息命中标签关键词时会自动启用对应但尚未启用的按需插件（全局开关 + 标签开关）。
 - 费用估算：按可配置的「¥/1M tokens」单价，在对话面板、插件列表、工作区和插件详情中把 token 换算成费用。
 - 对话面板支持分类折叠，插件说明改为鼠标悬浮提示（已知插件中英文跟随切换），减少长列表占用。
@@ -31,7 +32,8 @@ DSH 的插件一装就是全局：每个插件的工具 schema 都会进入每�
 
 ## 状态
 
-- **v0.3.1（当前）**：新增左侧栏 **插件作用域** 入口，点击直达管理页。
+- **v0.3.2（当前）**：对话下方显示本轮插件调用；插件面板新增「管理 / 调用历史」两个 tab，支持单轮明细。
+- **v0.3.1**：新增左侧栏 **插件作用域** 入口，点击直达管理页。
 - **v0.3.0**：删除作用域模板；工作区/会话/插件统一下拉选择全局/按需/关闭；标签列表支持增删改查、排序，改名/删除同步到已打标插件；保留用量、费用、关键词自动匹配、技能/Prompt 映射。
 - **v0.2.1**：上一版（按需交互简化）。
 - **M4b / Preset 完全隔离**：尚未开始。
@@ -48,15 +50,15 @@ DSH 的插件一装就是全局：每个插件的工具 schema 都会进入每�
 
 或在 **Plugins → Add plugin** 里选择本目录。
 
-### GitHub Release（v0.3.1）
+### GitHub Release（v0.3.2）
 
-    dsh plugin --profile desktop add https://github.com/UserShi/dsh-plugin-scope/releases/download/v0.3.1/dsh-plugin-scope-0.3.1.tgz
+    dsh plugin --profile desktop add https://github.com/UserShi/dsh-plugin-scope/releases/download/v0.3.2/dsh-plugin-scope-0.3.2.tgz
 
-### npm（v0.3.1）
+### npm（v0.3.2）
 
     dsh plugin --profile desktop add dsh-plugin-scope
 
-0.3.1 已发布到 npm。
+0.3.2 已发布到 npm。
 
 npm 页面：https://www.npmjs.com/package/dsh-plugin-scope
 
@@ -68,7 +70,7 @@ npm 页面：https://www.npmjs.com/package/dsh-plugin-scope
 4. 在对话底部 **Plugin Scope** chip 或右上角 **插件** 面板切换会话作用域，并手动启停按需插件。
 5. 点插件的 **Map contributions**，勾选该插件的工具和技能，并可按需填写 prompt section 名称；未映射的插件保持全局，不节省但不会破坏会话。
 6. 在 **标签列表** 新建标签、填关键词、打开自动匹配；点插件行的 **编辑标签** 从列表中选择标签。重命名/删除标签会自动同步到插件。
-7. 对话右上角的插件面板和 **插件列表** 会显示调用次数/token/费用；**工作区** 行也会显示累计。
+7. 对话右上角的插件面板和 **插件列表** 会显示调用次数/token/费用；每轮结束后对话下方显示本轮调用卡；面板的 **调用历史** 可查看单轮明细。**工作区** 行也会显示累计。
 8. 在 **配置** 里调整 **Token 单价（¥/1M）**；费用只用于估算，不替代 provider 账单。
 
 ## 工作方式

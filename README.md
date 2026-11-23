@@ -1,6 +1,6 @@
 # Plugin Scope for DeepSeek Harness
 
-> **v0.3.1 · Gate engine + scopes/usage/tags + sidebar entry** — global / on-demand / off / workspace / per-conversation plugin scopes, with token and cost stats, tag-group auto-match, and integration with **dsh-market** and the native **Plugins** page.
+> **v0.3.2 · Gate engine + scopes/usage/tags/sidebar + call history** — global / on-demand / off / workspace / per-conversation plugin scopes, with token and cost stats, tag-group auto-match, and integration with **dsh-market** and the native **Plugins** page.
 > Design: [docs/DESIGN.md](docs/DESIGN.md) · Roadmap: [docs/ROADMAP.md](docs/ROADMAP.md) · Changelog: [CHANGELOG.md](CHANGELOG.md) · Publishing: [docs/GITHUB.md](docs/GITHUB.md)
 
 ## The problem
@@ -23,6 +23,7 @@ It also provides:
 - A top-right conversation plugin picker: global plugins, enabled plugins, available on-demand plugins and off plugins, with fuzzy search over names and descriptions and one-click per-conversation toggles.
 - Workspace scopes: each working directory selects Global / On-demand / Off and its own plugin list; conversations without their own override inherit the workspace, while an explicit conversation setting wins.
 - Usage stats: the conversation plugin panel shows calls, estimated tool tokens and model tokens; the plugin list, workspaces and marketplace scope list show cumulative totals.
+- Each completed turn renders a plugin usage card below the conversation; the plugin panel has Manage / Call history tabs with per-turn plugin and tool detail.
 - Tag list: create, rename, delete and reorder tags; renames and deletes sync to every tagged plugin. With auto-match on, a message keyword enables matching on-demand plugins (global switch + per-tag switch).
 - Cost estimates: convert tokens to money at a configurable ¥/1M-token price in the conversation panel, plugin list, workspaces and plugin detail.
 - The conversation panel supports collapsible groups and moves plugin descriptions to hover tooltips (known plugins follow the Chinese/English switch).
@@ -31,7 +32,8 @@ It also provides:
 
 ## Status
 
-- **v0.3.1 (current)**: added the **Plugin Scope** entry to the left sidebar, opening the management page directly.
+- **v0.3.2 (current)**: per-turn plugin usage under each completed turn; the plugin panel now has Manage / Call history tabs with per-turn detail.
+- **v0.3.1**: added the **Plugin Scope** entry to the left sidebar, opening the management page directly.
 - **v0.3.0**: scope profiles removed; workspace/conversation/plugin dropdowns select Global/On-demand/Off; the tag list supports create/rename/delete/reorder and syncs tagged plugins; usage, cost, keyword auto-match, skill/prompt mapping remain.
 - **v0.2.1**: previous release (simplified on-demand activation).
 - **M4b / full Preset isolation**: not started yet.
@@ -48,15 +50,15 @@ It also provides:
 
 Or choose this directory in **Plugins → Add plugin**.
 
-### GitHub release (v0.3.1)
+### GitHub release (v0.3.2)
 
-    dsh plugin --profile desktop add https://github.com/UserShi/dsh-plugin-scope/releases/download/v0.3.1/dsh-plugin-scope-0.3.1.tgz
+    dsh plugin --profile desktop add https://github.com/UserShi/dsh-plugin-scope/releases/download/v0.3.2/dsh-plugin-scope-0.3.2.tgz
 
-### npm (v0.3.1)
+### npm (v0.3.2)
 
     dsh plugin --profile desktop add dsh-plugin-scope
 
-0.3.1 is published on npm.
+0.3.2 is published on npm.
 
 npm page: https://www.npmjs.com/package/dsh-plugin-scope
 
@@ -68,7 +70,7 @@ npm page: https://www.npmjs.com/package/dsh-plugin-scope
 4. Use the **Plugin Scope** chip or the top-right **Plugins** panel to switch the conversation scope and toggle on-demand plugins.
 5. Click **Map contributions** on a plugin to assign its tools and skills, and optionally its prompt-section names. Unmapped plugins stay Global: no savings, but no broken conversations.
 6. Create a tag, add keywords and enable auto-match under **Tags**; click **Edit tags** on a plugin to pick from the managed list. Renaming or deleting a tag syncs every tagged plugin.
-7. The top-right plugin panel, the **plugin list** and **Workspaces** rows show calls/tokens/cost.
+7. The top-right plugin panel, the **plugin list** and **Workspaces** rows show calls/tokens/cost; each completed turn gets a usage card, and **Call history** shows per-turn detail.
 8. Adjust **Token price (¥/1M)** under **Configuration**; costs are estimates, not provider billing.
 
 ## How it works

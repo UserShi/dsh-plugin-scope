@@ -5,6 +5,7 @@ import {
   attributeStats,
   estimateValueTokens,
   foldSessionStats,
+  foldSessionTurns,
   groupByWorkspace,
 } from '../lib/stats.js'
 
@@ -60,7 +61,32 @@ test('aggregateStats sums sessions and attributes tools to plugins', () => {
   const attributed = attributeStats(records, total)
   assert.equal(attributed.plugins.demo.calls, 2)
   assert.equal(attributed.plugins.demo.tokens, total.tokens)
+  assert.equal(attributed.plugins.demo.tools.run_code.calls, 2)
   assert.equal(attributed.unattributed.calls, 0)
+})
+
+test('foldSessionTurns separates turns, prompts and tool usage', () => {
+  const firstCall = { ...call, data: { ...call.data, turn: 1 } }
+  const firstResult = { ...result, data: { ...result.data, turn: 1 } }
+  const turns = foldSessionTurns([
+    { type: 'turn/start', time: 100, data: { turn: 1 } },
+    { type: 'user/message', time: 101, data: { content: [{ type: 'text', text: 'first prompt' }], source: { kind: 'user' } } },
+    { type: 'user/message', time: 102, data: { content: [{ type: 'text', text: 'time context' }], source: { kind: 'time-context' } } },
+    firstCall,
+    firstResult,
+    { type: 'assistant/message', data: { turn: 1, usage: { inputTokens: 10, outputTokens: 5, totalTokens: 15 } } },
+    { type: 'turn/end', time: 200, data: { turn: 1, reason: { kind: 'completed' } } },
+    { type: 'turn/start', time: 300, data: { turn: 2 } },
+    { type: 'user/message', time: 301, data: { content: [{ type: 'text', text: 'second prompt' }], source: { kind: 'user' } } },
+  ])
+  assert.equal(turns.length, 2)
+  assert.equal(turns[0].turn, 1)
+  assert.equal(turns[0].prompt, 'first prompt')
+  assert.equal(turns[0].calls, 1)
+  assert.equal(turns[0].usage.total, 15)
+  assert.equal(turns[0].durationMs, 100)
+  assert.equal(turns[1].prompt, 'second prompt')
+  assert.equal(turns[1].status, 'open')
 })
 
 test('groupByWorkspace aggregates by cwd', () => {

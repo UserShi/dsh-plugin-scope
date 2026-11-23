@@ -1,5 +1,27 @@
 # Changelog
 
+## v0.3.2 — 2026-11-23
+
+### 中文
+
+- 每次完成的对话下方显示本轮插件调用卡：插件名称、调用次数、工具 token、费用，以及本轮模型 token/费用。
+- 调用卡只展示已映射插件的调用；未映射/core 工具不计入插件调用历史。
+- 对话插件面板新增顶部两个 tab：**管理** 与 **调用历史**。
+- 调用历史按已完成对话倒序展示：轮次、时间、用户问题摘要、插件调用次数/token/费用。
+- 点击一条历史进入单轮明细：每个插件的调用次数、token、费用，再展开到具体工具明细。
+- 统计 API 新增每轮 turnDetails（会话级按需计算），并增加 pricePerMillion 与插件标题。
+- 测试 25/25 通过。
+
+### English
+
+- Each completed turn now renders a plugin usage card below the conversation: plugin names, calls, tool tokens, cost, plus model tokens/cost for the turn.
+- The card only shows mapped plugin calls; unmapped/core tools are excluded from plugin history.
+- The conversation plugin panel now has two tabs: **Manage** and **Call history**.
+- History lists completed turns newest-first with turn number, time, user prompt preview, calls/tokens/cost.
+- Clicking a row opens per-turn detail: each plugin's calls/tokens/cost, expandable to individual tools.
+- The stats API adds per-turn turnDetails for the requested session, pricePerMillion and plugin titles.
+- 25/25 tests pass.
+
 ## v0.3.1 — 2026-11-23
 
 ### 中文

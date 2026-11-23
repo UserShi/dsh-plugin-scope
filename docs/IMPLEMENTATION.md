@@ -1,6 +1,6 @@
 # v0.1–v0.3 实现说明（含 M4a / M4d）
 
-> Stable：dsh-plugin-scope 0.3.1（Gate + 工作区 + 用量 + 标签列表 + 统一下拉作用域 + 侧栏入口）；M4b / Preset 隔离未开始
+> Stable：dsh-plugin-scope 0.3.2（Gate + 工作区 + 用量 + 标签列表 + 统一下拉作用域 + 侧栏入口 + 单轮调用历史）；M4b / Preset 隔离未开始
 > 设计基线：[docs/DESIGN.md](DESIGN.md)  
 > 运行环境：DeepSeek Harness 0.2.2-rc.5 / Desktop profile
 
@@ -10,7 +10,7 @@
 |---|---|
 | lib/core.js | 纯函数：状态归一化、作用域解析、工具/技能/section 收集、token 估算、模板 CRUD |
 | lib/state.js | profile 级 JSON 状态：原子写、备份、串行化、损坏恢复 |
-| lib/stats.js | 纯函数：session log 折叠调用/工具 token/模型 usage、按插件/工作区归集 |
+| lib/stats.js | 纯函数：session log 折叠调用/工具 token/模型 usage、按插件/工作区归集、按 turn 折叠 |
 | lib/index.js | Host 插件：inventory、Gate、pluginManager 全局开关、HTTP API、agent/created |
 | lib/client.js | 浏览器半：Settings 页、Plugins/Settings tab、左侧栏入口 + main panel、插件详情徽章/区块、对话 chip、右上角对话插件选择器、映射抽屉 |
 | package.json | dsh.bundle.patch + dsh.client + exports；无运行时依赖 |
@@ -95,7 +95,7 @@ Map contributions 抽屉允许手动把当前会话可见工具、技能归到�
 | POST | /session/reset | { sessionId }；删除会话覆盖，回退到工作区/默认 |
 | POST | /workspace | { cwd, mode, profileId?, overrides? }；工作区作用域 |
 | POST | /workspace/delete | { cwd }；清除工作区配置 |
-| GET | /stats?session= | 当前会话 / 插件 / 工作区 / 全部累计用量 |
+| GET | /stats?session= | 当前会话 / 插件 / 工作区 / 全部累计用量；session.turnDetails 为单轮明细，pricePerMillion 为当前单价 |
 | POST | /tags | { name, tags }；插件标签 |
 | POST | /tag | { action: create/rename/delete/move, tag/name, direction? }；标签列表 CRUD |
 | POST | /tag-rule | { tag, keywords, enabled }；标签关键词/自动开关 |
@@ -132,7 +132,7 @@ Map contributions 抽屉允许手动把当前会话可见工具、技能归到�
 
 已在本机 desktop profile 安装并做运行时验证：
 
-- npm test：24/24 通过。
+- npm test：25/25 通过。
 - node --check lib/core.js lib/state.js lib/index.js lib/client.js：通过。
 - 安装：dsh plugin --profile desktop add link:/Users/haozhanshi/WorkSpace/deepseek-work/plugin-scope 成功；profile 依赖与 bundle 列表包含 dsh-plugin-scope。
 - GET /api/dsh-plugin-scope/state：返回 8 个 profile 插件、2 个 live agent。
