@@ -2,7 +2,7 @@
 
 验证时间：2026-11-23
 
-插件版本：**0.4.3**
+插件版本：**0.4.4**
 DSH：0.2.2-rc.5（桌面 + 隔离 Host 运行时）
 
 ## 总览
@@ -14,7 +14,7 @@ DSH：0.2.2-rc.5（桌面 + 隔离 Host 运行时）
 | M2 作用域 | ✅ | 工作区、会话、继承与覆盖 |
 | M3 市场 / 原生插件页 | ✅ | scope 徽章与直接设置 |
 | M4a 技能/Prompt + 映射诊断 | ✅ | stale/duplicate/protected、provider/source 过滤 |
-| M4b Preset Engine | ⚠️ 后端 + UI + per-workspace/per-session 完成 | 需要 Host 补丁；已开始会话迁移/client UI/上游合入未完成 |
+| M4b Preset Engine | ⚠️ 后端 + UI + workspace/session + started migration 完成 | 需要 Host 补丁；client UI/上游合入/进程级单加载未完成 |
 | M4c 用量 / 标签 | ✅ | 调用次数、token、费用、标签自动匹配 |
 | M4d 作用域简化 / 标签列表 | ✅ | 全局/按需/关闭、标签增删改查、侧栏入口 |
 | M5 发布 / 文档 | ✅ | 截图、DETAIL、FAQ、示例、CI、Release、npm、fresh profile |
@@ -58,6 +58,14 @@ GitHub workflows: CI / Release / Publish npm all success
 }
 ```
 
+### started session migration
+
+```text
+restored started session: blank=false, preset=standard, tools=40
+POST /session/migrate presetBundles=[ai]
+-> preset=scope:profile, tools=47, 7 diagram
+```
+
 ### per-workspace / per-session
 
 ```text
@@ -70,7 +78,7 @@ session presetBundles = [ai]      -> tools 47
 
 ```json
 {
-  "version": "0.4.3",
+  "version": "0.4.4",
   "preset": {
     "enabled": true,
     "registered": true,
@@ -116,11 +124,11 @@ session presetBundles = [ai]      -> tools 47
 
 ## Release
 
-- tag：`v0.4.3`
-- GitHub Release：https://github.com/UserShi/dsh-plugin-scope/releases/tag/v0.4.3
-- npm：`dsh-plugin-scope@0.4.3`
-- Release asset：`dsh-plugin-scope-0.4.3.tgz`
-- 代码：`a3c59b4`
+- tag：`v0.4.4`
+- GitHub Release：https://github.com/UserShi/dsh-plugin-scope/releases/tag/v0.4.4
+- npm：`dsh-plugin-scope@0.4.4`
+- Release asset：`dsh-plugin-scope-0.4.4.tgz`
+- 代码：待发布提交
 
 ## 验证循环（最多两次）
 
@@ -128,19 +136,19 @@ session presetBundles = [ai]      -> tools 47
 
 ```text
 npm test: 26/26
-isolated: 0.4.3, root row false, 47 tools / 7 diagram
+isolated: 0.4.4, root row false, 47 tools / 7 diagram
 workspace empty -> 40 tools / 0 diagram
 workspace full  -> 47 tools / 7 diagram
-desktop: 0.4.3, preset disabled, gates 2
+desktop: 0.4.4, preset disabled, gates 2
 ```
 
 ### 循环 2（发布后）
 
 ```text
 GitHub CI / Release / Publish npm: success
-npm latest: 0.4.3
-isolated: 0.4.3, preset registered, root row false, 47 / 7
-desktop: 0.4.3, preset disabled, gates 2
+npm latest: 0.4.4
+isolated: 0.4.4, preset registered, root row false, 47 / 7
+desktop: 0.4.4, preset disabled, gates 2
 npm test: 26/26
 ```
 

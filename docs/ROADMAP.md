@@ -3,7 +3,7 @@
 > 关联设计：[docs/DESIGN.md](DESIGN.md)  
 > 版本目标：v0.1 = Gate Engine + 全局开关 + 市场展示；v0.2 = 技能/prompt 门控 + Preset 隔离。  
 > 阶段验证：[docs/VALIDATION.md](VALIDATION.md)  
-> 当前：**v0.4.3 已发布**（映射诊断 + 文档收尾）；M4a/M4c/M4d 已完成，M4b / Preset 完全隔离因 DSH profile-level bundle 加载而阻塞。
+> 当前：**v0.4.4 已发布**（映射诊断 + 文档收尾）；M4a/M4c/M4d 已完成，M4b / Preset 完全隔离因 DSH profile-level bundle 加载而阻塞。
 
 ---
 
@@ -190,8 +190,13 @@
 - [x] per-workspace / per-session preset 子集：workspace 多选、session 跟随/关闭/全部，自定义子集走 API。
 - [x] M4b 配置 UI：profile `presetBundles` 勾选/保存、Host 状态、client half 警告；broken 原因显示在状态行。
 - [x] 懒注册 + 并发 guard：按需注册子集 preset，避免重复 ID/重复服务。
-- [ ] 已开始会话迁移到 preset。
-- [ ] 客户端 half bundle 的 UI 保留策略。
+- [x] 已开始会话迁移到 preset（`POST /session/migrate`，v0.4.4；turn-open 拒绝；边界测试见 BACKLOG）。
+- [ ] 客户端 half bundle 的 UI 保留策略（[M4B-TODO-01](BACKLOG.md#m4b-todo-01client-half-bundle-的-ui-保留)）。
+- [ ] Host `presetBundles` 合入上游（[M4B-TODO-02](BACKLOG.md#m4b-todo-02host-presetbundles-补丁合入上游)）。
+- [ ] 多子集进程级单加载（[M4B-TODO-03](BACKLOG.md#m4b-todo-03多子集进程级单加载)）。
+- [ ] 全量池失败自动回退 Gate（[M4B-TODO-04](BACKLOG.md#m4b-todo-04全量池失败自动回退-gate)）。
+- [ ] 会话级自定义子集 UI（[M4B-TODO-05](BACKLOG.md#m4b-todo-05会话级自定义子集-ui)）。
+- [ ] 会话迁移边界测试（[M4B-TODO-06](BACKLOG.md#m4b-todo-06会话迁移的更多边界测试)）。
 
 **验收**
 
@@ -210,8 +215,8 @@
 - [x] CI（test/check/pack，Node 20/22/24）。
 - [x] Release 工作流。
 - [x] GitHub Release `.tgz`。
-- [x] npm 发布（当前 0.4.3）。
-- [x] 发布后回归：全新 web profile + npm 0.4.3 安装 + API 200 + UI 侧栏/管理页验证（桌面 profile 迁移另测）。
+- [x] npm 发布（当前 0.4.4）。
+- [x] 发布后回归：全新 web profile + npm 0.4.4 安装 + API 200 + UI 侧栏/管理页验证（桌面 profile 迁移另测）。
 - [x] 文档：安装、快速开始、作用域语义、限制。
 - [x] FAQ / 故障排查：README + DETAIL。
 

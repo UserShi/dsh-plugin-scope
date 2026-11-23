@@ -1,7 +1,7 @@
 # Plugin Scope for DeepSeek Harness
 
-> **v0.4.3 · Gate engine + scopes/usage/tags/sidebar + call history + mapping diagnostics** — global / on-demand / off / workspace / per-conversation plugin scopes, with token and cost stats, tag-group auto-match, and integration with **dsh-market** and the native **Plugins** page.
-> Details: [DETAIL.md](DETAIL.md) · Examples: [examples/README.md](examples/README.md) · Design: [docs/DESIGN.md](docs/DESIGN.md) · Roadmap: [docs/ROADMAP.md](docs/ROADMAP.md) · Changelog: [CHANGELOG.md](CHANGELOG.md)
+> **v0.4.4 · Gate engine + scopes/usage/tags/sidebar + call history + mapping diagnostics** — global / on-demand / off / workspace / per-conversation plugin scopes, with token and cost stats, tag-group auto-match, and integration with **dsh-market** and the native **Plugins** page.
+> Details: [DETAIL.md](DETAIL.md) · Examples: [examples/README.md](examples/README.md) · Design: [docs/DESIGN.md](docs/DESIGN.md) · Roadmap: [docs/ROADMAP.md](docs/ROADMAP.md) · Backlog: [docs/BACKLOG.md](docs/BACKLOG.md) · Changelog: [CHANGELOG.md](CHANGELOG.md)
 
 ## The problem
 
@@ -36,7 +36,7 @@ It also provides:
 
 ## Status
 
-- **v0.4.3 (current)**: Profile Preset per-workspace / per-session subsets, config UI, automatic full-pool fallback; workspace changes re-select blank conversations.
+- **v0.4.4 (current)**: Profile Preset per-workspace / per-session subsets, config UI, automatic full-pool fallback; blank re-select and manual migration for started sessions. Remaining work is tracked in `docs/BACKLOG.md`.
 - **v0.3.3**: per-turn usage cards and call history.
 - **v0.3.2**: per-turn usage cards and call history.
 - **v0.3.1**: added the **Plugin Scope** entry to the left sidebar, opening the management page directly.
@@ -56,15 +56,15 @@ It also provides:
 
 Or choose this directory in **Plugins → Add plugin**.
 
-### GitHub release (v0.4.3)
+### GitHub release (v0.4.4)
 
-    dsh plugin --profile desktop add https://github.com/UserShi/dsh-plugin-scope/releases/download/v0.4.3/dsh-plugin-scope-0.4.3.tgz
+    dsh plugin --profile desktop add https://github.com/UserShi/dsh-plugin-scope/releases/download/v0.4.4/dsh-plugin-scope-0.4.4.tgz
 
-### npm (v0.4.3)
+### npm (v0.4.4)
 
     dsh plugin --profile desktop add dsh-plugin-scope
 
-0.4.3 is published on npm.
+0.4.4 is published on npm.
 
 npm page: https://www.npmjs.com/package/dsh-plugin-scope
 

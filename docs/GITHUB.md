@@ -1,7 +1,7 @@
 # GitHub 发布指南
 
 > 目标仓库：`https://github.com/UserShi/dsh-plugin-scope`（已创建，public）  
-> 当前状态：**v0.4.3** 已发布到 GitHub Release（自带 `dsh-plugin-scope-0.4.3.tgz`）和 npm。
+> 当前状态：**v0.4.4** 已发布到 GitHub Release（自带 `dsh-plugin-scope-0.4.4.tgz`）和 npm。
 
 ---
 
@@ -14,9 +14,9 @@
 | HTTPS 凭据 | 未使用 |
 | SSH key | `~/.ssh/id_rsa`，已添加到 GitHub |
 | SSH 到 GitHub | ✅ `Hi UserShi! You've successfully authenticated` |
-| 目标仓库 | ✅ public，main 与 v0.4.3 已推送 |
-| GitHub Release | ✅ https://github.com/UserShi/dsh-plugin-scope/releases/tag/v0.4.3 |
-| npm | ✅ https://www.npmjs.com/package/dsh-plugin-scope (0.4.3) |
+| 目标仓库 | ✅ public，main 与 v0.4.4 已推送 |
+| GitHub Release | ✅ https://github.com/UserShi/dsh-plugin-scope/releases/tag/v0.4.4 |
+| npm | ✅ https://www.npmjs.com/package/dsh-plugin-scope (0.4.4) |
 
 SSH 授权、代码推送、GitHub Release 与 npm 发布均已完成。
 
@@ -81,7 +81,7 @@ SSH 授权、代码推送、GitHub Release 与 npm 发布均已完成。
 - [ ] `lib/` 已提交（如果采用 git 安装）
 - [ ] CI 通过
 - [ ] 在临时 profile 安装并跑通 M1 验收
-- [x] 打 tag `v0.4.3`
+- [x] 打 tag `v0.4.4`
 - [ ] GitHub Release 附 `.tgz`
 - [ ] （可选）npm publish
 
@@ -159,7 +159,7 @@ jobs:
           generate_release_notes: true
 ```
 
-> Release 已由该 workflow 自动创建：https://github.com/UserShi/dsh-plugin-scope/releases/tag/v0.4.3
+> Release 已由该 workflow 自动创建：https://github.com/UserShi/dsh-plugin-scope/releases/tag/v0.4.4
 > npm 发布没有放进 workflow（secrets 不能直接用于 step 的 if），需要本地 `npm login` 或配置一个单独的发布工作流。
 
 ---
@@ -169,7 +169,7 @@ jobs:
 
 ```bash
 dsh plugin --profile desktop add \
-  https://github.com/UserShi/dsh-plugin-scope/releases/download/v0.4.3/dsh-plugin-scope-0.4.3.tgz
+  https://github.com/UserShi/dsh-plugin-scope/releases/download/v0.4.4/dsh-plugin-scope-0.4.4.tgz
 ```
 
 或在 **Plugins → Add plugin** 的 spec 里粘贴上面的 URL。

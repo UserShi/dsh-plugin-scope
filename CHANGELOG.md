@@ -1,5 +1,29 @@
 # Changelog
 
+## v0.4.4 — 2026-11-23
+
+### 中文
+
+- 新增已开始会话手动迁移：
+  - `POST /session/migrate`;
+  - 通过 registry `recompose` + `agent-preset/selected` 事件切换 preset；
+  - open turn 拒绝迁移；
+  - 会话表 Preset 下拉在已开始会话上先确认再迁移。
+- 验证：从磁盘恢复的已开始会话从 40 tools 迁移到 47 tools（7 个 diagram）。
+- 新增 [docs/BACKLOG.md](docs/BACKLOG.md)：登记 client-half、上游 Host、进程级单加载、全量失败回退、会话迁移边界测试等。
+- 测试 26/26 通过。
+
+### English
+
+- Added manual migration for started sessions:
+  - `POST /session/migrate`;
+  - switches presets via registry `recompose` plus the `agent-preset/selected` event;
+  - rejects when a turn is open;
+  - the session Preset dropdown confirms before migrating a started session.
+- Verified a disk-restored started session moving from 40 tools to 47 tools (7 diagram tools).
+- Added [docs/BACKLOG.md](docs/BACKLOG.md) for client-half, upstream Host, process-level single load, full-pool failure fallback and migration edge tests.
+- 26/26 tests pass.
+
 ## v0.4.3 — 2026-11-23
 
 ### 中文

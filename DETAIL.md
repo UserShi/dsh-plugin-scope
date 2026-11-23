@@ -241,7 +241,7 @@ Host 会把这些 bundle 的 layer 放入 `presetLayers`，不再进入 root com
 2. 空数组 → 不选 scope preset（Gate/标准）；
 3. 子集 → 懒注册 `scope:profile:<hash>`；全部池 → `scope:profile`；
 4. 子集注册失败自动回退全量池；
-5. 已开始会话由 registry 锁定，不能切换。
+5. 已开始会话可通过 `POST /session/migrate` 手动迁移：`presets.recompose` + `agent-preset/selected` 事件；open turn 拒绝。
 
 `diagnostics.presetIsolation` 暴露：
 
@@ -268,9 +268,9 @@ Host 会把这些 bundle 的 layer 放入 `presetLayers`，不再进入 root com
 ### 10.4 当前限制
 
 - 未应用 Host 补丁的标准 DSH 上该功能不生效（插件保持 Gate）；
-- 已开始会话不能迁移，继续保持原 preset；
+- 已开始会话迁移可用，但只验证过「从磁盘恢复的已完成会话」；open turn/子代理/fork/中途失败回滚仍需补测试（BACKLOG）；
 - 有 client half 的 bundle 只警告，可能缺少客户端 UI；
-- 多个不同子集并发使用会分别注册 preset，插件代码按子集加载，但不是进程级只加载一个子集；
+- 多个不同子集并发使用会分别注册 preset，插件代码按子集加载，但不是进程级只加载一个子集（BACKLOG）；
 - 注册失败会回退全量池；若全量池也失败，仅诊断，需手动清空 preset 回退 Gate。
 
 Host 变更建议见 [docs/DSH_HOST_PRESET_PROPOSAL.md](docs/DSH_HOST_PRESET_PROPOSAL.md)。
